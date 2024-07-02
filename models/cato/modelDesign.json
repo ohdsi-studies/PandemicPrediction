@@ -30,8 +30,6 @@
     {
       "covariateName": "history of cancer",
       "covariateId": 178243701699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782437,
       "startDay": -9999,
       "endDays": -1,
@@ -45,8 +43,6 @@
     {
       "covariateName": "history of COPD",
       "covariateId": 178243801699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782438,
       "startDay": -9999,
       "endDays": -1,
@@ -60,8 +56,6 @@
     {
       "covariateName": "history of diabetes",
       "covariateId": 178243901699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782439,
       "startDay": -9999,
       "endDays": -1,
@@ -75,8 +69,6 @@
     {
       "covariateName": "history of heart disease",
       "covariateId": 178244001699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782440,
       "startDay": -9999,
       "endDays": -1,
@@ -90,8 +82,6 @@
     {
       "covariateName": "history of hyperlipidemia",
       "covariateId": 178244101699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782441,
       "startDay": -9999,
       "endDays": -1,
@@ -105,8 +95,6 @@
     {
       "covariateName": "history of hypertension",
       "covariateId": 178244201699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782442,
       "startDay": -9999,
       "endDays": -1,
@@ -120,8 +108,6 @@
     {
       "covariateName": "history of kidney disease",
       "covariateId": 178244301699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
       "cohortId": 1782443,
       "startDay": -9999,
       "endDays": -1,

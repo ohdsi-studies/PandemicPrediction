@@ -74,8 +74,8 @@
           "locations": [
             {
               "githubUser": "ohdsi-studies",
-              "githubRepository": "Covid19PredictionStudies",
-              "githubBranch": "develop",
+              "githubRepository": "PandemicPrediction",
+              "githubBranch": "master",
               "githubModelsFolder": "models",
               "githubModelFolder": "cato"
             }
