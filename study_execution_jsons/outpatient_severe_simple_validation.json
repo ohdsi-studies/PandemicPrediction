@@ -54,7 +54,7 @@
   "moduleSpecifications": [
     {
       "module": "CohortGeneratorModule",
-      "version": "0.0.16",
+      "version": "0.4.2",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": {
@@ -65,7 +65,7 @@
     },
     {
       "module": "ModelTransferModule",
-      "version": "0.0.3",
+      "version": "0.0.10",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": {
@@ -74,8 +74,8 @@
           "locations": [
             {
               "githubUser": "ohdsi-studies",
-              "githubRepository": "Covid19PredictionStudies",
-              "githubBranch": "develop",
+              "githubRepository": "PandemicPrediction",
+              "githubBranch": "master",
               "githubModelsFolder": "models",
               "githubModelFolder": "sato"
             }
@@ -87,7 +87,7 @@
     },
     {
       "module": "PatientLevelPredictionValidationModule",
-      "version": "0.0.8",
+      "version": "0.0.12",
       "remoteRepo": "github.com",
       "remoteUsername": "ohdsi",
       "settings": [
