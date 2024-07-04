@@ -30,9 +30,7 @@
     {
       "covariateName": "history of liver failure or ascites",
       "covariateId": 178245501699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
-      "cohortId": 1782455,
+      "cohortIds": 1782455,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -45,9 +43,7 @@
     {
       "covariateName": "history of respiratory failure or insufficiency",
       "covariateId": 178245601699,
-      "cohortDatabaseSchema": "",
-      "cohortTable": "",
-      "cohortId": 1782456,
+      "cohortIds": 1782456,
       "startDay": -9999,
       "endDays": -1,
       "count": false,

@@ -1,6 +1,6 @@
 {
   "class": "plpModel",
-  "predictionFunction": "predictGLM",
+  "predictionFunction": "PatientLevelPrediction::predictGlm",
   "modelType": "binary",
   "saveType": "RtoJson"
 }
