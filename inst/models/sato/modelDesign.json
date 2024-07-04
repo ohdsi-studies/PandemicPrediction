@@ -156,7 +156,7 @@
     "attr_class": "preprocessSettings"
   },
   "modelSettings": {
-    fitFunction": "NA",
+    "fitFunction": "NA",
     "param": {
       "attr_settings": {
         "modelType": "GLM",
