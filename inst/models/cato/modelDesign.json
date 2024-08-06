@@ -1,6 +1,6 @@
 {
-  "targetId": 1782435,
-  "outcomeId": 1782436,
+  "targetId": 12,
+  "outcomeId": 13,
   "restrictPlpDataSettings": {
     "studyStartDate": "",
     "studyEndDate": "",
@@ -29,8 +29,8 @@
     },
     {
       "covariateName": "history of cancer",
-      "covariateId": 178243701699,
-      "cohortIds": 1782437,
+      "covariateId": 1501699,
+      "cohortIds": 15,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -42,8 +42,8 @@
     },
     {
       "covariateName": "history of COPD",
-      "covariateId": 178243801699,
-      "cohortIds": 1782438,
+      "covariateId": 1601699,
+      "cohortIds": 16,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -55,8 +55,8 @@
     },
     {
       "covariateName": "history of diabetes",
-      "covariateId": 178243901699,
-      "cohortIds": 1782439,
+      "covariateId": 1701699,
+      "cohortIds": 17,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -68,8 +68,8 @@
     },
     {
       "covariateName": "history of heart disease",
-      "covariateId": 178244001699,
-      "cohortIds": 1782440,
+      "covariateId": 1801699,
+      "cohortIds": 18,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -81,8 +81,8 @@
     },
     {
       "covariateName": "history of hyperlipidemia",
-      "covariateId": 178244101699,
-      "cohortIds": 1782441,
+      "covariateId": 1901699,
+      "cohortIds": 19,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -94,8 +94,8 @@
     },
     {
       "covariateName": "history of hypertension",
-      "covariateId": 178244201699,
-      "cohortIds": 1782442,
+      "covariateId": 2001699,
+      "cohortIds": 20,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -107,8 +107,8 @@
     },
     {
       "covariateName": "history of kidney disease",
-      "covariateId": 178244301699,
-      "cohortIds": 1782443,
+      "covariateId": 2101699,
+      "cohortIds": 21,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
