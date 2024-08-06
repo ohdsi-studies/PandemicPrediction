@@ -56,7 +56,7 @@
     {
       "covariateName": "history of skin or pressure ulcer",
       "covariateId": 2201699,
-      "cohortId": 22,
+      "cohortIds": 22,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -69,7 +69,7 @@
     {
       "covariateName": "history of cancer",
       "covariateId": 1501699,
-      "cohortId": 15,
+      "cohortIds": 15,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -82,7 +82,7 @@
     {
       "covariateName": "history of COPD",
       "covariateId": 1601699,
-      "cohortId": 16,
+      "cohortIds": 16,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -95,7 +95,7 @@
     {
       "covariateName": "history of diabetes",
       "covariateId": 1701699,
-      "cohortId": 17,
+      "cohortIds": 17,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -108,7 +108,7 @@
     {
       "covariateName": "history of heart disease",
       "covariateId": 1801699,
-      "cohortId": 18,
+      "cohortIds": 18,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -121,7 +121,7 @@
     {
       "covariateName": "history of hyperlipidemia",
       "covariateId": 1901699,
-      "cohortId": 19,
+      "cohortIds": 19,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -134,7 +134,7 @@
     {
       "covariateName": "history of hypertension",
       "covariateId": 2001699,
-      "cohortId": 20,
+      "cohortIds": 20,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
@@ -147,7 +147,7 @@
     {
       "covariateName": "history of kidney disease",
       "covariateId": 2101699,
-      "cohortId": 21,
+      "cohortIds": 21,
       "startDay": -9999,
       "endDays": -1,
       "count": false,
