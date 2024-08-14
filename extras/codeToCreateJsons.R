@@ -48,7 +48,8 @@ cohortDefinitions <- ROhdsiWebApi::exportCohortDefinitionSet(
   generateStats = TRUE
 )
 # modify the cohort
-cohortDefinitions <- lapply(1:length(cohortDefinitions$atlasId), function(i){list(
+cohortDefinitions <- lapply(1:length(cohortDefinitions$atlasId), function(i)  {
+  list(
   cohortId = cohortDefinitions$cohortId[i],
   cohortName = cohortDefinitions$cohortName[i],
   cohortDefinition = cohortDefinitions$json[i]
