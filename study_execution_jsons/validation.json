@@ -83,40 +83,27 @@
   ],
   "moduleSpecifications": [
     {
-      "module": "ModelTransferModule",
-      "version": "0.0.11",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
-      "settings": {
-        "s3Settings": null,
-        "githubSettings": {
-          "user": "ohdsi-studies",
-          "repository": "PandemicPrediction",
-          "ref": "master",
-          "modelsFolder": "models",
-          "attr_class": "data.frame",
-          "attr_row.names": 1
-        },
-        "localFileSettings": null
-      },
-      "attr_class": ["ModelTransferModuleSpecifications", "ModuleSpecifications"]
-    },
-    {
       "module": "CohortGeneratorModule",
-      "version": "0.4.2",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
       "settings": {
         "incremental": true,
         "generateStats": true
       },
-      "attr_class": ["CohortGeneratorModuleSpecifications", "ModuleSpecifications"]
+      "attr_class": ["ModuleSpecifications", "CohortGeneratorModuleSpecifications"]
+    },
+    {
+      "module": "ModelTransferModule",
+      "settings": {
+        "user": "ohdsi-studies",
+        "repository": "PandemicPrediction",
+        "ref": "master",
+        "modelsFolder": "models",
+        "attr_class": "data.frame",
+        "attr_row.names": 1
+      },
+      "attr_class": ["ModuleSpecifications", "ModelTransferModuleSpecifications"]
     },
     {
       "module": "PatientLevelPredictionValidationModule",
-      "version": "0.0.12",
-      "remoteRepo": "github.com",
-      "remoteUsername": "ohdsi",
       "settings": [
         {
           "targetId": 12,
@@ -734,7 +721,7 @@
           }
         }
       ],
-      "attr_class": ["PatientLevelPredictionValidationModuleSpecifications", "ModuleSpecifications"]
+      "attr_class": ["ModuleSpecifications", "PatientLevelPredictionValidationModuleSpecifications"]
     }
   ],
   "attr_class": "AnalysisSpecifications"

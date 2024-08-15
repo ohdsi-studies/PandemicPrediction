@@ -2,20 +2,21 @@ library(PatientLevelPrediction)
 library(Strategus)
 library(lubridate)
 
+
 # MODEL TRANSFER Module --------------------------------------------------------
-source('https://raw.githubusercontent.com/OHDSI/ModelTransferModule/v0.0.11/SettingsFunctions.R')
+source('https://raw.githubusercontent.com/OHDSI/ModelTransferModule/strategus_v1/Main.R')
 
 githubSettings <- data.frame(user = "ohdsi-studies",
                              repository = "PandemicPrediction",
                              ref = "master",
                              modelsFolder = "models")
 
-modelTransferModuleSpecs <- createModelTransferModuleSpecifications(
-  githubSettings = githubSettings
+modelTransferCreator <- ModelTransferModule$new()
+modelTransferModuleSpecifications <- modelTransferCreator$createModuleSpecifications(
+  settings = githubSettings
 )
 
 # COHORT GENERATOR MODULE ------------------------------------------------------
-source("https://raw.githubusercontent.com/OHDSI/CohortGeneratorModule/v0.4.2/SettingsFunctions.R")
 
 # atlas Id's from my personal atlas ~ Egill
 cohortIds <- list(outpatientVisit =  12,
@@ -47,21 +48,11 @@ cohortDefinitions <- ROhdsiWebApi::exportCohortDefinitionSet(
   cohortIds = unlist(cohortIds),
   generateStats = TRUE
 )
-# modify the cohort
-cohortDefinitions <- lapply(1:length(cohortDefinitions$atlasId), function(i)  {
-  list(
-  cohortId = cohortDefinitions$cohortId[i],
-  cohortName = cohortDefinitions$cohortName[i],
-  cohortDefinition = cohortDefinitions$json[i]
-)})
 
-createCohortSharedResource <- function(cohortDefinitionSet) {
-  sharedResource <- list(cohortDefinitions = cohortDefinitionSet)
-  class(sharedResource) <- c("CohortDefinitionSharedResources", "SharedResources")
-  return(sharedResource)
-}
+cgModuleCreator <- CohortGeneratorModule$new()
+cohortDefinitionShared <- cgModuleCreator$createCohortSharedResourceSpecifications(cohortDefinitions)
 
-cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications(
+cohortGeneratorModuleSpecifications <- cgModuleCreator$createModuleSpecifications(
   incremental = TRUE,
   generateStats = TRUE
 )
@@ -96,7 +87,7 @@ generateRestrictDataSettings <- function(start, end, interval = months(3)) {
 
 restrictPlpDataSettings <- generateRestrictDataSettings('2020-01-01', '2023-06-01')
 
-source('https://raw.githubusercontent.com/OHDSI/PatientLevelPredictionValidationModule/v0.0.12/SettingsFunctions.R')
+source('https://raw.githubusercontent.com/OHDSI/PatientLevelPredictionValidationModule/strategus_v1/Main.R')
 
 validationComponentsList <- list(
   list(
@@ -146,14 +137,16 @@ validationComponentsList <- list(
   )
 )
 
-predictionValidationModuleSpecifications <- createPatientLevelPredictionValidationModuleSpecifications(
-  validationComponentsList = validationComponentsList
+validationSettingsCreator <- PatientLevelPredictionValidationModule$new()
+
+predictionValidationModuleSpecifications <- validationSettingsCreator$createModuleSpecifications(
+  settings = validationComponentsList
 )
 
 analysisSpecifications <- createEmptyAnalysisSpecificiations() |>
-  addModuleSpecifications(modelTransferModuleSpecs) |>
-  addSharedResources(createCohortSharedResource(cohortDefinitions)) |>
+  addSharedResources(cohortDefinitionShared) |>
   addModuleSpecifications(cohortGeneratorModuleSpecifications) |>
+  addModuleSpecifications(modelTransferModuleSpecifications) |>
   addModuleSpecifications(predictionValidationModuleSpecifications)
 
 ParallelLogger::saveSettingsToJson(analysisSpecifications, file.path('study_execution_jsons', 'validation.json'))
