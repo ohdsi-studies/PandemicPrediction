@@ -4,12 +4,13 @@ library(lubridate)
 
 
 # MODEL TRANSFER Module --------------------------------------------------------
-source('https://raw.githubusercontent.com/OHDSI/ModelTransferModule/strategus_v1/Main.R')
+source("~/github/ModelTransferModule/Main.R")
 
 githubSettings <- data.frame(user = "ohdsi-studies",
-                             repository = "PandemicPrediction",
-                             ref = "master",
-                             modelsFolder = "models")
+                       repository = "PandemicPrediction",
+                       ref = "master",
+                       modelsFolder = "models")
+class(githubSettings) <- c('githubSettings', class(githubSettings))
 
 modelTransferCreator <- ModelTransferModule$new()
 modelTransferModuleSpecifications <- modelTransferCreator$createModuleSpecifications(
@@ -88,6 +89,7 @@ generateRestrictDataSettings <- function(start, end, interval = months(3)) {
 restrictPlpDataSettings <- generateRestrictDataSettings('2020-01-01', '2023-06-01')
 
 source('https://raw.githubusercontent.com/OHDSI/PatientLevelPredictionValidationModule/strategus_v1/Main.R')
+source("~/github/PatientLevelPredictionValidationModule/Main.R")
 
 validationComponentsList <- list(
   list(
