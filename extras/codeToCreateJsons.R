@@ -18,6 +18,7 @@ modelTransferModuleSpecs <- createModelTransferModuleSpecifications(
 source("https://raw.githubusercontent.com/OHDSI/CohortGeneratorModule/v0.4.2/SettingsFunctions.R")
 
 # atlas Id's from my personal atlas ~ Egill
+# maybe better for reproducibility to have the jsons in the repo and use them
 cohortIds <- list(outpatientVisit =  12,
                   inPatientVisit = 25,
                   death = 11,
@@ -67,6 +68,7 @@ cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications
 )
 
 # UNIVERSAL ANALYSIS SETTINGS --------------------------------------------------
+# Function used to generate restrictPlpDataSettings for time windows of three months
 generateRestrictDataSettings <- function(start, end, interval = months(3)) {
   start_date <- lubridate::ymd(start)
   end_date <- lubridate::ymd(end)
