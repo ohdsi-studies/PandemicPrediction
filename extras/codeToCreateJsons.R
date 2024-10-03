@@ -104,47 +104,52 @@ validationComponentsList <- list(
   list(
     targetId = cohortIds$outpatientVisit,
     outcomeId = cohortIds$death,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$outpatientVisit,
+    modelOutcomeId = cohortIds$death,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL,
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ),
   list(
     targetId = cohortIds$outpatientVisit,
     outcomeId = cohortIds$severe,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$outpatientVisit,
+    modelOutcomeId = cohortIds$severe,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL,
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ),
   list(
     targetId = cohortIds$outpatientVisit,
     outcomeId = cohortIds$critical,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$outpatientVisit,
+    modelOutcomeId = cohortIds$critical,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL,
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ), 
   list(
     targetId = cohortIds$inPatientVisit,
     outcomeId = cohortIds$death,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$inPatientVisit,
+    modelOutcomeId = cohortIds$death,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL, 
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ),
   list(
     targetId = cohortIds$inPatientVisit,
     outcomeId = cohortIds$critical,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$inPatientVisit,
+    modelOutcomeId = cohortIds$critical,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL, 
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   )
 )
 

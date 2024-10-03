@@ -121,6 +121,8 @@
         {
           "targetId": 12,
           "outcomeId": 11,
+          "modelTargetId": 12,
+          "modelOutcomeId": 11,
           "restrictPlpDataSettings": [
             {
               "studyStartDate": "20200101",
@@ -235,15 +237,15 @@
               "attr_class": "restrictPlpDataSettings"
             }
           ],
-          "validationSettings": {
-            "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
+          "populationSettings": null,
+          "recalibrate": null,
+          "runCovariateSummary": true
         },
         {
           "targetId": 12,
           "outcomeId": 14,
+          "modelTargetId": 12,
+          "modelOutcomeId": 14,
           "restrictPlpDataSettings": [
             {
               "studyStartDate": "20200101",
@@ -358,15 +360,15 @@
               "attr_class": "restrictPlpDataSettings"
             }
           ],
-          "validationSettings": {
-            "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
+          "populationSettings": null,
+          "recalibrate": null,
+          "runCovariateSummary": true
         },
         {
           "targetId": 12,
           "outcomeId": 13,
+          "modelTargetId": 12,
+          "modelOutcomeId": 13,
           "restrictPlpDataSettings": [
             {
               "studyStartDate": "20200101",
@@ -481,15 +483,15 @@
               "attr_class": "restrictPlpDataSettings"
             }
           ],
-          "validationSettings": {
-            "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
+          "populationSettings": null,
+          "recalibrate": null,
+          "runCovariateSummary": true
         },
         {
           "targetId": 25,
           "outcomeId": 11,
+          "modelTargetId": 25,
+          "modelOutcomeId": 11,
           "restrictPlpDataSettings": [
             {
               "studyStartDate": "20200101",
@@ -604,15 +606,15 @@
               "attr_class": "restrictPlpDataSettings"
             }
           ],
-          "validationSettings": {
-            "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
+          "populationSettings": null,
+          "recalibrate": null,
+          "runCovariateSummary": true
         },
         {
           "targetId": 25,
           "outcomeId": 13,
+          "modelTargetId": 25,
+          "modelOutcomeId": 13,
           "restrictPlpDataSettings": [
             {
               "studyStartDate": "20200101",
@@ -727,11 +729,9 @@
               "attr_class": "restrictPlpDataSettings"
             }
           ],
-          "validationSettings": {
-            "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
+          "populationSettings": null,
+          "recalibrate": null,
+          "runCovariateSummary": true
         }
       ],
       "attr_class": ["PatientLevelPredictionValidationModuleSpecifications", "ModuleSpecifications"]

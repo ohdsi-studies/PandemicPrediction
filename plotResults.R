@@ -20,9 +20,9 @@ extractModelInfo <- function(analysisPath) {
   validationDetails <- ParallelLogger::loadSettingsFromJson(file.path(modelPath, "validationDetails.json"))
   startDate <- validationDetails$restrictPlpDataSettings$studyStartDate
   endDate <- validationDetails$restrictPlpDataSettings$studyEndDate
-  timePeriod <- list(startDate = as.Date(startDate),
-                     endDate = as.Date(endDate))
-  task <- list(targeti = validationDetails$targetId, outcome = validationDetails$outcomeId)
+  timePeriod <- list(startDate = as.Date(startDate, format = "%Y%m%d"),
+                     endDate = as.Date(endDate, format = "%Y%m%d"))
+  task <- list(targetId = validationDetails$targetId, outcomeId = validationDetails$outcomeId)
   modelInfo <- list(task = task, timePeriod = timePeriod)
   return(modelInfo)
 }
@@ -41,10 +41,10 @@ for (i in seq_along(analyses)) {
 }
 
 results <- data.frame(performance = unlist(performance),
-                      start_date = sapply(timePeriod, function(x) x$startDate),
-                      end_date = sapply(timePeriod, function(x) x$endDate),
-                      target = sapply(modelInfo, function(x) x$task$targeti),
-                      outcome = sapply(modelInfo, function(x) x$task$outcome))
+                      start_date = sapply(modelInfo, function(x) x$timePeriod$startDate),
+                      end_date = sapply(modelInfo, function(x) x$timePeriod$endDate),
+                      target = sapply(modelInfo, function(x) x$task$targetId),
+                      outcome = sapply(modelInfo, function(x) x$task$outcomeId))
 
 getName <- function(target, outcome) {
   firstName <- switch(as.character(target),
@@ -62,8 +62,8 @@ getName <- function(target, outcome) {
 
 results <- results |>
   dplyr::mutate(name = mapply(getName, .data$target, .data$outcome),
-                start_date = as.Date(.data$start_date, "%Y%m%d"),
-                end_date = as.Date(.data$end_date, "%Y%m%d")) |>
+                start_date = as.Date(.data$start_date),
+                end_date = as.Date(.data$end_date)) |>
   dplyr::arrange(.data$start_date)
 
 
