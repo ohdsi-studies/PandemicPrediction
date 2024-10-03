@@ -2,24 +2,23 @@ library(PatientLevelPrediction)
 library(Strategus)
 library(lubridate)
 
-
 # MODEL TRANSFER Module --------------------------------------------------------
-source("~/github/ModelTransferModule/Main.R")
+source('https://raw.githubusercontent.com/OHDSI/ModelTransferModule/v0.0.11/SettingsFunctions.R')
 
 githubSettings <- data.frame(user = "ohdsi-studies",
-                       repository = "PandemicPrediction",
-                       ref = "master",
-                       modelsFolder = "models")
-class(githubSettings) <- c('githubSettings', class(githubSettings))
+                             repository = "PandemicPrediction",
+                             ref = "master",
+                             modelsFolder = "models")
 
-modelTransferCreator <- ModelTransferModule$new()
-modelTransferModuleSpecifications <- modelTransferCreator$createModuleSpecifications(
-  settings = githubSettings
+modelTransferModuleSpecs <- createModelTransferModuleSpecifications(
+  githubSettings = githubSettings
 )
 
 # COHORT GENERATOR MODULE ------------------------------------------------------
+source("https://raw.githubusercontent.com/OHDSI/CohortGeneratorModule/v0.4.2/SettingsFunctions.R")
 
 # atlas Id's from my personal atlas ~ Egill
+# maybe better for reproducibility to have the jsons in the repo and use them
 cohortIds <- list(outpatientVisit =  12,
                   inPatientVisit = 25,
                   death = 11,
@@ -49,16 +48,27 @@ cohortDefinitions <- ROhdsiWebApi::exportCohortDefinitionSet(
   cohortIds = unlist(cohortIds),
   generateStats = TRUE
 )
+# modify the cohort
+cohortDefinitions <- lapply(1:length(cohortDefinitions$atlasId), function(i)  {
+  list(
+  cohortId = cohortDefinitions$cohortId[i],
+  cohortName = cohortDefinitions$cohortName[i],
+  cohortDefinition = cohortDefinitions$json[i]
+)})
 
-cgModuleCreator <- CohortGeneratorModule$new()
-cohortDefinitionShared <- cgModuleCreator$createCohortSharedResourceSpecifications(cohortDefinitions)
+createCohortSharedResource <- function(cohortDefinitionSet) {
+  sharedResource <- list(cohortDefinitions = cohortDefinitionSet)
+  class(sharedResource) <- c("CohortDefinitionSharedResources", "SharedResources")
+  return(sharedResource)
+}
 
-cohortGeneratorModuleSpecifications <- cgModuleCreator$createModuleSpecifications(
+cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications(
   incremental = TRUE,
   generateStats = TRUE
 )
 
 # UNIVERSAL ANALYSIS SETTINGS --------------------------------------------------
+# Function used to generate restrictPlpDataSettings for time windows of three months
 generateRestrictDataSettings <- function(start, end, interval = months(3)) {
   start_date <- lubridate::ymd(start)
   end_date <- lubridate::ymd(end)
@@ -88,67 +98,69 @@ generateRestrictDataSettings <- function(start, end, interval = months(3)) {
 
 restrictPlpDataSettings <- generateRestrictDataSettings('2020-01-01', '2023-06-01')
 
-source('https://raw.githubusercontent.com/OHDSI/PatientLevelPredictionValidationModule/strategus_v1/Main.R')
-source("~/github/PatientLevelPredictionValidationModule/Main.R")
+source('https://raw.githubusercontent.com/OHDSI/PatientLevelPredictionValidationModule/v0.0.12/SettingsFunctions.R')
 
 validationComponentsList <- list(
   list(
     targetId = cohortIds$outpatientVisit,
     outcomeId = cohortIds$death,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$outpatientVisit,
+    modelOutcomeId = cohortIds$death,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL,
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ),
   list(
     targetId = cohortIds$outpatientVisit,
     outcomeId = cohortIds$severe,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$outpatientVisit,
+    modelOutcomeId = cohortIds$severe,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL,
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ),
   list(
     targetId = cohortIds$outpatientVisit,
     outcomeId = cohortIds$critical,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$outpatientVisit,
+    modelOutcomeId = cohortIds$critical,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL,
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ), 
   list(
     targetId = cohortIds$inPatientVisit,
     outcomeId = cohortIds$death,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$inPatientVisit,
+    modelOutcomeId = cohortIds$death,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL, 
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   ),
   list(
     targetId = cohortIds$inPatientVisit,
     outcomeId = cohortIds$critical,
-    restrictPlpDataSettings = restrictPlpDataSettings, # vector
-    validationSettings = PatientLevelPrediction::createValidationSettings(
-      recalibrate = NULL,
-      runCovariateSummary = TRUE
-    )
+    modelTargetId = cohortIds$inPatientVisit,
+    modelOutcomeId = cohortIds$critical,
+    restrictPlpDataSettings = restrictPlpDataSettings,
+    populationSettings = NULL, 
+    recalibrate = NULL,
+    runCovariateSummary = TRUE
   )
 )
 
-validationSettingsCreator <- PatientLevelPredictionValidationModule$new()
-
-predictionValidationModuleSpecifications <- validationSettingsCreator$createModuleSpecifications(
-  settings = validationComponentsList
+predictionValidationModuleSpecifications <- createPatientLevelPredictionValidationModuleSpecifications(
+  validationComponentsList = validationComponentsList
 )
 
 analysisSpecifications <- createEmptyAnalysisSpecificiations() |>
-  addSharedResources(cohortDefinitionShared) |>
+  addModuleSpecifications(modelTransferModuleSpecs) |>
+  addSharedResources(createCohortSharedResource(cohortDefinitions)) |>
   addModuleSpecifications(cohortGeneratorModuleSpecifications) |>
-  addModuleSpecifications(modelTransferModuleSpecifications) |>
   addModuleSpecifications(predictionValidationModuleSpecifications)
 
 ParallelLogger::saveSettingsToJson(analysisSpecifications, file.path('study_execution_jsons', 'validation.json'))
