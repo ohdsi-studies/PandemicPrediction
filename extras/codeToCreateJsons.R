@@ -4,14 +4,13 @@ library(lubridate)
 
 # MODEL TRANSFER Module --------------------------------------------------------
 
-githubSettings <- data.frame(user = "ohdsi-studies",
-                             repository = "PandemicPrediction",
-                             ref = "strategus_v1",
-                             modelsFolder = "models")
+localFileSettings <- data.frame(
+  locations = "./inst/models/"
+)
 
 modelTransferModule <- ModelTransferModule$new()
 
-modelTransferModuleSpecs <- modelTransferModule$createModuleSpecifications(githubSettings = githubSettings)
+modelTransferModuleSpecs <- modelTransferModule$createModuleSpecifications(localFileSettings = localFileSettings)
 
 
 # COHORT GENERATOR MODULE ------------------------------------------------------
@@ -63,53 +62,57 @@ generateRestrictDataSettings <- function(start, end, interval = months(3)) {
 
 restrictPlpDataSettings <- generateRestrictDataSettings('2020-01-01', '2023-06-01')
 
-
+outpatientVisit <- 12
+death <- 11
+severe <- 14
+critical <- 13
+inPatientVisit <- 25
 validationComponentsList <- list(
   list(
-    targetId = cohortIds$outpatientVisit,
-    outcomeId = cohortIds$death,
-    modelTargetId = cohortIds$outpatientVisit,
-    modelOutcomeId = cohortIds$death,
+    targetId = outpatientVisit,
+    outcomeId = death,
+    modelTargetId = outpatientVisit,
+    modelOutcomeId = death,
     restrictPlpDataSettings = restrictPlpDataSettings,
     populationSettings = NULL,
     recalibrate = NULL,
     runCovariateSummary = TRUE
   ),
   list(
-    targetId = cohortIds$outpatientVisit,
-    outcomeId = cohortIds$severe,
-    modelTargetId = cohortIds$outpatientVisit,
-    modelOutcomeId = cohortIds$severe,
+    targetId = outpatientVisit,
+    outcomeId = severe,
+    modelTargetId = outpatientVisit,
+    modelOutcomeId = severe,
     restrictPlpDataSettings = restrictPlpDataSettings,
     populationSettings = NULL,
     recalibrate = NULL,
     runCovariateSummary = TRUE
   ),
   list(
-    targetId = cohortIds$outpatientVisit,
-    outcomeId = cohortIds$critical,
-    modelTargetId = cohortIds$outpatientVisit,
-    modelOutcomeId = cohortIds$critical,
+    targetId = outpatientVisit,
+    outcomeId = critical,
+    modelTargetId = outpatientVisit,
+    modelOutcomeId = critical,
     restrictPlpDataSettings = restrictPlpDataSettings,
     populationSettings = NULL,
     recalibrate = NULL,
     runCovariateSummary = TRUE
   ), 
   list(
-    targetId = cohortIds$inPatientVisit,
-    outcomeId = cohortIds$death,
-    modelTargetId = cohortIds$inPatientVisit,
-    modelOutcomeId = cohortIds$death,
+    targetId = inPatientVisit,
+    outcomeId = death,
+    modelTargetId = inPatientVisit,
+    modelOutcomeId = death,
     restrictPlpDataSettings = restrictPlpDataSettings,
     populationSettings = NULL, 
     recalibrate = NULL,
     runCovariateSummary = TRUE
   ),
   list(
-    targetId = cohortIds$inPatientVisit,
-    outcomeId = cohortIds$critical,
-    modelTargetId = cohortIds$inPatientVisit,
-    modelOutcomeId = cohortIds$critical,
+    targetId = inPatientVisit,
+    outcomeId = critical,
+    modelTargetId = inPatientVisit,
+    modelOutcomeId = critical,
     restrictPlpDataSettings = restrictPlpDataSettings,
     populationSettings = NULL, 
     recalibrate = NULL,
