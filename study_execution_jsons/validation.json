@@ -83,644 +83,647 @@
   ],
   "moduleSpecifications": [
     {
+      "module": "ModelTransferModule",
+      "settings": {
+        "githubSettings": {
+          "user": "ohdsi-studies",
+          "repository": "PandemicPrediction",
+          "ref": "master",
+          "modelsFolder": "models",
+          "attr_class": "data.frame",
+          "attr_row.names": 1
+        }
+      },
+      "attr_class": ["ModuleSpecifications", "ModelTransferModuleSpecifications"]
+    },
+    {
       "module": "CohortGeneratorModule",
       "settings": {
-        "incremental": true,
         "generateStats": true
       },
       "attr_class": ["ModuleSpecifications", "CohortGeneratorModuleSpecifications"]
     },
     {
-      "module": "ModelTransferModule",
-      "settings": {
-        "user": "ohdsi-studies",
-        "repository": "PandemicPrediction",
-        "ref": "master",
-        "modelsFolder": "models",
-        "attr_class": ["githubSettings", "data.frame"],
-        "attr_row.names": 1
-      },
-      "attr_class": ["ModuleSpecifications", "ModelTransferModuleSpecifications"]
-    },
-    {
       "module": "PatientLevelPredictionValidationModule",
-      "settings": [
-        {
-          "targetId": 12,
-          "outcomeId": 11,
-          "restrictPlpDataSettings": [
-            {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200401",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200701",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20201001",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210101",
-              "studyEndDate": "20210331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210401",
-              "studyEndDate": "20210630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210701",
-              "studyEndDate": "20210930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20211001",
-              "studyEndDate": "20211231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220101",
-              "studyEndDate": "20220331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220401",
-              "studyEndDate": "20220630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220701",
-              "studyEndDate": "20220930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20221001",
-              "studyEndDate": "20221231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230101",
-              "studyEndDate": "20230331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230401",
-              "studyEndDate": "20230601",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            }
-          ],
-          "validationSettings": {
+      "settings": {
+        "validationComponentsList": [
+          {
+            "targetId": 12,
+            "outcomeId": 11,
+            "modelTargetId": 12,
+            "modelOutcomeId": 11,
+            "restrictPlpDataSettings": [
+              {
+                "studyStartDate": "20200101",
+                "studyEndDate": "20200331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200401",
+                "studyEndDate": "20200630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200701",
+                "studyEndDate": "20200930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20201001",
+                "studyEndDate": "20201231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210101",
+                "studyEndDate": "20210331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210401",
+                "studyEndDate": "20210630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210701",
+                "studyEndDate": "20210930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20211001",
+                "studyEndDate": "20211231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220101",
+                "studyEndDate": "20220331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220401",
+                "studyEndDate": "20220630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220701",
+                "studyEndDate": "20220930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20221001",
+                "studyEndDate": "20221231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230101",
+                "studyEndDate": "20230331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230401",
+                "studyEndDate": "20230601",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              }
+            ],
+            "populationSettings": null,
             "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
-        },
-        {
-          "targetId": 12,
-          "outcomeId": 14,
-          "restrictPlpDataSettings": [
-            {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200401",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200701",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20201001",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210101",
-              "studyEndDate": "20210331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210401",
-              "studyEndDate": "20210630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210701",
-              "studyEndDate": "20210930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20211001",
-              "studyEndDate": "20211231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220101",
-              "studyEndDate": "20220331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220401",
-              "studyEndDate": "20220630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220701",
-              "studyEndDate": "20220930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20221001",
-              "studyEndDate": "20221231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230101",
-              "studyEndDate": "20230331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230401",
-              "studyEndDate": "20230601",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            }
-          ],
-          "validationSettings": {
+            "runCovariateSummary": true
+          },
+          {
+            "targetId": 12,
+            "outcomeId": 14,
+            "modelTargetId": 12,
+            "modelOutcomeId": 14,
+            "restrictPlpDataSettings": [
+              {
+                "studyStartDate": "20200101",
+                "studyEndDate": "20200331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200401",
+                "studyEndDate": "20200630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200701",
+                "studyEndDate": "20200930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20201001",
+                "studyEndDate": "20201231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210101",
+                "studyEndDate": "20210331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210401",
+                "studyEndDate": "20210630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210701",
+                "studyEndDate": "20210930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20211001",
+                "studyEndDate": "20211231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220101",
+                "studyEndDate": "20220331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220401",
+                "studyEndDate": "20220630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220701",
+                "studyEndDate": "20220930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20221001",
+                "studyEndDate": "20221231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230101",
+                "studyEndDate": "20230331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230401",
+                "studyEndDate": "20230601",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              }
+            ],
+            "populationSettings": null,
             "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
-        },
-        {
-          "targetId": 12,
-          "outcomeId": 13,
-          "restrictPlpDataSettings": [
-            {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200401",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200701",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20201001",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210101",
-              "studyEndDate": "20210331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210401",
-              "studyEndDate": "20210630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210701",
-              "studyEndDate": "20210930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20211001",
-              "studyEndDate": "20211231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220101",
-              "studyEndDate": "20220331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220401",
-              "studyEndDate": "20220630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220701",
-              "studyEndDate": "20220930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20221001",
-              "studyEndDate": "20221231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230101",
-              "studyEndDate": "20230331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230401",
-              "studyEndDate": "20230601",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            }
-          ],
-          "validationSettings": {
+            "runCovariateSummary": true
+          },
+          {
+            "targetId": 12,
+            "outcomeId": 13,
+            "modelTargetId": 12,
+            "modelOutcomeId": 13,
+            "restrictPlpDataSettings": [
+              {
+                "studyStartDate": "20200101",
+                "studyEndDate": "20200331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200401",
+                "studyEndDate": "20200630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200701",
+                "studyEndDate": "20200930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20201001",
+                "studyEndDate": "20201231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210101",
+                "studyEndDate": "20210331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210401",
+                "studyEndDate": "20210630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210701",
+                "studyEndDate": "20210930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20211001",
+                "studyEndDate": "20211231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220101",
+                "studyEndDate": "20220331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220401",
+                "studyEndDate": "20220630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220701",
+                "studyEndDate": "20220930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20221001",
+                "studyEndDate": "20221231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230101",
+                "studyEndDate": "20230331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230401",
+                "studyEndDate": "20230601",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              }
+            ],
+            "populationSettings": null,
             "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
-        },
-        {
-          "targetId": 25,
-          "outcomeId": 11,
-          "restrictPlpDataSettings": [
-            {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200401",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200701",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20201001",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210101",
-              "studyEndDate": "20210331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210401",
-              "studyEndDate": "20210630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210701",
-              "studyEndDate": "20210930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20211001",
-              "studyEndDate": "20211231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220101",
-              "studyEndDate": "20220331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220401",
-              "studyEndDate": "20220630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220701",
-              "studyEndDate": "20220930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20221001",
-              "studyEndDate": "20221231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230101",
-              "studyEndDate": "20230331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230401",
-              "studyEndDate": "20230601",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            }
-          ],
-          "validationSettings": {
+            "runCovariateSummary": true
+          },
+          {
+            "targetId": 25,
+            "outcomeId": 11,
+            "modelTargetId": 25,
+            "modelOutcomeId": 11,
+            "restrictPlpDataSettings": [
+              {
+                "studyStartDate": "20200101",
+                "studyEndDate": "20200331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200401",
+                "studyEndDate": "20200630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200701",
+                "studyEndDate": "20200930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20201001",
+                "studyEndDate": "20201231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210101",
+                "studyEndDate": "20210331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210401",
+                "studyEndDate": "20210630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210701",
+                "studyEndDate": "20210930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20211001",
+                "studyEndDate": "20211231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220101",
+                "studyEndDate": "20220331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220401",
+                "studyEndDate": "20220630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220701",
+                "studyEndDate": "20220930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20221001",
+                "studyEndDate": "20221231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230101",
+                "studyEndDate": "20230331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230401",
+                "studyEndDate": "20230601",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              }
+            ],
+            "populationSettings": null,
             "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
-          }
-        },
-        {
-          "targetId": 25,
-          "outcomeId": 13,
-          "restrictPlpDataSettings": [
-            {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200401",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20200701",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20201001",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210101",
-              "studyEndDate": "20210331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210401",
-              "studyEndDate": "20210630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20210701",
-              "studyEndDate": "20210930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20211001",
-              "studyEndDate": "20211231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220101",
-              "studyEndDate": "20220331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220401",
-              "studyEndDate": "20220630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20220701",
-              "studyEndDate": "20220930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20221001",
-              "studyEndDate": "20221231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230101",
-              "studyEndDate": "20230331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            {
-              "studyStartDate": "20230401",
-              "studyEndDate": "20230601",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            }
-          ],
-          "validationSettings": {
+            "runCovariateSummary": true
+          },
+          {
+            "targetId": 25,
+            "outcomeId": 13,
+            "modelTargetId": 25,
+            "modelOutcomeId": 13,
+            "restrictPlpDataSettings": [
+              {
+                "studyStartDate": "20200101",
+                "studyEndDate": "20200331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200401",
+                "studyEndDate": "20200630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20200701",
+                "studyEndDate": "20200930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20201001",
+                "studyEndDate": "20201231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210101",
+                "studyEndDate": "20210331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210401",
+                "studyEndDate": "20210630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20210701",
+                "studyEndDate": "20210930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20211001",
+                "studyEndDate": "20211231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220101",
+                "studyEndDate": "20220331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220401",
+                "studyEndDate": "20220630",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20220701",
+                "studyEndDate": "20220930",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20221001",
+                "studyEndDate": "20221231",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230101",
+                "studyEndDate": "20230331",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              },
+              {
+                "studyStartDate": "20230401",
+                "studyEndDate": "20230601",
+                "firstExposureOnly": false,
+                "washoutPeriod": 0,
+                "sampleSize": null,
+                "attr_class": "restrictPlpDataSettings"
+              }
+            ],
+            "populationSettings": null,
             "recalibrate": null,
-            "runCovariateSummary": true,
-            "attr_class": "validationSettings"
+            "runCovariateSummary": true
           }
-        }
-      ],
+        ]
+      },
       "attr_class": ["ModuleSpecifications", "PatientLevelPredictionValidationModuleSpecifications"]
     }
   ],
