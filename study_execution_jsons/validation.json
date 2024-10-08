@@ -88,7 +88,7 @@
         "githubSettings": {
           "user": "ohdsi-studies",
           "repository": "PandemicPrediction",
-          "ref": "master",
+          "ref": "strategus_v1",
           "modelsFolder": "models",
           "attr_class": "data.frame",
           "attr_row.names": 1
