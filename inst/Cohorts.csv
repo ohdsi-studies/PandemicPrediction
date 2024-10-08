@@ -1,0 +1,16 @@
+atlas_id,cohort_id,cohort_name,logic_description,generate_stats
+12,12,[T] Pandemic Prediction target outpatient,NA,TRUE
+25,25,Seek Cover Inpatient Pneumonia and Covid,NA,TRUE
+11,11,[O] Pandemic Prediction outcome death,NA,TRUE
+14,14,[O] Pandemic Prediction outcome pneumonia in hospital,NA,TRUE
+13,13,[O] Pandemic Prediction inpatient resp failure or insuffiency,NA,TRUE
+15,15,Cancer,NA,TRUE
+16,16,COPD,NA,TRUE
+17,17,Diabetes,NA,TRUE
+18,18,Heart disease,NA,TRUE
+19,19,Hyperlipidemia,NA,TRUE
+20,20,Hypertension,NA,TRUE
+21,21,Kidney Disease,NA,TRUE
+22,22,Skin or pressure ulcer,NA,TRUE
+23,23,Hepatic Failure,NA,TRUE
+24,24,Resp failure,NA,TRUE
