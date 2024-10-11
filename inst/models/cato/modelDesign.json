@@ -159,9 +159,9 @@
     "fitFunction": "NA",
     "param": {
       "attr_settings": {
-        "modelType": "GLM",
+        "modelType": "coverI",
         "seed": 1,
-        "name": "Existing GLM"
+        "name": "coverI"
       },
       "attr_modelType": "binary",
       "attr_saveType": "RtoJson"

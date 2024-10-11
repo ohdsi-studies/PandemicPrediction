@@ -198,9 +198,9 @@
     "fitFunction": "NA",
     "param": {
       "attr_settings": {
-        "modelType": "GLM",
+        "modelType": "hospitalF",
         "seed": 1,
-        "name": "Existing GLM"
+        "name": "hospitalF"
       },
       "attr_modelType": "binary",
       "attr_saveType": "RtoJson"

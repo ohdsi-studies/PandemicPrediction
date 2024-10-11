@@ -163,9 +163,9 @@
     },
     "attr_class": "modelSettings",
     "attr_settings": {
-      "modelType": "GLM",
+      "modelType": "dataDrivenH",
       "seed": 1,
-      "name": "Existing GLM"
+      "name": "dataDrivenH"
     }
   },
   "splitSettings": {
