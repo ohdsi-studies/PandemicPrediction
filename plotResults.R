@@ -18,16 +18,18 @@ extractPerformance <- function(analysisPath) {
 extractModelInfo <- function(analysisPath) {
   modelPath <- file.path(analysisPath, "validationResult", "model")
   validationDetails <- ParallelLogger::loadSettingsFromJson(file.path(modelPath, "validationDetails.json"))
+  modelDesign <- ParallelLogger::loadSettingsFromJson(file.path(modelPath, "modelDesign.json"))
   startDate <- validationDetails$restrictPlpDataSettings$studyStartDate
   endDate <- validationDetails$restrictPlpDataSettings$studyEndDate
   timePeriod <- list(startDate = as.Date(startDate, format = "%Y%m%d"),
                      endDate = as.Date(endDate, format = "%Y%m%d"))
   task <- list(targetId = validationDetails$targetId, outcomeId = validationDetails$outcomeId)
-  modelInfo <- list(task = task, timePeriod = timePeriod)
+  modelName <- attr(modelDesign$modelSettings$param, "settings")$name
+  modelInfo <- list(name = modelName, task = task, timePeriod = timePeriod)
   return(modelInfo)
 }
 
-resultFolder <- '/home/egill/ohdsi-studies/PandemicPrediction/results/new_inpatient_cohorts/strategusWork/PatientLevelPredictionValidationModule_3/ducky/'
+resultFolder <- './results/strategus_v1/strategusWork/PatientLevelPredictionValidationModule/OPTUM Extended DOD/'
 
 analyses <- dir(resultFolder, pattern = "Analysis*")
 
@@ -41,6 +43,7 @@ for (i in seq_along(analyses)) {
 }
 
 results <- data.frame(performance = unlist(performance),
+                      name = sapply(modelInfo, function(x) x$name),
                       start_date = sapply(modelInfo, function(x) x$timePeriod$startDate),
                       end_date = sapply(modelInfo, function(x) x$timePeriod$endDate),
                       target = sapply(modelInfo, function(x) x$task$targetId),
@@ -61,7 +64,7 @@ getName <- function(target, outcome) {
 }
 
 results <- results |>
-  dplyr::mutate(name = mapply(getName, .data$target, .data$outcome),
+  dplyr::mutate(
                 start_date = as.Date(.data$start_date),
                 end_date = as.Date(.data$end_date)) |>
   dplyr::arrange(.data$start_date)
