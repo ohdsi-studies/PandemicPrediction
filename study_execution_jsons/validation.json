@@ -719,7 +719,8 @@
             "recalibrate": null,
             "runCovariateSummary": true
           }
-        ]
+        ],
+        "logLevel": "INFO"
       },
       "attr_class": ["ModuleSpecifications", "PatientLevelPredictionValidationModuleSpecifications"]
     }

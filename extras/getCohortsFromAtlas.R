@@ -14,12 +14,12 @@ cohortIds <- list(outpatientVisit =  12,
                   hepaticFailure = 23,
                   respFailure = 24)
 
-baseUrl <- keyring::key_get('webapi', 'baseurl')
+baseUrl <- Sys.getenv("WEBAPI_URL")
 ROhdsiWebApi::authorizeWebApi(
   baseUrl = baseUrl,
-  authMethod = 'db',
-  webApiUsername = keyring::key_get('webapi', 'username'),
-  webApiPassword = keyring::key_get('webapi', 'password')
+  authMethod = "db",
+  webApiUsername = Sys.getenv("WEBAPI_USER"),
+  webApiPassword = Sys.getenv("WEBAPI_PASSWORD")
 )
 
 cohortDefinitions <- ROhdsiWebApi::exportCohortDefinitionSet(
