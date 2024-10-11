@@ -1154,12 +1154,7 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.10",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "utils"
-      ],
-      "Hash": "d0387d5687ec933dd7587efd4cfa2d85"
+      "Source": "Repository"
     },
     "reticulate": {
       "Package": "reticulate",
