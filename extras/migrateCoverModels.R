@@ -146,14 +146,17 @@ for (analysis in dataDrivenAnalysisIds) {
     name <- "I" # intensive care from those hospitalized with pneumonia
     plpModel$modelDesign$targetId <- 12
     plpModel$modelDesign$outcomeId <- 13
+    attributes(plpModel$modelDesign$modelSettings)$name <- "dataDrivenI"
   } else if (analysis == 3) {
     name <- "F" # death from those hospitalized with pneumonia
     plpModel$modelDesign$targetId <- 12
     plpModel$modelDesign$outcomeId <- 11
+    attributes(plpModel$modelDesign$modelSettings)$name <- "dataDrivenF"
   } else if (analysis == 4) {
     name <- "H" # hospitalization from those with outpatient visit
     plpModel$modelDesign$targetId <- 12
     plpModel$modelDesign$outcomeId <- 14
+    attributes(plpModel$modelDesign$modelSettings)$name <- "dataDrivenH"
   }
   PatientLevelPrediction::savePlpModel(plpModel, paste0("./inst/models/dataDriven", name))
 }

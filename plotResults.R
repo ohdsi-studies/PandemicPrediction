@@ -29,7 +29,7 @@ extractModelInfo <- function(analysisPath) {
   return(modelInfo)
 }
 
-resultFolder <- './results/strategus_v1/strategusWork/PatientLevelPredictionValidationModule/OPTUM Extended DOD/'
+resultFolder <- './results/strategus_new/strategusWork/PatientLevelPredictionValidationModule/ducky/'
 
 analyses <- dir(resultFolder, pattern = "Analysis*")
 
