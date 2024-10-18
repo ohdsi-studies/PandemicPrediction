@@ -16,7 +16,9 @@ createModel <- function(results) {
   inputCoefficients <- inputCoefficients[names(inputCoefficients) != "(Intercept)"]
   covariateIds <- as.numeric(names(inputCoefficients)) 
   coefficient <- as.numeric(inputCoefficients)
-  model[["coefficients"]] <- data.frame(covariateIds=covariateIds, coefficient=coefficient)
+  model[["coefficients"]] <- data.frame(covariateId = covariateIds, 
+                                        coefficient = coefficient)
+  model[["finalMapping"]] <- results$model$model$modelType
   return(model)
 }
 
@@ -32,10 +34,21 @@ createModelDesign <- function(results) {
   class(restrictPlpDataSettings) <- "restrictPlpDataSettings"
   modelDesign[["restrictPlpDataSettings"]] <- restrictPlpDataSettings
   covariateSettings <- results$model$metaData$call$covariateSettings
-  modelDesign[["covariateSettings"]] <- covariateSettings
+  modelDesign[["covariateSettings"]] <- list(covariateSettings)
   populationSettings <- results$model$populationSettings
   populationSettings[c("cohortId", "studyStartDate", 
                        "studyEndDate", "attrition", "outcomeId")] <- NULL
+  populationSettings$restrictTarToCohortEnd <- FALSE
+  populationSettings$addExposureDaysToStart <- NULL
+  populationSettings$addExposureDaysToEnd <- NULL
+  # need to match fields to seek cover models - even though they were not same
+  # for the data driven models in practice they were the same because of conditions
+  # enforced in cohorts
+  populationSettings$washoutPeriod <- 0 # enforced in cohorts to be 365
+  populationSettings$removeSubjectsWithPriorOutcome <- TRUE # enforced in cohorts
+  populationSettings$minTimeAtRisk <- 1 # require time at risk is false - so irrevelant
+  
+  class(populationSettings) <- "populationSettings"
   modelDesign[["populationSettings"]] <- populationSettings
   sampleSettings <- list(numbersOutcomestoNonOutcomes = 1,
                          sampleSeed = 1)
@@ -54,7 +67,7 @@ createModelDesign <- function(results) {
   modelSettings <- list(fitFunction = NA,
                         param = list())
   attr(modelSettings, "class") <- "modelSettings"
-  attr(modelSettings, "settings") <- list(modelType = "GLM",
+  attr(modelSettings$param, "settings") <- list(modelType = "GLM",
                                                 seed = 1,
                                                 name = "Existing GLM")
   attr(modelSettings$param, "modelType") <- "binary"
@@ -131,10 +144,16 @@ for (analysis in dataDrivenAnalysisIds) {
   attr(plpModel, "saveType") <- "RtoJson"
   if (analysis == 1) {
     name <- "I" # intensive care from those hospitalized with pneumonia
+    plpModel$modelDesign$targetId <- 12
+    plpModel$modelDesign$outcomeId <- 13
   } else if (analysis == 3) {
     name <- "F" # death from those hospitalized with pneumonia
+    plpModel$modelDesign$targetId <- 12
+    plpModel$modelDesign$outcomeId <- 11
   } else if (analysis == 4) {
     name <- "H" # hospitalization from those with outpatient visit
+    plpModel$modelDesign$targetId <- 12
+    plpModel$modelDesign$outcomeId <- 14
   }
   PatientLevelPrediction::savePlpModel(plpModel, paste0("./inst/models/dataDriven", name))
 }
