@@ -373,25 +373,7 @@
       "RemoteUsername": "mi-erasmusmc",
       "RemoteRepo": "Strategus",
       "RemoteRef": "v1.0-plpv-mt-modules",
-      "RemoteSha": "a81e6c58363ecbf3ea08af5d818401cc363a62f0",
-      "Requirements": [
-        "CohortGenerator",
-        "DatabaseConnector",
-        "ParallelLogger",
-        "R",
-        "R6",
-        "ResultModelManager",
-        "SqlRender",
-        "checkmate",
-        "cli",
-        "digest",
-        "dplyr",
-        "methods",
-        "purrr",
-        "readr",
-        "rlang"
-      ],
-      "Hash": "86421353dfd57a152ae164e4ccd4d423"
+      "RemoteSha": "f31e0b44ea0720e7705dd6a250e202fdcd5e7d65"
     },
     "askpass": {
       "Package": "askpass",
