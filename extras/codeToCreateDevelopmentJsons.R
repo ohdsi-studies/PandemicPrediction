@@ -104,8 +104,8 @@ preprocessSettings <- createPreprocessSettings(
 splitSettings <- createDefaultSplitSetting(splitSeed = 42)
 
 firstYearCovid <- createRestrictPlpDataSettings(
-  studyStartDate = "2020-01-01",
-  studyEndDate = "2020-31-12"
+  studyStartDate = "20200101",
+  studyEndDate = "20201231"
 )
 
 covidH <- PatientLevelPrediction::createModelDesign(targetId = 12, 
