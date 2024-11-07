@@ -1,5 +1,6 @@
 cohortIds <- list(outpatientVisit =  12,
                   inPatientVisit = 25,
+                  outpatientVisitInfluenza = 30,
                   death = 11,
                   severe = 14,
                   critical = 13,

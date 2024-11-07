@@ -1,6 +1,7 @@
 atlas_id,cohort_id,cohort_name,logic_description,generate_stats
 12,12,[T] Pandemic Prediction target outpatient,NA,TRUE
 25,25,Seek Cover Inpatient Pneumonia and Covid,NA,TRUE
+30,30,[T] Pandemic Prediction target influenza outpatient,NA,TRUE
 11,11,[O] Pandemic Prediction outcome death,NA,TRUE
 14,14,[O] Pandemic Prediction outcome pneumonia in hospital,NA,TRUE
 13,13,[O] Pandemic Prediction inpatient resp failure or insuffiency,NA,TRUE
