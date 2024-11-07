@@ -161,7 +161,7 @@
       "attr_settings": {
         "modelType": "CoverF",
         "seed": 1,
-        "name": "CoverF"
+        "name": "coverF"
       },
       "attr_modelType": "binary",
       "attr_saveType": "RtoJson"
