@@ -5,7 +5,7 @@ library(lubridate)
 # MODEL TRANSFER Module --------------------------------------------------------
 
 localFileSettings <- data.frame(
-  locations = "./inst/models/"
+  locations = "./inst/originalModels/"
 )
 
 modelTransferModule <- ModelTransferModule$new()
@@ -66,7 +66,6 @@ outpatientVisit <- 12
 death <- 11
 severe <- 14
 critical <- 13
-inPatientVisit <- 25
 validationComponentsList <- list(
   list(
     targetId = outpatientVisit,
@@ -97,27 +96,7 @@ validationComponentsList <- list(
     populationSettings = NULL,
     recalibrate = NULL,
     runCovariateSummary = TRUE
-  ), 
-  list(
-    targetId = inPatientVisit,
-    outcomeId = death,
-    modelTargetId = inPatientVisit,
-    modelOutcomeId = death,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL, 
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ),
-  list(
-    targetId = inPatientVisit,
-    outcomeId = critical,
-    modelTargetId = inPatientVisit,
-    modelOutcomeId = critical,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL, 
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  )
+  ) 
 )
 
 plpValidationModule <- PatientLevelPredictionValidationModule$new()
