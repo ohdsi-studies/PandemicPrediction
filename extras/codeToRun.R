@@ -1,4 +1,9 @@
 library(Strategus)
+library(PandemicPrediction)
+
+analysisSpecifications <- PandemicPrediction::loadStudySpec(
+  type = 'all_validation_new.json'
+  )
 
 # Inputs to run (edit these for your CDM):
 # ========================================= #
@@ -16,17 +21,17 @@ outputFolder <- "/output/folder/"
 
 # fill in your connection details and path to driver
 connectionDetails <- DatabaseConnector::createConnectionDetails(
-  dbms = Sys.getenv("DBMS"), 
-  server = Sys.getenv("DATABASE_SERVER"), 
+  dbms = Sys.getenv("DBMS"),
+  server = Sys.getenv("DATABASE_SERVER"),
   user = Sys.getenv("DATABASE_USER"),
   password = Sys.getenv("DATABASE_PASSWORD"),
   port = Sys.getenv("DATABASE_PORT"),
   connectionString = Sys.getenv("DATABASE_CONNECTION_STRING"),
   pathToDriver = Sys.getenv("DATABASE_DRIVER")
-) 
+)
 # A schema with write access to store cohort tables
 workDatabaseSchema <- Sys.getenv("WORK_SCHEMA")
-  
+
 # name of cohort table that will be created for study
 cohortTable <- Sys.getenv("COHORT_TABLE")
 
@@ -45,13 +50,7 @@ Sys.setenv("INSTANTIATED_MODULES_FOLDER" = "/path/to/strategus/modules/")
 
 # =========== END OF INPUTS ========== #
 
-Strategus::storeConnectionDetails(
-  connectionDetails = connectionDetails,
-  connectionDetailsReference = connectionDetailsReference
-)
-
 executionSettings <- Strategus::createCdmExecutionSettings(
-  connectionDetailsReference = connectionDetailsReference,
   workDatabaseSchema = workDatabaseSchema,
   cdmDatabaseSchema = cdmDatabaseSchema,
   cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = cohortTable),
@@ -60,12 +59,8 @@ executionSettings <- Strategus::createCdmExecutionSettings(
   minCellCount = minCellCount
 )
 
-json <- paste(readLines("./study_execution_jsons/outpatient_critical_simple_validation.json"), collapse = "\n")
-analysisSpecifications <- ParallelLogger::convertJsonToSettings(json)
-
 Strategus::execute(
   analysisSpecifications = analysisSpecifications,
   executionSettings = executionSettings,
-  executionScriptFolder = file.path(outputFolder, "strategusExecution"),
-  restart = FALSE
+  connectionDetails = connectionDetails
 )

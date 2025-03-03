@@ -1,0 +1,30 @@
+Package: PandemicPrediction
+Type: Package
+Title: Network Pandemic Temporal Validation Study
+Version: 0.0.0.9000
+Date: 2025-2-28
+Authors@R: c(
+  person("Egill", "Fridgeirsson", email = "Fridgeirsson@ohdsi.org", role = c("aut", "cre"))
+  )
+Maintainer: Egill Fridgeirsson <Fridgeirsson@ohdsi.org>
+Description: Methods research study investigating temporal trends of existing covid model.
+License: Apache License 2.0
+VignetteBuilder: knitr
+Depends:
+  R (>= 3.3.0)
+Imports:
+  DatabaseConnector,
+  dplyr,
+  ggplot2,
+  ParallelLogger,
+  Strategus
+Suggests:
+  knitr,
+  markdown,
+  remotes,
+  rmarkdown,
+  testthat
+Remotes:
+  ohdsi/Strategus
+RoxygenNote: 7.3.2
+Encoding: UTF-8
