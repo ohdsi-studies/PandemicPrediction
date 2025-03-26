@@ -1,5 +1,10 @@
 library(Strategus)
+library(PandemicPrediction)
 library(dplyr)
+
+analysisSpecifications <- PandemicPrediction::loadStudySpec(
+  type = 'all_validation_new.json'
+  )
 
 # Inputs to run (edit these for your CDM):
 # ========================================= #
@@ -15,18 +20,18 @@ outputFolder <- "/output/folder/"
 # see ?DatabaseConnector::createConnectionDetails for help for your 
 # database platform
 connectionDetails <- DatabaseConnector::createConnectionDetails(
-  dbms = Sys.getenv("DBMS"), 
-  server = Sys.getenv("DATABASE_SERVER"), 
+  dbms = Sys.getenv("DBMS"),
+  server = Sys.getenv("DATABASE_SERVER"),
   user = Sys.getenv("DATABASE_USER"),
   password = Sys.getenv("DATABASE_PASSWORD"),
   port = Sys.getenv("DATABASE_PORT"),
   connectionString = Sys.getenv("DATABASE_CONNECTION_STRING"),
   pathToDriver = Sys.getenv("DATABASE_DRIVER")
-) 
+)
 
 # A schema with write access to store cohort tables
 workDatabaseSchema <- Sys.getenv("WORK_SCHEMA")
-  
+
 # name of cohort table that will be created for study
 cohortTable <- Sys.getenv("COHORT_TABLE")
 
@@ -38,8 +43,9 @@ minCellCount <- 5
 
 # =========== END OF INPUTS ========== #
 
-analysisSpecifications <- ParallelLogger::loadSettingsFromJson(
-  fileName = "./study_execution_jsons/validation.json"
+Strategus::storeConnectionDetails(
+  connectionDetails = connectionDetails,
+  connectionDetailsReference = connectionDetailsReference
 )
 
 executionSettings <- Strategus::createCdmExecutionSettings(
@@ -50,7 +56,10 @@ executionSettings <- Strategus::createCdmExecutionSettings(
   resultsFolder = file.path(outputFolder, "strategusOutput"),
   minCellCount = minCellCount
 )
-  
+
+json <- paste(readLines("./study_execution_jsons/outpatient_critical_simple_validation.json"), collapse = "\n")
+analysisSpecifications <- ParallelLogger::convertJsonToSettings(json)
+
 Strategus::execute(
   analysisSpecifications = analysisSpecifications,
   executionSettings = executionSettings,
