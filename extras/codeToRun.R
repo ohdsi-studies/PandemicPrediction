@@ -3,8 +3,14 @@ library(PandemicPrediction)
 library(dplyr)
 
 analysisSpecifications <- PandemicPrediction::loadStudySpec(
+<<<<<<< HEAD:extras/codeToRun.R
   type = 'all_validation_new.json'
   )
+||||||| parent of 84acd83 (stuff):codeToRun.R
+=======
+  type = "development.json"
+)
+>>>>>>> 84acd83 (stuff):codeToRun.R
 
 # Inputs to run (edit these for your CDM):
 # ========================================= #
@@ -14,10 +20,10 @@ if (!Sys.getenv("DATABASE_TEMP_SCHEMA") == "") {
 }
 
 # where to save the output - a directory in your environment
-outputFolder <- "/output/folder/"
+outputFolder <- "/results/development-new-strategus/"
 
 # fill in your connection details and path to driver
-# see ?DatabaseConnector::createConnectionDetails for help for your 
+# see ?DatabaseConnector::createConnectionDetails for help for your
 # database platform
 connectionDetails <- DatabaseConnector::createConnectionDetails(
   dbms = Sys.getenv("DBMS"),
@@ -57,9 +63,14 @@ executionSettings <- Strategus::createCdmExecutionSettings(
   minCellCount = minCellCount
 )
 
+<<<<<<< HEAD:extras/codeToRun.R
 json <- paste(readLines("./study_execution_jsons/outpatient_critical_simple_validation.json"), collapse = "\n")
 analysisSpecifications <- ParallelLogger::convertJsonToSettings(json)
 
+||||||| parent of 84acd83 (stuff):codeToRun.R
+  
+=======
+>>>>>>> 84acd83 (stuff):codeToRun.R
 Strategus::execute(
   analysisSpecifications = analysisSpecifications,
   executionSettings = executionSettings,

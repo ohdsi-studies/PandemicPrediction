@@ -284,4 +284,4 @@ analysisSpecifications <- createEmptyAnalysisSpecificiations() |>
   addModuleSpecifications(cohortGeneratorModuleSpecifications) |>
   addModuleSpecifications(plpModuleSpecs)
 
-ParallelLogger::saveSettingsToJson(analysisSpecifications, file.path("study_execution_jsons", "development.json"))
+ParallelLogger::saveSettingsToJson(analysisSpecifications, file.path("inst/study_execution_jsons", "development.json"))
