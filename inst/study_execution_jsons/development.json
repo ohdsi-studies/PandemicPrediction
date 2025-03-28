@@ -101,7 +101,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": [
@@ -323,7 +323,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": [
@@ -545,7 +545,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": [
@@ -767,7 +767,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": {
@@ -886,7 +886,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": {
@@ -1005,7 +1005,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": {
@@ -1124,7 +1124,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": [
@@ -1346,7 +1346,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": [
@@ -1568,7 +1568,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": [
@@ -1790,7 +1790,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": {
@@ -1909,7 +1909,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": {
@@ -2028,7 +2028,7 @@
               "studyEndDate": "20201231",
               "firstExposureOnly": false,
               "washoutPeriod": 0,
-              "sampleSize": null,
+              "sampleSize": 150000,
               "attr_class": "restrictPlpDataSettings"
             },
             "covariateSettings": {
