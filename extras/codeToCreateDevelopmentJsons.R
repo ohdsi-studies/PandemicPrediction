@@ -3,7 +3,6 @@ library(Strategus)
 library(lubridate)
 
 # COHORT GENERATOR MODULE ------------------------------------------------------
-
 cohortDefinitions <- CohortGenerator::getCohortDefinitionSet(
   settingsFileName = "inst/Cohorts.csv",
   jsonFolder = "inst/cohorts",
@@ -105,7 +104,8 @@ splitSettings <- createDefaultSplitSetting(splitSeed = 42)
 
 firstYearCovid <- createRestrictPlpDataSettings(
   studyStartDate = "20200101",
-  studyEndDate = "20201231"
+  studyEndDate = "20201231",
+  sampleSize = 150000
 )
 
 covidH <- PatientLevelPrediction::createModelDesign(targetId = 12, 
@@ -266,16 +266,6 @@ modelDesignList <- list(covidH,
                         dataDrivenCoverF) 
   
 plpModuleSpecs <- plpModule$createModuleSpecifications(modelDesignList = modelDesignList)
-
-# MODEL TRANSFER Module --------------------------------------------------------
-
-localFileSettings <- data.frame(
-  locations = "./inst/models/"
-)
-
-modelTransferModule <- ModelTransferModule$new()
-
-modelTransferModuleSpecs <- modelTransferModule$createModuleSpecifications(localFileSettings = localFileSettings)
 
 # ANALYSIS SPECIFICATIONS ------------------------------------------------------
 
