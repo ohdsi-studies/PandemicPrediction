@@ -1,23 +1,21 @@
 library(PatientLevelPrediction)
-library(Strategus) # need https://github.com/OHDSI/Strategus/tree/v1.0-plpv-mt-modules branch
+library(Strategus)
 
-# get cohortDefinitions from old settings
-set <- ParallelLogger::loadSettingsFromJson(
-'./inst/study_execution_jsons/validation.json'
-)
-cohortDefinitions <- set$sharedResources[[1]]$cohortDefinitions
 
-cohortDefinitionSet <- data.frame(
-  cohortId = unlist(lapply(cohortDefinitions, function(x) x$cohortId)),
-  cohortName = unlist(lapply(cohortDefinitions, function(x) x$cohortName)),
-  json =  unlist(lapply(cohortDefinitions, function(x) x$cohortDefinition)),
-  sql = ''
+cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
+  settingsFileName = "inst/Cohorts.csv",
+  jsonFolder = "inst/cohorts",
+  sqlFolder = "inst/sql/sql_server",
+  cohortFileNameFormat = "%s_%s",
+  cohortFileNameValue = c("cohortId", "cohortName")
 )
+cohortDefinitionSet <- cohortDefinitionSet |>
+  dplyr::filter(.data$cohortId != 30) # only used for development
 
 # add cohortGenerator
 cohortGeneratorModule <- Strategus::CohortGeneratorModule$new()
 cohortDefinitionShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitionSet)
-cohortGeneratorModuleSpecifications<- cohortGeneratorModule$createModuleSpecifications(generateStats = T)
+cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(generateStats = TRUE)
 
 
 # UNIVERSAL ANALYSIS SETTINGS --------------------------------------------------
@@ -45,98 +43,88 @@ generateRestrictDataSettings <- function(start, end, interval = months(3)) {
   }
 
   return(settings_list)
-
 }
 
-restrictPlpDataSettings <- generateRestrictDataSettings('2020-01-01', '2023-06-01')
+restrictPlpDataSettings <- generateRestrictDataSettings("2020-01-01", "2023-06-01")
 
 # maybe move this into PLP?
-createPackageModel <- function(modelFolder, package){
+createPackageModel <- function(modelFolder, package) {
   result <- list(
-    type = 'package',
+    type = "package",
     modelFolder = modelFolder,
     package = package
   )
-  class(result) <- 'plpModel'
+  class(result) <- "plpModel"
 
   return(result)
 }
 validationList <- list()
 
 validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 12, # outpatient visit, inPatientVisit = 25
+  targetId = 12, # outpatient visit,
   outcomeId = 11, # death. - 14 severe, 13 critial
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
     createPackageModel(
-      modelFolder = 'models/dato',
-      package = 'PandemicPrediction'
-  )), # list of locations of models
-  recalibrate = "weakRecalibration"
+      modelFolder = "models/dato",
+      package = "PandemicPrediction"
+    ),
+    createPackageModel(
+      modelFolder = "models/dataDrivenF",
+      package = "PandemicPrediction"
     )
+  ), # list of locations of models
+  recalibrate = "weakRecalibration"
+)
 validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 12, # 12 outpatient visit, inPatientVisit = 25
+  targetId = 12, # 12 outpatient visit,
   outcomeId = 14, # 11 death. - 14 severe, 13 critial
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
     createPackageModel(
-      modelFolder = 'models/sato',
-      package = 'PandemicPrediction'
-    )),
+      modelFolder = "models/sato",
+      package = "PandemicPrediction"
+    ),
+    createPackageModel(
+      modelFolder = "models/dataDrivenH",
+      package = "PandemicPrediction"
+    )
+  ),
   recalibrate = "weakRecalibration"
 )
 validationList[[3]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 12, # 12 outpatient visit, inPatientVisit = 25
+  targetId = 12, # 12 outpatient visit,
   outcomeId = 13, # 11 death. - 14 severe, 13 critial
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
     createPackageModel(
-      modelFolder = 'models/cato',
-      package = 'PandemicPrediction'
-    )),
-  recalibrate = "weakRecalibration"
-)
-validationList[[4]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 25, # 12 outpatient visit, inPatientVisit = 25
-  outcomeId = 11, # 11 death. - 14 severe, 13 critial
-  populationSettings = NULL, # use models
-  restrictPlpDataSettings = restrictPlpDataSettings,
-  plpModelList = list(
+      modelFolder = "models/cato",
+      package = "PandemicPrediction"
+    ),
     createPackageModel(
-      modelFolder = 'models/dati',
-      package = 'PandemicPrediction'
-    )),
-  recalibrate = "weakRecalibration"
-)
-validationList[[5]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 25, # 12 outpatient visit, inPatientVisit = 25
-  outcomeId = 13, # 11 death. - 14 severe, 13 critial
-  populationSettings = NULL, # use models
-  restrictPlpDataSettings = restrictPlpDataSettings,
-  plpModelList = list(
-    createPackageModel(
-      modelFolder = 'models/cati',
-      package = 'PandemicPrediction'
-    )),
+      modelFolder = "models/dataDrivenI",
+      package = "PandemicPrediction"
+    )
+  ),
   recalibrate = "weakRecalibration"
 )
 
-allValList <- do.call('c', validationList)
+allValList <- do.call("c", validationList)
 
 predictionValidationModuleSpecifications <- Strategus::PatientLevelPredictionValidationModule$new()
 predictionValidationModuleSpecifications <- predictionValidationModuleSpecifications$createModuleSpecifications(
   validationList = allValList
-    )
+)
 
-analysisSpecifications <- Strategus::createEmptyAnalysisSpecificiations()  |>
+analysisSpecifications <- Strategus::createEmptyAnalysisSpecificiations() |>
   Strategus::addSharedResources(cohortDefinitionShared) |>
   Strategus::addModuleSpecifications(cohortGeneratorModuleSpecifications) |>
   Strategus::addModuleSpecifications(predictionValidationModuleSpecifications)
 
 ParallelLogger::saveSettingsToJson(
   object = analysisSpecifications,
-  fileName = './inst/study_execution_jsons/all_validation_new.json'
+  fileName = "./inst/study_execution_jsons/cover_validation.json"
 )

@@ -3,14 +3,8 @@ library(PandemicPrediction)
 library(dplyr)
 
 analysisSpecifications <- PandemicPrediction::loadStudySpec(
-<<<<<<< HEAD:extras/codeToRun.R
-  type = 'all_validation_new.json'
-  )
-||||||| parent of 84acd83 (stuff):codeToRun.R
-=======
   type = "development.json"
 )
->>>>>>> 84acd83 (stuff):codeToRun.R
 
 # Inputs to run (edit these for your CDM):
 # ========================================= #
@@ -48,12 +42,6 @@ cdmDatabaseSchema <- Sys.getenv("CDM_SCHEMA")
 minCellCount <- 5
 
 # =========== END OF INPUTS ========== #
-
-Strategus::storeConnectionDetails(
-  connectionDetails = connectionDetails,
-  connectionDetailsReference = connectionDetailsReference
-)
-
 executionSettings <- Strategus::createCdmExecutionSettings(
   workDatabaseSchema = workDatabaseSchema,
   cdmDatabaseSchema = cdmDatabaseSchema,
@@ -63,14 +51,6 @@ executionSettings <- Strategus::createCdmExecutionSettings(
   minCellCount = minCellCount
 )
 
-<<<<<<< HEAD:extras/codeToRun.R
-json <- paste(readLines("./study_execution_jsons/outpatient_critical_simple_validation.json"), collapse = "\n")
-analysisSpecifications <- ParallelLogger::convertJsonToSettings(json)
-
-||||||| parent of 84acd83 (stuff):codeToRun.R
-  
-=======
->>>>>>> 84acd83 (stuff):codeToRun.R
 Strategus::execute(
   analysisSpecifications = analysisSpecifications,
   executionSettings = executionSettings,

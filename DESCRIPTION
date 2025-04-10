@@ -6,7 +6,7 @@ Date: 2025-2-28
 Authors@R: c(
   person("Egill", "Fridgeirsson", email = "Fridgeirsson@ohdsi.org", role = c("aut", "cre"))
   )
-Maintainer: Egill Fridgeirsson <Fridgeirsson@ohdsi.org>
+Maintainer: Egill Fridgeirsson <e.fridgeirsson@erasmusmc.nl>
 Description: Methods research study investigating temporal trends of existing covid model.
 License: Apache License 2.0
 VignetteBuilder: knitr
