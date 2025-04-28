@@ -18,13 +18,16 @@ plotResults <- function(
     start_date = sapply(modelInfo, function(x) x$startDate),
     end_date = sapply(modelInfo, function(x) x$endDate),
     target = sapply(modelInfo, function(x) x$targetId),
-    outcome = sapply(modelInfo, function(x) x$outcomeId)
+    outcome = sapply(modelInfo, function(x) x$outcomeId),
+    modelName = sapply(modelInfo, function(x) x$name)
   )
   results <- cbind(results, dplyr::bind_rows(performance))
 
   results <- results |>
     dplyr::mutate(
-      name = mapply(getName, .data$target, .data$outcome),
+      name = paste(mapply(getName, .data$target, .data$outcome),
+        .data$modelName, sep = "_"
+      ),
       start_date = as.Date(.data$start_date),
       end_date = as.Date(.data$end_date)
     ) |>
@@ -92,13 +95,31 @@ extractModelInfo <- function(analysisPath) {
   validationDetails <- ParallelLogger::loadSettingsFromJson(file.path(modelPath, "validationDetails.json"))
   startDate <- validationDetails$restrictPlpDataSettings$studyStartDate
   endDate <- validationDetails$restrictPlpDataSettings$studyEndDate
+  modelDesign <- ParallelLogger::loadSettingsFromJson(file.path(modelPath, "modelDesign.json"))
+  name <- attributes(modelDesign$modelSettings$param)$settings$name
   modelInfo <- data.frame(
+    name = getModelName(name, validationDetails$targetId, validationDetails$outcomeId),
     targetId = validationDetails$targetId,
     outcomeId = validationDetails$outcomeId,
     startDate = as.Date(startDate, format = "%Y%m%d"),
     endDate = as.Date(endDate, format = "%Y%m%d")
   )
   return(modelInfo)
+}
+
+getModelName <- function(name, targetId, outcomeId) {
+  if (!grepl("cover", name, ignore.case = TRUE)) {
+    if (targetId == 12) {
+      if (outcomeId == 11) {
+        name <- "dataDrivenF"
+      } else if (outcomeId == 13) {
+        name <- "dataDrivenI"
+      } else if (outcomeId == 14) {
+        name <- "dataDrivenH"
+      }
+    }
+  }
+  return(name)
 }
 
 getName <- function(target, outcome) {
