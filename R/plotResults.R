@@ -23,6 +23,7 @@ plotResults <- function(
     modelName = sapply(modelInfo, function(x) x$name)
   )
   results <- cbind(results, dplyr::bind_rows(performance))
+  results$analysis <- analyses
   if (!is.null(filter)) {
     results <- results |>
       dplyr::filter(grepl(filter, .data$modelName, ignore.case = TRUE))
