@@ -3,7 +3,8 @@
 # then plot performance as a line covering three months at a time
 #' @export
 plotResults <- function(
-    resultFolder = "") {
+    resultFolder = "",
+    filter = "cover") {
   analyses <- dir(resultFolder, pattern = "Analysis*")
 
   performance <- list()
@@ -22,6 +23,10 @@ plotResults <- function(
     modelName = sapply(modelInfo, function(x) x$name)
   )
   results <- cbind(results, dplyr::bind_rows(performance))
+  if (!is.null(filter)) {
+    results <- results |>
+      dplyr::filter(grepl(filter, .data$modelName, ignore.case = TRUE))
+  }
 
   results <- results |>
     dplyr::mutate(
