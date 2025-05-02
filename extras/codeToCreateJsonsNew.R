@@ -61,7 +61,7 @@ createPackageModel <- function(modelFolder, package) {
 validationList <- list()
 
 validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 12, # outpatient visit,
+  targetId = 31, # covid
   outcomeId = 11, # death. - 14 severe, 13 critial
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
@@ -78,7 +78,7 @@ validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
   recalibrate = "weakRecalibration"
 )
 validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 12, # 12 outpatient visit,
+  targetId = 31, # covid
   outcomeId = 14, # 11 death. - 14 severe, 13 critial
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
@@ -95,7 +95,7 @@ validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
   recalibrate = "weakRecalibration"
 )
 validationList[[3]] <- PatientLevelPrediction::createValidationDesign(
-  targetId = 12, # 12 outpatient visit,
+  targetId = 31, # covid
   outcomeId = 13, # 11 death. - 14 severe, 13 critial
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
