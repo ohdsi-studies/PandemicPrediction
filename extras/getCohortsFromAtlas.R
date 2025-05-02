@@ -13,7 +13,8 @@ cohortIds <- list(outpatientVisit =  12,
                   kidneyDisease  = 21,
                   ulcer = 22,
                   hepaticFailure = 23,
-                  respFailure = 24)
+                  respFailure = 24,
+                  newTarget = 31)
 
 baseUrl <- Sys.getenv("WEBAPI_URL")
 ROhdsiWebApi::authorizeWebApi(
