@@ -24,10 +24,6 @@ plotResults <- function(
   )
   results <- cbind(results, dplyr::bind_rows(performance))
   results$analysis <- analyses
-  if (!is.null(filter)) {
-    results <- results |>
-      dplyr::filter(grepl(filter, .data$modelName, ignore.case = TRUE))
-  }
 
   results <- results |>
     dplyr::mutate(
@@ -38,6 +34,11 @@ plotResults <- function(
       end_date = as.Date(.data$end_date)
     ) |>
     dplyr::arrange(.data$start_date)
+
+  if (!is.null(filter)) {
+    results <- results |>
+      dplyr::filter(grepl(filter, .data$name, ignore.case = TRUE))
+  }
 
   vplot <- ggplot2::ggplot(results, ggplot2::aes(
     x = .data$start_date,
@@ -115,7 +116,7 @@ extractModelInfo <- function(analysisPath) {
 
 getModelName <- function(name, targetId, outcomeId) {
   if (!grepl("cover", name, ignore.case = TRUE)) {
-    if (targetId == 12) {
+    if (targetId == 12 || targetId == 31) {
       if (outcomeId == 11) {
         name <- "dataDrivenF"
       } else if (outcomeId == 13) {
@@ -132,6 +133,7 @@ getName <- function(target, outcome) {
   firstName <- switch(as.character(target),
     "12" = "Outpatient",
     "25" = "Inpatient",
+    "31" = "CovidNew",
     "UnknownTarget"
   )
 
