@@ -112,7 +112,16 @@ validationList[[3]] <- PatientLevelPrediction::createValidationDesign(
   recalibrate = "weakRecalibration"
 )
 
-allValList <- do.call("c", validationList)
+allValList <- do.call(
+  c,
+  lapply(validationList, function(tmp) {
+    if (inherits(tmp, "validationDesign")) {
+      list(tmp)
+    } else {
+      tmp
+    }
+  })
+)
 
 predictionValidationModuleSpecifications <- Strategus::PatientLevelPredictionValidationModule$new()
 predictionValidationModuleSpecifications <- predictionValidationModuleSpecifications$createModuleSpecifications(
