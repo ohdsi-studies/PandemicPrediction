@@ -13,11 +13,14 @@ cohortDefinitions <- CohortGenerator::getCohortDefinitionSet(
 
 # modify the cohort
 cohortGeneratorModule <- CohortGeneratorModule$new()
-cohortDefShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitions)
+cohortDefShared <- 
+  cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitions)
 
-cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(
-  generateStats = TRUE
-)
+cohortGeneratorModuleSpecifications <- 
+  cohortGeneratorModule$createModuleSpecifications(
+    generateStats = TRUE
+  )
+
 # Model development 
 plpModule <- PatientLevelPredictionModule$new()
 
@@ -27,7 +30,7 @@ covariateSettings <- list(
     useDemographicsGender = TRUE,
     useDemographicsAgeGroup = TRUE),
   createCohortCovariateSettings(cohortName = "history of cancer",
-                                cohortId = 15, # covariateId = cohortId * 100K + settingId * 1k + analysisId
+                                cohortId = 15,
                                 settingId = 1,
                                 analysisId = 699,
                                 startDay = -9999,
@@ -77,7 +80,8 @@ dataDrivenCovariateSettings <- FeatureExtraction::createCovariateSettings(
   useDrugGroupEraLongTerm = TRUE,
   useDrugGroupEraShortTerm  = TRUE,
   useConditionGroupEraLongTerm = TRUE,
-  useConditionGroupEraShortTerm = TRUE)
+  useConditionGroupEraShortTerm = TRUE,
+  endDays = -1)
 
 
 populationSettings <- createStudyPopulationSettings(binary = TRUE,
@@ -102,13 +106,36 @@ preprocessSettings <- createPreprocessSettings(
 
 splitSettings <- createDefaultSplitSetting(splitSeed = 42)
 
-firstYearCovid <- createRestrictPlpDataSettings(
-  studyStartDate = "20200101",
-  studyEndDate = "20201231",
-  sampleSize = 150000
+restrictList <- list(
+  # first year covid with same sample size as influenza model
+  createRestrictPlpDataSettings(
+    studyStartDate = "20200101",
+    studyEndDate = "20201231",
+    sampleSize = 150000
+  ),
+  # first three months of 2021
+  createRestrictPlpDataSettings(
+    studyStartDate = "20210101",
+    studyEndDate = "20210331",
+  ),
+  # first 6 months of 2021
+  createRestrictPlpDataSettings(
+    studyStartDate = "20210101",
+    studyEndDate = "20210630",
+  ),
+  # first 9 months of 2021
+  createRestrictPlpDataSettings(
+    studyStartDate = "20210101",
+    studyEndDate = "20210930",
+  ),
+  # first year of 2021 without sampling
+  createRestrictPlpDataSettings(
+    studyStartDate = "20210101",
+    studyEndDate = "20211231"
+  )
 )
 
-covidH <- PatientLevelPrediction::createModelDesign(targetId = 12, 
+covidH <- PatientLevelPrediction::createModelDesign(targetId = 31, 
                                                     outcomeId = 14,
                                                     restrictPlpDataSettings = firstYearCovid,
                                                     populationSettings = populationSettings,
@@ -119,7 +146,7 @@ covidH <- PatientLevelPrediction::createModelDesign(targetId = 12,
                                                     runCovariateSummary = TRUE)
                                                        
 covidI <- PatientLevelPrediction::createModelDesign(
-  targetId = 12,
+  targetId = 31,
   outcomeId = 13,
   restrictPlpDataSettings = firstYearCovid,
   populationSettings = populationSettings,
@@ -131,7 +158,7 @@ covidI <- PatientLevelPrediction::createModelDesign(
 )
 
 covidF <- PatientLevelPrediction::createModelDesign(
-  targetId = 12,
+  targetId = 31,
   outcomeId = 11,
   restrictPlpDataSettings = firstYearCovid,
   populationSettings = populationSettings,
@@ -143,7 +170,7 @@ covidF <- PatientLevelPrediction::createModelDesign(
 )
 
 dataDrivenCovidH <- PatientLevelPrediction::createModelDesign(
-  targetId = 12,
+  targetId = 31,
   outcomeId = 14,
   restrictPlpDataSettings = firstYearCovid,
   populationSettings = populationSettings,
@@ -178,92 +205,13 @@ dataDrivenCovidF <- PatientLevelPrediction::createModelDesign(
   runCovariateSummary = TRUE
 )
 
-# influenza trained models, use sampling to same size as covid models ? 
-coverH <- PatientLevelPrediction::createModelDesign(
-  targetId = 30, 
-  outcomeId = 14, 
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = covariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
-
-coverI <- PatientLevelPrediction::createModelDesign(
-  targetId = 30, 
-  outcomeId = 13, 
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = covariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
-
-coverF <- PatientLevelPrediction::createModelDesign(
-  targetId = 30, 
-  outcomeId = 11, 
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = covariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
-
-dataDrivenCoverH <- PatientLevelPrediction::createModelDesign(
-  targetId = 30, 
-  outcomeId = 14, 
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = dataDrivenCovariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
-
-dataDrivenCoverI <- PatientLevelPrediction::createModelDesign(
-  targetId = 30, 
-  outcomeId = 13, 
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = dataDrivenCovariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
-
-dataDrivenCoverF <- PatientLevelPrediction::createModelDesign(
-  targetId = 30, 
-  outcomeId = 11, 
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = dataDrivenCovariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
-
 
 modelDesignList <- list(covidH, 
                         covidI,
                         covidF,
                         dataDrivenCovidH,
                         dataDrivenCovidI,
-                        dataDrivenCovidF,
-                        coverH,
-                        coverI,
-                        coverF,
-                        dataDrivenCoverH,
-                        dataDrivenCoverI,
-                        dataDrivenCoverF) 
+                        dataDrivenCovidF) 
   
 plpModuleSpecs <- plpModule$createModuleSpecifications(modelDesignList = modelDesignList)
 
