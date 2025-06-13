@@ -11,6 +11,9 @@ cohortDefinitions <- CohortGenerator::getCohortDefinitionSet(
   cohortFileNameValue = c("cohortId", "cohortName")
 )
 
+cohortDefinitions <- cohortDefinitions |>
+  dplyr::filter(!.data$cohortId %in% c(30, 12, 22, 23, 24)) # only used for development
+
 # modify the cohort
 cohortGeneratorModule <- CohortGeneratorModule$new()
 cohortDefShared <- 
