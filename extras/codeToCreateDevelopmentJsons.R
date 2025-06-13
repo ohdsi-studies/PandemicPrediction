@@ -135,83 +135,89 @@ restrictList <- list(
   )
 )
 
-covidH <- PatientLevelPrediction::createModelDesign(targetId = 31, 
-                                                    outcomeId = 14,
-                                                    restrictPlpDataSettings = firstYearCovid,
-                                                    populationSettings = populationSettings,
-                                                    covariateSettings =  covariateSettings,
-                                                    preprocessSettings = preprocessSettings,
-                                                    modelSettings = setLassoLogisticRegression(seed = 42),
-                                                    splitSettings = splitSettings,
-                                                    runCovariateSummary = TRUE)
-                                                       
-covidI <- PatientLevelPrediction::createModelDesign(
-  targetId = 31,
-  outcomeId = 13,
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = covariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
+modelDesignList <- list()
+for (i in seq_along(restrictList)) {
+  covidH <- PatientLevelPrediction::createModelDesign(
+    targetId = 31, # covid
+    outcomeId = 11, # death. - 14 severe, 13 critial
+    populationSettings = populationSettings,
+    restrictPlpDataSettings = restrictList[[i]],
+    covariateSettings = covariateSettings,
+    preprocessSettings = preprocessSettings,
+    modelSettings = setLassoLogisticRegression(seed = 42),
+    splitSettings = splitSettings,
+    runCovariateSummary = TRUE
+  )
 
-covidF <- PatientLevelPrediction::createModelDesign(
-  targetId = 31,
-  outcomeId = 11,
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = covariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
+  covidI <- PatientLevelPrediction::createModelDesign(
+    targetId = 31,
+    outcomeId = 13,
+    restrictPlpDataSettings = restrictList[[i]],
 
-dataDrivenCovidH <- PatientLevelPrediction::createModelDesign(
-  targetId = 31,
-  outcomeId = 14,
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = dataDrivenCovariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
+    populationSettings = populationSettings,
+    covariateSettings = covariateSettings,
+    preprocessSettings = preprocessSettings,
+    modelSettings = setLassoLogisticRegression(seed = 42),
+    splitSettings = splitSettings,
+    runCovariateSummary = TRUE
+  )
 
-dataDrivenCovidI <- PatientLevelPrediction::createModelDesign(
-  targetId = 12,
-  outcomeId = 13,
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = dataDrivenCovariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
+  covidF <- PatientLevelPrediction::createModelDesign(
+    targetId = 31,
+    outcomeId = 11,
+    restrictPlpDataSettings = restrictList[[i]],
+    populationSettings = populationSettings,
+    covariateSettings = covariateSettings,
+    preprocessSettings = preprocessSettings,
+    modelSettings = setLassoLogisticRegression(seed = 42),
+    splitSettings = splitSettings,
+    runCovariateSummary = TRUE
+  )
 
-dataDrivenCovidF <- PatientLevelPrediction::createModelDesign(
-  targetId = 12,
-  outcomeId = 11,
-  restrictPlpDataSettings = firstYearCovid,
-  populationSettings = populationSettings,
-  covariateSettings = dataDrivenCovariateSettings,
-  preprocessSettings = preprocessSettings,
-  modelSettings = setLassoLogisticRegression(seed = 42),
-  splitSettings = splitSettings,
-  runCovariateSummary = TRUE
-)
+  dataDrivenCovidH <- PatientLevelPrediction::createModelDesign(
+    targetId = 31,
+    outcomeId = 14,
+    restrictPlpDataSettings = restrictList[[i]],
+    populationSettings = populationSettings,
+    covariateSettings = dataDrivenCovariateSettings,
+    preprocessSettings = preprocessSettings,
+    modelSettings = setLassoLogisticRegression(seed = 42),
+    splitSettings = splitSettings,
+    runCovariateSummary = TRUE
+  )
 
+  dataDrivenCovidI <- PatientLevelPrediction::createModelDesign(
+    targetId = 12,
+    outcomeId = 13,
+    restrictPlpDataSettings = restrictList[[i]],
+    populationSettings = populationSettings,
+    covariateSettings = dataDrivenCovariateSettings,
+    preprocessSettings = preprocessSettings,
+    modelSettings = setLassoLogisticRegression(seed = 42),
+    splitSettings = splitSettings,
+    runCovariateSummary = TRUE
+  )
 
-modelDesignList <- list(covidH, 
-                        covidI,
-                        covidF,
-                        dataDrivenCovidH,
-                        dataDrivenCovidI,
-                        dataDrivenCovidF) 
+  dataDrivenCovidF <- PatientLevelPrediction::createModelDesign(
+    targetId = 12,
+    outcomeId = 11,
+    restrictPlpDataSettings = restrictList[[i]],
+    populationSettings = populationSettings,
+    covariateSettings = dataDrivenCovariateSettings,
+    preprocessSettings = preprocessSettings,
+    modelSettings = setLassoLogisticRegression(seed = 42),
+    splitSettings = splitSettings,
+    runCovariateSummary = TRUE
+  )
+  modelDesignList <- c(modelDesignList, 
+                        list(covidH, 
+                             covidI,
+                             covidF,
+                             dataDrivenCovidH,
+                             dataDrivenCovidI,
+                             dataDrivenCovidF))
+
+}
   
 plpModuleSpecs <- plpModule$createModuleSpecifications(modelDesignList = modelDesignList)
 
