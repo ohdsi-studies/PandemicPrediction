@@ -190,7 +190,7 @@ for (i in seq_along(restrictList)) {
   )
 
   dataDrivenCovidI <- PatientLevelPrediction::createModelDesign(
-    targetId = 12,
+    targetId = 31,
     outcomeId = 13,
     restrictPlpDataSettings = restrictList[[i]],
     populationSettings = populationSettings,
@@ -202,7 +202,7 @@ for (i in seq_along(restrictList)) {
   )
 
   dataDrivenCovidF <- PatientLevelPrediction::createModelDesign(
-    targetId = 12,
+    targetId = 31,
     outcomeId = 11,
     restrictPlpDataSettings = restrictList[[i]],
     populationSettings = populationSettings,
