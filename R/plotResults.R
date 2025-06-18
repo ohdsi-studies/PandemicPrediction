@@ -3,37 +3,11 @@
 # then plot performance as a line covering three months at a time
 #' @export
 plotResults <- function(
-    resultFolder = "",
+    results,
     filter = "cover") {
-  analyses <- dir(resultFolder, pattern = "Analysis*")
-
-  performance <- list()
-  modelInfo <- list()
-  for (i in seq_along(analyses)) {
-    analysisPath <- file.path(resultFolder, analyses[[i]])
-    performance[[i]] <- extractPerformance(analysisPath)
-    modelInfo[[i]] <- extractModelInfo(analysisPath)
+  if (is.character(results)) {
+    results <- getResults(results)
   }
-
-  results <- data.frame(
-    start_date = sapply(modelInfo, function(x) x$startDate),
-    end_date = sapply(modelInfo, function(x) x$endDate),
-    target = sapply(modelInfo, function(x) x$targetId),
-    outcome = sapply(modelInfo, function(x) x$outcomeId),
-    modelName = sapply(modelInfo, function(x) x$name)
-  )
-  results <- cbind(results, dplyr::bind_rows(performance))
-  results$analysis <- analyses
-
-  results <- results |>
-    dplyr::mutate(
-      name = paste(mapply(getName, .data$target, .data$outcome),
-        .data$modelName, sep = "_"
-      ),
-      start_date = as.Date(.data$start_date),
-      end_date = as.Date(.data$end_date)
-    ) |>
-    dplyr::arrange(.data$start_date)
 
   if (!is.null(filter)) {
     results <- results |>
@@ -71,6 +45,44 @@ plotResults <- function(
     )
 
   return(vplot)
+}
+
+#' @export
+getResults <- function(resultsFolder, outFolder = NULL) {
+  analyses <- dir(resultsFolder, pattern = "Analysis*")
+
+  performance <- list()
+  modelInfo <- list()
+  for (i in seq_along(analyses)) {
+    analysisPath <- file.path(resultsFolder, analyses[[i]])
+    performance[[i]] <- extractPerformance(analysisPath)
+    modelInfo[[i]] <- extractModelInfo(analysisPath)
+  }
+
+  results <- data.frame(
+    start_date = sapply(modelInfo, function(x) x$startDate),
+    end_date = sapply(modelInfo, function(x) x$endDate),
+    target = sapply(modelInfo, function(x) x$targetId),
+    outcome = sapply(modelInfo, function(x) x$outcomeId),
+    modelName = sapply(modelInfo, function(x) x$name)
+  )
+  results <- cbind(results, dplyr::bind_rows(performance))
+  results$analysis <- analyses
+
+  results <- results |>
+    dplyr::mutate(
+      name = paste(mapply(getName, .data$target, .data$outcome),
+        .data$modelName, sep = "_"
+      ),
+      start_date = as.Date(.data$start_date),
+      end_date = as.Date(.data$end_date)
+    ) |>
+    dplyr::arrange(.data$start_date)
+  if (!is.null(outFolder)) {
+    if (!dir.exists(outFolder)) dir.create(outFolder, recursive = TRUE)
+    saveRDS(results, file = file.path(outFolder, "results.rds"))
+  }
+  results
 }
 
 
