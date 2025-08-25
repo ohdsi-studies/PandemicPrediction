@@ -116,25 +116,25 @@ restrictList <- list(
     studyEndDate = "20201231",
     sampleSize = 150000
   ),
-  # first three months of 2021
+  # first three months of 2020
   createRestrictPlpDataSettings(
-    studyStartDate = "20210101",
-    studyEndDate = "20210331",
+    studyStartDate = "20200101",
+    studyEndDate = "20200331",
   ),
-  # first 6 months of 2021
+  # first 6 months of 2020
   createRestrictPlpDataSettings(
-    studyStartDate = "20210101",
-    studyEndDate = "20210630",
+    studyStartDate = "20200101",
+    studyEndDate = "20200630",
   ),
-  # first 9 months of 2021
+  # first 9 months of 2020
   createRestrictPlpDataSettings(
-    studyStartDate = "20210101",
-    studyEndDate = "20210930",
+    studyStartDate = "20200101",
+    studyEndDate = "20200930",
   ),
-  # first year of 2021 without sampling
+  # first year of 2020 without sampling
   createRestrictPlpDataSettings(
-    studyStartDate = "20210101",
-    studyEndDate = "20211231"
+    studyStartDate = "20200101",
+    studyEndDate = "20201231"
   )
 )
 
