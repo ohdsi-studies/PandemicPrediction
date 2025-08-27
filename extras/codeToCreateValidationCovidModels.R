@@ -4,6 +4,18 @@ library(lubridate)
 library(purrr)
 
 newModelsDir <- "./inst/newModels/"
+package <- "PandemicPrediction"
+
+createPackageModel <- function(modelFolder, package) {
+  result <- list(
+    type = "package",
+    modelFolder = modelFolder,
+    package = package
+  )
+  class(result) <- "plpModel"
+
+  return(result)
+}
 
 getOutcomeId <- function(outcomeName) {
   switch(outcomeName,
@@ -95,12 +107,17 @@ createValidationDesigns <- function(modelDetails) {
       warning("No validation windows for model ", basename(path), ". It will not be included in the analysis.")
       return(NULL)
     }
+    relativeModelPath <- stringr::str_remove(path, "^./inst/")
+    packageModel <- createPackageModel(
+      modelFolder = relativeModelPath,
+      package = package
+    )
     validationDesign <- PatientLevelPrediction::createValidationDesign(
       targetId = targetId,
       outcomeId = outcomeId,
       populationSettings = NULL, # Use settings from the trained model
       restrictPlpDataSettings = restrictPlpDataSettingsList,
-      plpModelList = list(path),
+      plpModelList = list(packageModel),
       recalibrate = "weakRecalibration",
       runCovariateSummary = TRUE
     )
