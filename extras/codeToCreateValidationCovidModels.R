@@ -106,6 +106,7 @@ createValidationDesigns <- function(modelDetails) {
     )
     return(validationDesign)
   })
+  validationDesigns <- purrr::list_flatten(validationDesigns)
 
   validationDesigns <- compact(validationDesigns)
   return(validationDesigns)
