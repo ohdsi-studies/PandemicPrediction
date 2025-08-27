@@ -1,147 +1,149 @@
-library(PatientLevelPrediction)
-library(Strategus)
+library(dplyr)
+library(stringr)
 library(lubridate)
+library(purrr)
 
-# MODEL TRANSFER Module --------------------------------------------------------
+newModelsDir <- "./inst/newModels/"
 
-localFileSettings <- data.frame(
-  locations = "./inst/newModels/"
-)
+getOutcomeId <- function(outcomeName) {
+  switch(outcomeName,
+    "Death" = 11,
+    "Critical" = 13,
+    "Hospital" = 14,
+    NA
+  )
+}
 
-modelTransferModule <- ModelTransferModule$new()
+getTargetId <- function(outcomeName) {
+  return(31)
+}
+# Scans the models directory and parses folder names to extract metadata.
+discoverAndParseModels <- function(modelsDir) {
+  modelFolder <- list.dirs(modelsDir, full.names = TRUE, recursive = FALSE)
+  if (length(modelFolder) == 0) {
+    warning("No model folders found in: ", modelsDir)
+    return(tibble())
+  }
+  message("Found ", length(modelFolder), " models to process for validation design.")
+  parsedModels <- map_dfr(modelFolder, function(folderPath) {
+    folderName <- basename(folderPath)
+    matches <- str_match(folderName, "^([^_]+)_([^_]+)_(\\d{8})_to_(\\d{8})$")
+    if (is.na(matches[1, 1])) {
+      warning("Folder name does not match expected format and will be skipped: ", folderName)
+      return(NULL)
+    }
+    tibble(
+      path = folderPath,
+      outcomeName = matches[1, 2],
+      featureSet = matches[1, 3],
+      devStartDate = ymd(matches[1, 4]),
+      devEndDate = ymd(matches[1, 5]),
+      targetId = getTargetId(matches[1, 2]),
+      outcomeId = getOutcomeId(matches[1, 2])
+    )
+  })
+  if (any(is.na(parsedModels$outcomeId))) {
+    warning("Some models had outcome names that could not be mapped to an ID and will be excluded.")
+    parsedModels <- parsedModels %>% filter(!is.na(.data$outcomeId))
+  }
+  return(parsedModels)
+}
 
-modelTransferModuleSpecs <- modelTransferModule$createModuleSpecifications(localFileSettings = localFileSettings)
 
+newModelDetails <- discoverAndParseModels(modelsDir = newModelsDir)
+cat("\n--- Discovered and Parsed Model Details ---\n")
+print(newModelDetails)
+cat("\n")
 
-# COHORT GENERATOR MODULE ------------------------------------------------------
+overallEndDate <- "2023-06-01"
 
-cohortDefinitions <- CohortGenerator::getCohortDefinitionSet(
+# Generates a list of rolling 3-month RestrictPlpDataSettings objects
+setDynamicRestrictSettings <- function(validationStartDate, overallEndDate, interval = months(3)) {
+  startDate <- ymd(validationStartDate)
+  endDate <- ymd(overallEndDate)
+  if (startDate >= endDate) {
+    return(list())
+  }
+  settingsList <- list()
+  currentStart <- startDate
+  while (currentStart < endDate) {
+    currentEnd <- currentStart + interval - days(1)
+
+    if (currentEnd > endDate) {
+      currentEnd <- endDate
+    }
+    settings <- PatientLevelPrediction::createRestrictPlpDataSettings(
+      studyStartDate = format(currentStart, "%Y%m%d"),
+      studyEndDate = format(currentEnd, "%Y%m%d")
+    )
+
+    settingsList <- append(settingsList, list(settings))
+    currentStart <- currentStart + interval
+  }
+  return(settingsList)
+}
+
+createValidationDesigns <- function(modelDetails) {
+  validationDesigns <- pmap(modelDetails, function(path, outcomeId, targetId, devEndDate, ...) {
+    validationStartDate <- devEndDate + days(1)
+    message(sprintf("Creating validation design for model '%s', starting %s", basename(path), validationStartDate))
+    restrictPlpDataSettingsList <- setDynamicRestrictSettings(
+      validationStartDate = validationStartDate,
+      overallEndDate = overallEndDate
+    )
+    if (length(restrictPlpDataSettingsList) == 0) {
+      warning("No validation windows for model ", basename(path), ". It will not be included in the analysis.")
+      return(NULL)
+    }
+    validationDesign <- PatientLevelPrediction::createValidationDesign(
+      targetId = targetId,
+      outcomeId = outcomeId,
+      populationSettings = NULL, # Use settings from the trained model
+      restrictPlpDataSettings = restrictPlpDataSettingsList,
+      plpModelList = list(path),
+      recalibrate = "weakRecalibration",
+      runCovariateSummary = TRUE
+    )
+    return(validationDesign)
+  })
+
+  validationDesigns <- compact(validationDesigns)
+  return(validationDesigns)
+}
+
+# --- Execute the validation design creation ---
+validationList <- createValidationDesigns(modelDetails = newModelDetails)
+cat("\n--- Successfully created", length(validationList), "validation designs ---\n")
+
+cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
   settingsFileName = "inst/Cohorts.csv",
   jsonFolder = "inst/cohorts",
   sqlFolder = "inst/sql/sql_server",
   cohortFileNameFormat = "%s_%s",
   cohortFileNameValue = c("cohortId", "cohortName")
 )
+cohortDefinitionSet <- cohortDefinitionSet |>
+  dplyr::filter(.data$cohortId != 30) # only used for development
 
-# modify the cohort
-cohortGeneratorModule <- CohortGeneratorModule$new()
-cohortDefShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitions)
+cohortGeneratorModule <- Strategus::CohortGeneratorModule$new()
+cohortDefinitionShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitionSet)
+cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(generateStats = TRUE)
 
-cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(
-  generateStats = TRUE
+predictionValidationModule <- Strategus::PatientLevelPredictionValidationModule$new()
+predictionValidationModuleSpecifications <- predictionValidationModule$createModuleSpecifications(
+  validationList = validationList
 )
 
-# UNIVERSAL ANALYSIS SETTINGS --------------------------------------------------
-# Function used to generate restrictPlpDataSettings for time windows of three months
-generateRestrictDataSettings <- function(start, end, interval = months(3)) {
-  startDate <- lubridate::ymd(start)
-  endDate <- lubridate::ymd(end)
-  
-  settingsList <- list()
-  currentStart <- startDate
-  
-  while (currentStart < endDate) {
-    currentEnd <- currentStart + interval - days(1)
-    
-    if (currentEnd > endDate) {
-      currentEnd <- endDate
-    }
-    
-    settings <- createRestrictPlpDataSettings(
-      studyStartDate = format(currentStart, "%Y%m%d"),
-      studyEndDate = format(currentEnd, "%Y%m%d")
-    )
-    
-    settingsList <- append(settingsList, list(settings))
-    currentStart <- currentStart + interval
-  }
-  
-  return(settingsList)
-  
-}
+analysisSpecifications <- Strategus::createEmptyAnalysisSpecificiations() |>
+  Strategus::addSharedResources(cohortDefinitionShared) |>
+  Strategus::addModuleSpecifications(cohortGeneratorModuleSpecifications) |>
+  Strategus::addModuleSpecifications(predictionValidationModuleSpecifications)
 
-# start only 2021 since models were developed in 2020
-restrictPlpDataSettings <- generateRestrictDataSettings("2021-01-01", "2023-06-01")
-
-outpatientVisitCovid <- 12
-outpatientVisitFlu <- 30
-death <- 11
-severe <- 14
-critical <- 13
-validationComponentsList <- list(
-  list(
-    targetId = outpatientVisitCovid,
-    outcomeId = death,
-    modelTargetId = outpatientVisitFlu,
-    modelOutcomeId = death,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL,
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ),
-  list(
-    targetId = outpatientVisitCovid,
-    outcomeId = severe,
-    modelTargetId = outpatientVisitFlu,
-    modelOutcomeId = severe,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL,
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ),
-  list(
-    targetId = outpatientVisitCovid,
-    outcomeId = critical,
-    modelTargetId = outpatientVisitFlu,
-    modelOutcomeId = critical,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL,
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ), 
-  list(
-    targetId = outpatientVisitCovid,
-    outcomeId = death,
-    modelTargetId = outpatientVisitCovid,
-    modelOutcomeId = death,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL,
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ),
-  list(
-    targetId = outpatientVisitCovid,
-    outcomeId = severe,
-    modelTargetId = outpatientVisitCovid,
-    modelOutcomeId = severe,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL,
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ),
-  list(
-    targetId = outpatientVisitCovid,
-    outcomeId = critical,
-    modelTargetId = outpatientVisitCovid,
-    modelOutcomeId = critical,
-    restrictPlpDataSettings = restrictPlpDataSettings,
-    populationSettings = NULL,
-    recalibrate = NULL,
-    runCovariateSummary = TRUE
-  ) 
+# --- Save the final JSON object ---
+outputFileName <- "./inst/study_execution_jsons/new_models_validation.json"
+ParallelLogger::saveSettingsToJson(
+  object = analysisSpecifications,
+  fileName = outputFileName
 )
 
-plpValidationModule <- PatientLevelPredictionValidationModule$new()
-
-predictionValidationModuleSpecifications <- plpValidationModule$createModuleSpecifications(
-  validationComponentsList = validationComponentsList,
-  logLevel = "INFO"
-)
-
-analysisSpecifications <- createEmptyAnalysisSpecificiations() |>
-  addModuleSpecifications(modelTransferModuleSpecs) |>
-  addSharedResources(cohortDefShared) |>
-  addModuleSpecifications(cohortGeneratorModuleSpecifications) |>
-  addModuleSpecifications(predictionValidationModuleSpecifications)
-
-ParallelLogger::saveSettingsToJson(analysisSpecifications, file.path("study_execution_jsons", "validationNewModels.json"))
+message("\nAnalysis specifications for new models successfully saved to:\n", normalizePath(outputFileName))

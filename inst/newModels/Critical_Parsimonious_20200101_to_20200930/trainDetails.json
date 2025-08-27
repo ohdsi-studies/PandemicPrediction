@@ -1,0 +1,34 @@
+{
+  "analysisId": "Analysis_20",
+  "analysisSource": "",
+  "developmentDatabase": null,
+  "developmentDatabaseSchema": "optum_extended_dod.cdm_optum_extended_dod_v3322",
+  "attrition": {
+    "outcomeId": [13, 13, 13, 13],
+    "description": ["Original cohorts", "Initial plpData cohort or population", "No prior outcome", "Removing subjects with no time at risk (if any))"],
+    "targetCount": [170638, 170638, 162281, 162281],
+    "uniquePeople": [170629, 170629, 162272, 162272],
+    "outcomes": [23539, 14671, 14671, 14671],
+    "attr_class": "data.frame",
+    "attr_row.names": ["2", "1", "11", "12"]
+  },
+  "trainingTime": "11.1330728530884 secs",
+  "trainingDate": "2025-08-26",
+  "modelName": "logistic",
+  "finalModelParameters": {
+    "variance": 0.2225,
+    "log_likelihood": -31261.8891
+  },
+  "hyperParamSearch": {
+    "metric": ["AUC", "AUC", "AUC"],
+    "fold": [1, 2, 3],
+    "value": [0.7828, 0.7904, 0.7894],
+    "startingVariance": [0.01, 0.01, 0.01],
+    "lowerLimit": [0.01, 0.01, 0.01],
+    "upperLimit": [20, 20, 20],
+    "tolerance": [2e-06, 2e-06, 2e-06],
+    "attr_class": "data.frame",
+    "attr_row.names": [1, 2, 3]
+  },
+  "developmentDatabaseId": "1159444929"
+}
