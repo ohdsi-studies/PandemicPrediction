@@ -75,7 +75,7 @@
         "modelDesignList": [
           {
             "targetId": 31,
-            "outcomeId": 11,
+            "outcomeId": 14,
             "restrictPlpDataSettings": {
               "studyStartDate": "20200101",
               "studyEndDate": "20201231",
@@ -1098,7 +1098,7 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 11,
+            "outcomeId": 14,
             "restrictPlpDataSettings": {
               "studyStartDate": "20200101",
               "studyEndDate": "20200331",
@@ -2121,7 +2121,7 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 11,
+            "outcomeId": 14,
             "restrictPlpDataSettings": {
               "studyStartDate": "20200101",
               "studyEndDate": "20200630",
@@ -3144,7 +3144,7 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 11,
+            "outcomeId": 14,
             "restrictPlpDataSettings": {
               "studyStartDate": "20200101",
               "studyEndDate": "20200930",
@@ -4167,7 +4167,7 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 11,
+            "outcomeId": 14,
             "restrictPlpDataSettings": {
               "studyStartDate": "20200101",
               "studyEndDate": "20201231",

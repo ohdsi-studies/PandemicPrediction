@@ -142,7 +142,7 @@ modelDesignList <- list()
 for (i in seq_along(restrictList)) {
   covidH <- PatientLevelPrediction::createModelDesign(
     targetId = 31, # covid
-    outcomeId = 11, # death. - 14 severe, 13 critial
+    outcomeId = 14, # death. - 14 severe, 13 critial
     populationSettings = populationSettings,
     restrictPlpDataSettings = restrictList[[i]],
     covariateSettings = covariateSettings,
