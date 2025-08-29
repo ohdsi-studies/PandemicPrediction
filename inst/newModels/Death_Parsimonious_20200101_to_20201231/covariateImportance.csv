@@ -1,24 +1,24 @@
 "covariateId","covariateName","analysisId","conceptId","valueAsConceptId","collisions","covariateValue"
-4003,"age group:  20 -  24",3,0,NA,NA,-4.49514085916738
-5003,"age group:  25 -  29",3,0,NA,NA,-4.44738737829772
-6003,"age group:  30 -  34",3,0,NA,NA,-3.88691291009452
-3003,"age group:  15 -  19",3,0,NA,NA,-3.86396854665225
-7003,"age group:  35 -  39",3,0,NA,NA,-3.42040799579257
-18003,"age group:  90 -  94",3,0,NA,NA,3.36829333220334
-8003,"age group:  40 -  44",3,0,NA,NA,-3.22963645973206
-9003,"age group:  45 -  49",3,0,NA,NA,-2.850627411904
-10003,"age group:  50 -  54",3,0,NA,NA,-2.29361340017749
-11003,"age group:  55 -  59",3,0,NA,NA,-1.6237840281153
-12003,"age group:  60 -  64",3,0,NA,NA,-0.952702663464206
-16003,"age group:  80 -  84",3,0,NA,NA,0.848884704071228
-17003,"age group:  85 -  89",3,0,NA,NA,0.778583515574136
-8507001,"gender = MALE",1,8507,NA,NA,0.498064353500792
-15003,"age group:  75 -  79",3,0,NA,NA,0.43606416755383
-1701699,"Cohort_covariate during day -9999 through -1 days relative to index: history of diabetes ",699,-1,NA,NA,0.43411583005393
-2001699,"Cohort_covariate during day -9999 through -1 days relative to index: history of hypertension ",699,-1,NA,NA,0.364916609190141
-1601699,"Cohort_covariate during day -9999 through -1 days relative to index: history of COPD ",699,-1,NA,NA,0.325501959001167
-13003,"age group:  65 -  69",3,0,NA,NA,-0.32278077335217
-2101699,"Cohort_covariate during day -9999 through -1 days relative to index: history of kidney disease ",699,-1,NA,NA,0.290740585377555
-1901699,"Cohort_covariate during day -9999 through -1 days relative to index: history of hyperlipidemia ",699,-1,NA,NA,-0.260948363525887
-1801699,"Cohort_covariate during day -9999 through -1 days relative to index: history of heart disease ",699,-1,NA,NA,0.251335396743666
-1501699,"Cohort_covariate during day -9999 through -1 days relative to index: history of cancer ",699,-1,NA,NA,-0.078041860634892
+6003,"age group:  30 -  34",3,0,NA,NA,-3.89250026842852
+5003,"age group:  25 -  29",3,0,NA,NA,-3.77895957548098
+3003,"age group:  15 -  19",3,0,NA,NA,-3.46164442201782
+18003,"age group:  90 -  94",3,0,NA,NA,3.35249531616217
+4003,"age group:  20 -  24",3,0,NA,NA,-3.19075697083472
+7003,"age group:  35 -  39",3,0,NA,NA,-2.69987635378105
+8003,"age group:  40 -  44",3,0,NA,NA,-2.63599990186031
+9003,"age group:  45 -  49",3,0,NA,NA,-2.50027882144096
+10003,"age group:  50 -  54",3,0,NA,NA,-2.39643175845182
+11003,"age group:  55 -  59",3,0,NA,NA,-1.67145487216239
+12003,"age group:  60 -  64",3,0,NA,NA,-1.06136916014341
+16003,"age group:  80 -  84",3,0,NA,NA,0.955394585367912
+17003,"age group:  85 -  89",3,0,NA,NA,0.844345558946395
+8507001,"gender = MALE",1,8507,NA,NA,0.451987159847658
+1701699,"Cohort_covariate during day -9999 through -1 days relative to index: history of diabetes ",699,-1,NA,NA,0.429890794652699
+15003,"age group:  75 -  79",3,0,NA,NA,0.419865775743736
+1801699,"Cohort_covariate during day -9999 through -1 days relative to index: history of heart disease ",699,-1,NA,NA,0.346412708290587
+2001699,"Cohort_covariate during day -9999 through -1 days relative to index: history of hypertension ",699,-1,NA,NA,0.297403648223237
+1601699,"Cohort_covariate during day -9999 through -1 days relative to index: history of COPD ",699,-1,NA,NA,0.294807892483117
+1901699,"Cohort_covariate during day -9999 through -1 days relative to index: history of hyperlipidemia ",699,-1,NA,NA,-0.272742584797939
+2101699,"Cohort_covariate during day -9999 through -1 days relative to index: history of kidney disease ",699,-1,NA,NA,0.217446980601837
+13003,"age group:  65 -  69",3,0,NA,NA,-0.185571187285558
+1501699,"Cohort_covariate during day -9999 through -1 days relative to index: history of cancer ",699,-1,NA,NA,-0.0533352166114347

@@ -1,0 +1,222 @@
+{
+  "targetId": 31,
+  "outcomeId": 14,
+  "restrictPlpDataSettings": {
+    "studyStartDate": "20200101",
+    "studyEndDate": "20200331",
+    "firstExposureOnly": false,
+    "washoutPeriod": 0,
+    "sampleSize": null,
+    "attr_class": "restrictPlpDataSettings"
+  },
+  "covariateSettings": [
+    {
+      "temporal": false,
+      "temporalSequence": false,
+      "DemographicsGender": true,
+      "DemographicsAgeGroup": true,
+      "longTermStartDays": -365,
+      "mediumTermStartDays": -180,
+      "shortTermStartDays": -30,
+      "endDays": 0,
+      "includedCovariateConceptIds": [],
+      "addDescendantsToInclude": false,
+      "excludedCovariateConceptIds": [],
+      "addDescendantsToExclude": false,
+      "includedCovariateIds": [],
+      "attr_class": "covariateSettings",
+      "attr_fun": "getDbDefaultCovariateData"
+    },
+    {
+      "covariateName": "history of cancer",
+      "covariateId": 1501699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 15,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    },
+    {
+      "covariateName": "history of COPD",
+      "covariateId": 1601699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 16,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    },
+    {
+      "covariateName": "history of diabetes",
+      "covariateId": 1701699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 17,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    },
+    {
+      "covariateName": "history of heart disease",
+      "covariateId": 1801699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 18,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    },
+    {
+      "covariateName": "history of hyperlipidemia",
+      "covariateId": 1901699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 19,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    },
+    {
+      "covariateName": "history of hypertension",
+      "covariateId": 2001699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 20,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    },
+    {
+      "covariateName": "history of kidney disease",
+      "covariateId": 2101699,
+      "cohortDatabaseSchema": "scratch.scratch_efridgei",
+      "cohortTable": "pp",
+      "cohortIds": 21,
+      "startDay": -9999,
+      "endDays": -1,
+      "count": false,
+      "ageInteraction": false,
+      "lnAgeInteraction": false,
+      "analysisId": 699,
+      "attr_class": "covariateSettings",
+      "attr_fun": "PatientLevelPrediction::getCohortCovariateData"
+    }
+  ],
+  "populationSettings": {
+    "binary": true,
+    "includeAllOutcomes": true,
+    "firstExposureOnly": false,
+    "washoutPeriod": 0,
+    "removeSubjectsWithPriorOutcome": true,
+    "priorOutcomeLookback": 99999,
+    "requireTimeAtRisk": false,
+    "minTimeAtRisk": 1,
+    "riskWindowStart": 0,
+    "startAnchor": "cohort start",
+    "riskWindowEnd": 30,
+    "endAnchor": "cohort start",
+    "restrictTarToCohortEnd": false,
+    "attr_class": "populationSettings"
+  },
+  "sampleSettings": [
+    {
+      "numberOutcomestoNonOutcomes": 1,
+      "sampleSeed": 1,
+      "attr_class": "sampleSettings",
+      "attr_fun": "sameData"
+    }
+  ],
+  "featureEngineeringSettings": [
+    {
+      "attr_class": "featureEngineeringSettings",
+      "attr_fun": "sameData"
+    }
+  ],
+  "preprocessSettings": {
+    "minFraction": 0.001,
+    "normalize": true,
+    "removeRedundancy": true,
+    "attr_class": "preprocessSettings"
+  },
+  "modelSettings": {
+    "fitFunction": "fitCyclopsModel",
+    "param": {
+      "priorParams": {
+        "priorType": "laplace",
+        "forceIntercept": false,
+        "variance": 0.01,
+        "exclude": 0
+      },
+      "includeCovariateIds": null,
+      "upperLimit": 20,
+      "lowerLimit": 0.01,
+      "priorCoefs": null,
+      "attr_settings": {
+        "priorfunction": "Cyclops::createPrior",
+        "selectorType": "byPid",
+        "crossValidationInPrior": true,
+        "modelType": "logistic",
+        "addIntercept": true,
+        "useControl": true,
+        "seed": 42,
+        "name": "Lasso Logistic Regression",
+        "threads": -1,
+        "tolerance": 2e-06,
+        "cvRepetitions": 1,
+        "maxIterations": 3000
+      },
+      "attr_modelType": "binary",
+      "attr_saveType": "RtoJson"
+    },
+    "attr_class": "modelSettings"
+  },
+  "splitSettings": {
+    "test": 0.25,
+    "train": 0.75,
+    "seed": 42,
+    "nfold": 3,
+    "attr_class": "splitSettings",
+    "attr_fun": "randomSplitter"
+  },
+  "executeSettings": {
+    "runSplitData": true,
+    "runSampleData": false,
+    "runFeatureEngineering": false,
+    "runPreprocessData": true,
+    "runModelDevelopment": true,
+    "runCovariateSummary": true,
+    "attr_class": "executeSettings"
+  },
+  "attr_class": "modelDesign"
+}

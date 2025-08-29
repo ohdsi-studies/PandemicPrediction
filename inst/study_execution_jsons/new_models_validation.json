@@ -4988,6 +4988,1110 @@
             "recalibrate": "weakRecalibration",
             "runCovariateSummary": true,
             "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200401",
+              "studyEndDate": "20200630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200701",
+              "studyEndDate": "20200930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20201001",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210101",
+              "studyEndDate": "20210331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210401",
+              "studyEndDate": "20210630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210701",
+              "studyEndDate": "20210930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20211001",
+              "studyEndDate": "20211231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220101",
+              "studyEndDate": "20220331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220401",
+              "studyEndDate": "20220630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220701",
+              "studyEndDate": "20220930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20221001",
+              "studyEndDate": "20221231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230101",
+              "studyEndDate": "20230331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200331",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230401",
+              "studyEndDate": "20230601",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200701",
+              "studyEndDate": "20200930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20201001",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210101",
+              "studyEndDate": "20210331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210401",
+              "studyEndDate": "20210630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210701",
+              "studyEndDate": "20210930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20211001",
+              "studyEndDate": "20211231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220101",
+              "studyEndDate": "20220331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220401",
+              "studyEndDate": "20220630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220701",
+              "studyEndDate": "20220930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20221001",
+              "studyEndDate": "20221231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230101",
+              "studyEndDate": "20230331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200630",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230401",
+              "studyEndDate": "20230601",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20201001",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210101",
+              "studyEndDate": "20210331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210401",
+              "studyEndDate": "20210630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210701",
+              "studyEndDate": "20210930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20211001",
+              "studyEndDate": "20211231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220101",
+              "studyEndDate": "20220331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220401",
+              "studyEndDate": "20220630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220701",
+              "studyEndDate": "20220930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20221001",
+              "studyEndDate": "20221231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230101",
+              "studyEndDate": "20230331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20200930",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230401",
+              "studyEndDate": "20230601",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210101",
+              "studyEndDate": "20210331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210401",
+              "studyEndDate": "20210630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210701",
+              "studyEndDate": "20210930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20211001",
+              "studyEndDate": "20211231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220101",
+              "studyEndDate": "20220331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220401",
+              "studyEndDate": "20220630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220701",
+              "studyEndDate": "20220930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20221001",
+              "studyEndDate": "20221231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230101",
+              "studyEndDate": "20230331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 14,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "newModels//Hospital_Parsimonious_20200101_to_20201231",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230401",
+              "studyEndDate": "20230601",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
           }
         ],
         "logLevel": "INFO"
