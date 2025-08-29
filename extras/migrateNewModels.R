@@ -62,15 +62,28 @@ organizePlpModels <- function(sourceDir, destDir) {
     }
 
     outcomeName <- getOutcomeName(outcomeId)
-
+    
+    sampleSize <- modelDesign$restrictPlpDataSettings$sampleSize
+    
+    populationSuffix <- "" # Default to nothing
+    if (as.Date(endDate, "%Y%m%d") - as.Date(startDate, "%Y%m%d") > 360) {
+        if (!is.null(sampleSize)) {
+            populationSuffix <- "Sampled"
+        } else {
+            populationSuffix <- "FullPop"
+        }
+    }
+    
     newFolderName <- paste(
       outcomeName,
       featureSet,
+      populationSuffix,
       startDate,
       "to",
       endDate,
       sep = "_"
-    )
+    ) |>
+    stringr::str_replace_all("__", "_") 
 
     newModelPath <- file.path(destDir, newFolderName)
 
