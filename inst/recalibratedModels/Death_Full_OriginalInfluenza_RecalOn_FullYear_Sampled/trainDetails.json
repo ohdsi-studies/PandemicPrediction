@@ -1,0 +1,23 @@
+{
+  "analysisId": "Analysis_3",
+  "analysisSource": "",
+  "developmentDatabase": "optum_dod",
+  "attrition": {
+    "description": ["Original cohorts", "At least 365 days of observation prior", "Have time at risk"],
+    "targetCount": [150000, 150000, 150000],
+    "uniquePeople": [146981, 146981, 146981],
+    "outcomes": [6305, 6305, 6305],
+    "attr_class": "data.frame",
+    "attr_row.names": [1, 2, 3]
+  },
+  "trainingTime": 5.1434,
+  "trainingDate": "2020-03-29 09:58:42",
+  "modelName": "Existing GLM",
+  "finalModelParameters": [0.0223, 45046495, -5692.6165],
+  "hyperParamSearch": {
+    "none": 1,
+    "attr_class": "data.frame",
+    "attr_row.names": 1
+  },
+  "RECALIBRATION_NOTE": "Recalibrated on RecalOn_FullYear_Sampled"
+}
