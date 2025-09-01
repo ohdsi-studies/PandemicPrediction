@@ -2,18 +2,18 @@ library(PandemicPrediction)
 
 allResults <- dplyr::bind_rows(
   getAnalysisResults(
-    databasePath = "results/development/databaseFile.sqlite", 
-    evaluationType = "Test", 
+    databasePath = "results/development/databaseFile.sqlite",
+    evaluationType = "Test",
     analysisId = "dev"
   ),
   getAnalysisResults(
-    databasePath = "results/validation/databaseFile.sqlite", 
-    evaluationType = "Validation", 
+    databasePath = "results/validation/databaseFile.sqlite",
+    evaluationType = "Validation",
     analysisId = "val_original"
   ),
   getAnalysisResults(
-    databasePath = "results/new-model-validation/databaseFile.sqlite", 
-    evaluationType = "Validation", 
+    databasePath = "results/new-model-validation/databaseFile.sqlite",
+    evaluationType = "Validation",
     analysisId = "val_new"
   )
 )
@@ -24,9 +24,9 @@ print(dplyr::glimpse(allResults))
 
 plotComparison(
   allResults = allResults,
-  outcomes = c("Critical", "Hospital"),
+  outcomes = c("Death", "Critical", "Hospital"),
   modelOriginsToCompare = c("Original Influenza", "New Covid"),
   featureSetsToCompare = c("Full", "Parsimonious"),
-  devPeriodsToCompare = c("First 3 Months"),
+  devPeriodsToCompare = c("First 6 Months"),
   facetBy = c("featureSet", "outcomeName"),
 )

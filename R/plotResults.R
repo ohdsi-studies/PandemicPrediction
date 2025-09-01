@@ -276,11 +276,45 @@ plotComparison <- function(
   if (is.null(title)) {
     title <- "Model Performance Over Time"
   }
-  legendData <- resultsToPlot |>
-    dplyr::group_by(!!!rlang::syms(facetBy), .data$fullName, .data$legendLabel) |>
-    dplyr::summarise(labelX = max(.data$endDate, na.rm = TRUE), .groups = "drop") |>
+  xRange <- dplyr::bind_rows(
+    dplyr::select(resultsToPlot,
+      !!!rlang::syms(facetBy),
+      start = .data$startDate,
+      end = .data$endDate
+    ),
+    dplyr::select(devPerformance,
+      !!!rlang::syms(facetBy),
+      start = .data$devStartDate,
+      end = .data$devEndDate
+    )
+  ) |>
     dplyr::group_by(!!!rlang::syms(facetBy)) |>
-    dplyr::mutate(labelY = 0.51 + (dplyr::row_number() - 1) * 0.04) |>
+    dplyr::summarise(
+      xmin = min(start, na.rm = TRUE),
+      xmax = max(end, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      span = as.numeric(.data$xmax - .data$xmin),
+      # Place labels close to the right edge of each facet; keep a tiny left padding (>= 2 days)
+      legendX = .data$xmax - pmax(2, ceiling(0.02 * .data$span))
+    )
+
+  # Global x-limits (so the plot stops at your last date, no long tail)
+  globalXmin <- min(xRange$xmin, na.rm = TRUE)
+  globalXMax <- max(xRange$xmax, na.rm = TRUE)
+  legendData <- resultsToPlot |>
+    dplyr::distinct(!!!rlang::syms(facetBy), .data$fullName, .data$legendLabel) |>
+    dplyr::left_join(xRange, by = facetBy) |>
+    dplyr::group_by(!!!rlang::syms(facetBy)) |>
+    dplyr::arrange(.data$fullName, .by_group = TRUE) |>
+    dplyr::mutate(
+      n = dplyr::n(),
+      gap = pmin(0.07, (0.70 - 0.52) / pmax(1, n - 1)),
+      labelY = 0.52 + (dplyr::row_number() - 1) * .data$gap,
+      labelX = .data$legendX
+    ) |>
+    dplyr::select(-"n", -"gap") |>
     dplyr::ungroup()
 
   vplot <- ggplot2::ggplot(
@@ -302,19 +336,27 @@ plotComparison <- function(
     ggplot2::geom_segment(ggplot2::aes(xend = .data$endDate, yend = .data$AUROC), linewidth = 1.2) +
     ggplot2::geom_point(size = 3) +
     ggplot2::geom_point(ggplot2::aes(x = .data$endDate), size = 3) +
+    ggplot2::theme_bw(base_size = 16) +
     ggplot2::geom_text(
       data = legendData,
       mapping = ggplot2::aes(
         x = .data$labelX, y = .data$labelY,
         label = .data$legendLabel, colour = .data$fullName
       ),
-      hjust = 1, fontface = "bold", size = 3.5
+      hjust = 1, vjust = 0, fontface = "bold", size = 4.5 # bigger text for 4k
     ) +
-    ggplot2::theme_bw() +
-    ggplot2::scale_x_date(date_breaks = "3 months", date_labels = "%b %Y", minor_breaks = NULL) +
+    ggplot2::scale_x_date(
+      date_breaks = "3 months",
+      date_labels = "%b %Y",
+      minor_breaks = NULL,
+      limits = c(globalXmin, globalXMax),
+      expand = ggplot2::expansion(mult = c(0.01, 0.01))
+    ) +
+    ggplot2::coord_cartesian(clip = "off") +
     ggplot2::labs(title = title, x = "Validation Period", y = "AUROC") +
     ggplot2::ylim(0.5, 1) +
     ggplot2::theme(
+      plot.margin = grid::unit(c(5.5, 35, 5.5, 5.5), "pt"),
       axis.text.x = ggplot2::element_text(angle = 45, hjust = 1),
       legend.position = "none"
     )
@@ -326,6 +368,16 @@ plotComparison <- function(
     }
     vplot <- vplot + ggplot2::facet_grid(rows = ggplot2::vars(!!!rlang::syms(facetBy)))
   }
+
+  # colors
+  allLevels <- sort(unique(c(
+    resultsToPlot$fullName,
+    devPerformance$fullName
+  )))
+  resultsToPlot$fullName <- factor(resultsToPlot$fullName, levels = allLevels)
+  devPerformance$fullName <- factor(devPerformance$fullName, levels = allLevels)
+
+  vplot <- vplot + ggthemes::scale_color_tableau(palette = "Tableau 20", limits = allLevels)
 
   return(vplot)
 }
