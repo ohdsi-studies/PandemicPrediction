@@ -100,12 +100,12 @@
         "validationList": [
           {
             "targetId": 31,
-            "outcomeId": 13,
+            "outcomeId": 11,
             "populationSettings": null,
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Full_OriginalInfluenza_RecalOn_First_3_Months",
+                "modelFolder": "recalibratedModels/Death_Parsimonious_OriginalInfluenza_RecalOn_First_3_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -124,12 +124,12 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 13,
+            "outcomeId": 11,
             "populationSettings": null,
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Full_OriginalInfluenza_RecalOn_First_6_Months",
+                "modelFolder": "recalibratedModels/Death_Parsimonious_OriginalInfluenza_RecalOn_First_6_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -148,12 +148,12 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 13,
+            "outcomeId": 11,
             "populationSettings": null,
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Full_OriginalInfluenza_RecalOn_First_9_Months",
+                "modelFolder": "recalibratedModels/Death_Parsimonious_OriginalInfluenza_RecalOn_First_9_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -172,12 +172,12 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 13,
+            "outcomeId": 11,
             "populationSettings": null,
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Full_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "modelFolder": "recalibratedModels/Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -196,132 +196,12 @@
           },
           {
             "targetId": 31,
-            "outcomeId": 13,
+            "outcomeId": 11,
             "populationSettings": null,
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Full_OriginalInfluenza_RecalOn_FullYear_Sampled",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": 150000,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 13,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Parsimonious_OriginalInfluenza_RecalOn_First_3_Months",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 13,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Parsimonious_OriginalInfluenza_RecalOn_First_6_Months",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 13,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Parsimonious_OriginalInfluenza_RecalOn_First_9_Months",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 13,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 13,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Critical_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
+                "modelFolder": "recalibratedModels/Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -345,7 +225,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Death_Full_OriginalInfluenza_RecalOn_First_3_Months",
+                "modelFolder": "recalibratedModels/Death_Full_OriginalInfluenza_RecalOn_First_3_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -369,7 +249,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Death_Full_OriginalInfluenza_RecalOn_First_6_Months",
+                "modelFolder": "recalibratedModels/Death_Full_OriginalInfluenza_RecalOn_First_6_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -393,7 +273,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Death_Full_OriginalInfluenza_RecalOn_First_9_Months",
+                "modelFolder": "recalibratedModels/Death_Full_OriginalInfluenza_RecalOn_First_9_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -417,7 +297,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Death_Full_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "modelFolder": "recalibratedModels/Death_Full_OriginalInfluenza_RecalOn_FullYear_FullPop",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -441,103 +321,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Death_Full_OriginalInfluenza_RecalOn_FullYear_Sampled",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20201231",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": 150000,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 11,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_First_3_Months",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200331",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 11,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_First_6_Months",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200630",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 11,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_First_9_Months",
-                "package": "PandemicPrediction",
-                "attr_class": "plpModel"
-              }
-            ],
-            "restrictPlpDataSettings": {
-              "studyStartDate": "20200101",
-              "studyEndDate": "20200930",
-              "firstExposureOnly": false,
-              "washoutPeriod": 0,
-              "sampleSize": null,
-              "attr_class": "restrictPlpDataSettings"
-            },
-            "recalibrate": null,
-            "runCovariateSummary": false,
-            "attr_class": "validationDesign"
-          },
-          {
-            "targetId": 31,
-            "outcomeId": 11,
-            "populationSettings": null,
-            "plpModelList": [
-              {
-                "type": "package",
-                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
+                "modelFolder": "recalibratedModels/Death_Full_OriginalInfluenza_RecalOn_FullYear_Sampled",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -561,7 +345,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Full_OriginalInfluenza_RecalOn_First_3_Months",
+                "modelFolder": "recalibratedModels/Hospital_Parsimonious_OriginalInfluenza_RecalOn_First_3_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -585,7 +369,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Full_OriginalInfluenza_RecalOn_First_6_Months",
+                "modelFolder": "recalibratedModels/Hospital_Parsimonious_OriginalInfluenza_RecalOn_First_6_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -609,7 +393,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Full_OriginalInfluenza_RecalOn_First_9_Months",
+                "modelFolder": "recalibratedModels/Hospital_Parsimonious_OriginalInfluenza_RecalOn_First_9_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -633,7 +417,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Full_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "modelFolder": "recalibratedModels/Hospital_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -657,7 +441,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Full_OriginalInfluenza_RecalOn_FullYear_Sampled",
+                "modelFolder": "recalibratedModels/Hospital_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -681,7 +465,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Parsimonious_OriginalInfluenza_RecalOn_First_3_Months",
+                "modelFolder": "recalibratedModels/Hospital_Full_OriginalInfluenza_RecalOn_First_3_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -705,7 +489,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Parsimonious_OriginalInfluenza_RecalOn_First_6_Months",
+                "modelFolder": "recalibratedModels/Hospital_Full_OriginalInfluenza_RecalOn_First_6_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -729,7 +513,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Parsimonious_OriginalInfluenza_RecalOn_First_9_Months",
+                "modelFolder": "recalibratedModels/Hospital_Full_OriginalInfluenza_RecalOn_First_9_Months",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -753,7 +537,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "modelFolder": "recalibratedModels/Hospital_Full_OriginalInfluenza_RecalOn_FullYear_FullPop",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -777,7 +561,247 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "recalibratedModels//Hospital_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
+                "modelFolder": "recalibratedModels/Hospital_Full_OriginalInfluenza_RecalOn_FullYear_Sampled",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": 150000,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Parsimonious_OriginalInfluenza_RecalOn_First_3_Months",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Parsimonious_OriginalInfluenza_RecalOn_First_6_Months",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Parsimonious_OriginalInfluenza_RecalOn_First_9_Months",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": 150000,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Full_OriginalInfluenza_RecalOn_First_3_Months",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Full_OriginalInfluenza_RecalOn_First_6_Months",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Full_OriginalInfluenza_RecalOn_First_9_Months",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Full_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20201231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 13,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels/Critical_Full_OriginalInfluenza_RecalOn_FullYear_Sampled",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -795,7 +819,7 @@
             "attr_class": "validationDesign"
           }
         ],
-        "logLevel": "INFO"
+        "logLevel": "DEBUG"
       },
       "attr_class": ["ModuleSpecifications", "PatientLevelPredictionValidationModuleSpecifications"]
     }
