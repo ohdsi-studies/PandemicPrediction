@@ -111,14 +111,14 @@ promoteRecalibratedModels <- function(sourceDir, destinationDir, modelMap) {
     }
 
     originalCoefficients <- originalModel$model$coefficients$coefficient
-    originalIntercept <- originalModel$model$coefficients$intercept
+    originalIntercept <- originalModel$model$intercept
     newCoefficients <- c(
       recalCoefficients$adjustIntercept + (recalCoefficients$adjustGradient * originalIntercept),
       recalCoefficients$adjustGradient * originalCoefficients
     )
 
     promotedModel <- originalModel
-    promotedModel$model$coefficients$coefficient <- newCoefficients
+    promotedModel$model$coefficients$coefficient <- newCoefficients[-1]
     promotedModel$model$intercept <- newCoefficients[1]
     promotedModel$trainDetails$RECALIBRATION_NOTE <- paste(
       "Recalibrated on",
