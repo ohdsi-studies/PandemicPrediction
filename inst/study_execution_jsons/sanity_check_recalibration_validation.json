@@ -819,7 +819,7 @@
             "attr_class": "validationDesign"
           }
         ],
-        "logLevel": "DEBUG"
+        "logLevel": "INFO"
       },
       "attr_class": ["ModuleSpecifications", "PatientLevelPredictionValidationModuleSpecifications"]
     }

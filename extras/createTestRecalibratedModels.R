@@ -101,8 +101,7 @@ cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifi
 
 predictionValidationModule <- Strategus::PatientLevelPredictionValidationModule$new()
 predictionValidationModuleSpecifications <- predictionValidationModule$createModuleSpecifications(
-  validationList = validationList,
-  logLevel = "DEBUG"
+  validationList = validationList
 )
 
 analysisSpecifications <- Strategus::createEmptyAnalysisSpecificiations() |>
