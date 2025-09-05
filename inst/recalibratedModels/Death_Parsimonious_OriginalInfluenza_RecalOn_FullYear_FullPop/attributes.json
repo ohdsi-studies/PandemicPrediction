@@ -3,5 +3,12 @@
   "predictionFunction": "PandemicPrediction::predictWithRecalibration",
   "modelType": "binary",
   "saveType": "RtoJson",
-  "originalPredictionFunction": "PatientLevelPrediction::predictGlm"
+  "originalPredictionFunction": "PatientLevelPrediction::predictGlm",
+  "recalibration": {
+    "coefficients": {
+      "adjustGradient": 0.1123,
+      "adjustIntercept": -0.5992
+    },
+    "recalibratedOn": "RecalOn_FullYear_FullPop"
+  }
 }

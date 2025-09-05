@@ -79,7 +79,7 @@ promoteRecalibratedModels <- function(destinationDir, masterMap) {
     
     attr(promotedModel, "originalPredictionFunction") <- attr(originalModel, "predictionFunction")
     
-    promotedModel$recalibration <- list(
+    attr(promotedModel, "recalibration") <- list(
       coefficients = recalCoefficients,
       recalibratedOn = getRecalibrationPeriodName(mapRow$recalPeriodSettings[[1]])
     )

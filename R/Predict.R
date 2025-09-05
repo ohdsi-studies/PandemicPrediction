@@ -32,12 +32,12 @@ predictWithRecalibration <- function(plpModel, data, cohort) {
     )
   )
 
-  if (is.null(plpModel$recalibration)) {
-    warning("No recalibration coefficients found on this model. Returning original predictions.")
+  if (is.null(attr(plpModel, "recalibration"))) {
+    ParallelLogger::logWarn("No recalibration coefficients found on this model. Returning original predictions.")
     return(initialPrediction)
   }
 
-  coeffs <- plpModel$recalibration$coefficients
+  coeffs <- attr(plpModel, "recalibration")$coefficients
   message(
     "Applying recalibration with Intercept: ",
     coeffs$adjustIntercept, ", Gradient: ", coeffs$adjustGradient
