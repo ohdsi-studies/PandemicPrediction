@@ -5001,6 +5001,246 @@
             "plpModelList": [
               {
                 "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210101",
+              "studyEndDate": "20210331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210401",
+              "studyEndDate": "20210630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20210701",
+              "studyEndDate": "20210930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20211001",
+              "studyEndDate": "20211231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220101",
+              "studyEndDate": "20220331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220401",
+              "studyEndDate": "20220630",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20220701",
+              "studyEndDate": "20220930",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20221001",
+              "studyEndDate": "20221231",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230101",
+              "studyEndDate": "20230331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_FullPop",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20230401",
+              "studyEndDate": "20230601",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": null,
+            "runCovariateSummary": true,
+            "attr_class": "validationDesign"
+          },
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
                 "modelFolder": "recalibratedModels//Death_Parsimonious_OriginalInfluenza_RecalOn_FullYear_Sampled",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"

@@ -121,7 +121,6 @@ createValidationDesigns <- function(modelDetails) {
       package = packageName
     )
 
-    # Recalibration is OFF for these models as it's already "baked in".
     PatientLevelPrediction::createValidationDesign(
       targetId = targetId,
       outcomeId = outcomeId,
