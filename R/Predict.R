@@ -16,7 +16,7 @@
 #' A prediction data frame with the recalibrated risk values.
 #' @export
 predictWithRecalibration <- function(plpModel, data, cohort) {
-  originalPredictionFunction <- attr(plpModel, "predictionFunction")
+  originalPredictionFunction <- attr(plpModel, "originalPredictionFunction")
 
   message(
     "predictWithRecalibration: Calling base function '",
@@ -32,7 +32,7 @@ predictWithRecalibration <- function(plpModel, data, cohort) {
     )
   )
 
-  if (is.null(plpModel$recalibration) || is.null(plpModel$recalibration$coefficients)) {
+  if (is.null(plpModel$recalibration)) {
     warning("No recalibration coefficients found on this model. Returning original predictions.")
     return(initialPrediction)
   }

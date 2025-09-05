@@ -77,7 +77,7 @@ promoteRecalibratedModels <- function(destinationDir, masterMap) {
     
     promotedModel <- originalModel
     
-    promotedModel$predictionFunction <- attr(originalModel, "predictionFunction")
+    attr(promotedModel, "originalPredictionFunction") <- attr(originalModel, "predictionFunction")
     
     promotedModel$recalibration <- list(
       coefficients = recalCoefficients,
