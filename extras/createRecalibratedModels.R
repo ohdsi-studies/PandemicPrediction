@@ -1,8 +1,7 @@
-originalModelsDir <- "./inst/models/"
+recalibrationJsonPath <- "./inst/study_execution_jsons/recalibration.json"
 recalibrationResultsDir <- "./results/recalibration/"
 recalibratedModelsDir <- "./inst/recalibratedModels/"
 
-# Maps original outcome IDs to descriptive names for folder creation
 getOutcomeName <- function(outcomeId) {
   dplyr::case_when(
     as.character(outcomeId) == "11" ~ "Death",
@@ -11,24 +10,15 @@ getOutcomeName <- function(outcomeId) {
   )
 }
 
-# Determines the feature set from a model object for folder creation
-getFeatureSet <- function(plpModel) {
-  covariateSettingsLength <- length(plpModel$modelDesign$covariateSettings)
-  if (covariateSettingsLength == 1) {
-    return("Full")
-  } else if (covariateSettingsLength > 1) {
-    return("Parsimonious")
-  } else {
-    return("UnknownFeatures")
-  }
+getFeatureSetFromPath <- function(modelPath) {
+  isDataDriven <- grepl("dataDriven", modelPath, fixed = TRUE)
+  return(ifelse(isDataDriven, "Full", "Parsimonious"))
 }
 
-# Determines the recalibration period name for folder creation
 getRecalibrationPeriodName <- function(restrictSettings) {
   startDate <- lubridate::ymd(restrictSettings$studyStartDate)
   endDate <- lubridate::ymd(restrictSettings$studyEndDate)
   sampleSize <- restrictSettings$sampleSize
-
   dplyr::case_when(
     !is.null(sampleSize) & lubridate::interval(startDate, endDate) > lubridate::days(360) ~ "RecalOn_FullYear_Sampled",
     lubridate::interval(startDate, endDate) <= lubridate::days(92) ~ "RecalOn_First_3_Months",
@@ -38,114 +28,84 @@ getRecalibrationPeriodName <- function(restrictSettings) {
   )
 }
 
-createOriginalModelMap <- function(modelsDir) {
-  message("--- Stage 1: Creating a map of original models from: ", modelsDir, " ---")
-
-  modelFolders <- list.dirs(modelsDir, full.names = TRUE, recursive = FALSE)
-
-  modelMap <- purrr::map_dfr(modelFolders, function(modelPath) {
-    plpModel <- PatientLevelPrediction::loadPlpModel(modelPath)
-
-    # Create the unique "fingerprint" for this model
-    fingerprint <- tibble::tibble(
-      modelName = attr(plpModel$modelDesign$modelSettings$param, "settings")$modelType,
-      outcomeId = plpModel$modelDesign$outcomeId,
-      featureSet = getFeatureSet(plpModel),
-      originalModelPath = modelPath
+createMasterMapFromJson <- function(jsonPath) {
+  message("--- Creating a master map from the definitive source: ", jsonPath, " ---")
+  analysisSpec <- jsonlite::fromJSON(jsonPath, simplifyVector = FALSE)
+  validationList <- analysisSpec$moduleSpecifications[[2]]$settings$validationList
+  
+  masterMap <- purrr::imap_dfr(validationList, function(design, index) {
+    modelInfo <- design$plpModelList[[1]]
+    
+    tibble::tibble(
+      analysisId = index,
+      originalModelPath = file.path("./inst", modelInfo$modelFolder),
+      outcomeId = design$outcomeId,
+      recalPeriodSettings = list(design$restrictPlpDataSettings)
     )
-    return(fingerprint)
   })
-
-  message("Successfully created map for ", nrow(modelMap), " original models.")
-  return(modelMap)
+  
+  message("Successfully created definitive map for ", nrow(masterMap), " analysis tasks.")
+  return(masterMap)
 }
 
-promoteRecalibratedModels <- function(sourceDir, destinationDir, modelMap) {
+promoteRecalibratedModels <- function(destinationDir, masterMap) {
   if (!dir.exists(destinationDir)) {
-    message("\n--- Stage 2: Promoting models to: ", destinationDir, " ---")
+    message("\n--- Promoting models to: ", destinationDir, " ---")
     dir.create(destinationDir, recursive = TRUE)
   }
 
-  runPlpPaths <- list.files(
-    path = sourceDir,
-    pattern = "runPlp.rds",
-    recursive = TRUE,
-    full.names = TRUE
-  )
-
-  if (length(runPlpPaths) == 0) {
-    warning("No 'runPlp.rds' files found in: ", sourceDir)
-    return(invisible(NULL))
-  }
-
-  message(sprintf("Found %d recalibration results to process.", length(runPlpPaths)))
   summaryLog <- list()
 
-  for (runPlpPath in runPlpPaths) {
-    # find path of model next to runPlp.rds
-    modelFolderPath <- file.path(dirname(runPlpPath), "model")
-    recalModel <- PatientLevelPrediction::loadPlpModel(modelFolderPath)
-    recalModelDesign <- recalModel$modelDesign
-
-    fingerprintToFind <- tibble::tibble(
-      modelName = attr(recalModelDesign$modelSettings$param, "settings")$modelType,
-      outcomeId = recalModelDesign$outcomeId,
-      featureSet = getFeatureSet(recalModel)
-    )
-
-    matchedModel <- dplyr::inner_join(fingerprintToFind, modelMap, by = c("modelName", "outcomeId", "featureSet"))
-
-    if (nrow(matchedModel) == 0) {
-      warning("Could not find a matching original model for recalibration result: ", runPlpPath)
+  for (i in 1:nrow(masterMap)) {
+    mapRow <- masterMap[i, ]
+    analysisFolderName <- paste0("Analysis_", mapRow$analysisId)
+    runPlpPath <- file.path(recalibrationResultsDir, analysisFolderName, "validationResult", "runPlp.rds")
+    
+    if (!file.exists(runPlpPath)) {
+      warning("Skipping Analysis ", mapRow$analysisId, ": runPlp.rds not found.")
       next
     }
-
-    originalModel <- PatientLevelPrediction::loadPlpModel(matchedModel$originalModelPath)
+    
+    originalModel <- PatientLevelPrediction::loadPlpModel(mapRow$originalModelPath)
     runPlpObject <- readRDS(runPlpPath)
     recalCoefficients <- attr(runPlpObject$prediction, "metaData")$weakRecalibration
-
-    if (is.null(recalCoefficients) || is.null(originalModel$model$coefficients)) {
-      warning("Skipping file: Recalibration coefficients or original coefficients not found for ", runPlpPath)
+    
+    if (is.null(recalCoefficients)) {
+      warning("Skipping Analysis ", mapRow$analysisId, ": Missing recalibration coefficients.")
       next
     }
-
-    originalCoefficients <- originalModel$model$coefficients$coefficient
-    originalIntercept <- originalModel$model$intercept
-    newCoefficients <- c(
-      recalCoefficients$adjustIntercept + (recalCoefficients$adjustGradient * originalIntercept),
-      recalCoefficients$adjustGradient * originalCoefficients
-    )
-
+    
     promotedModel <- originalModel
-    promotedModel$model$coefficients$coefficient <- newCoefficients[-1]
-    promotedModel$model$intercept <- newCoefficients[1]
-    promotedModel$trainDetails$RECALIBRATION_NOTE <- paste(
-      "Recalibrated on",
-      getRecalibrationPeriodName(recalModel$validationDetails$restrictPlpDataSettings)
+    
+    promotedModel$predictionFunction <- attr(originalModel, "predictionFunction")
+    
+    promotedModel$recalibration <- list(
+      coefficients = recalCoefficients,
+      recalibratedOn = getRecalibrationPeriodName(mapRow$recalPeriodSettings[[1]])
     )
-
-    outcomeName <- getOutcomeName(promotedModel$modelDesign$outcomeId)
-    recalPeriodName <- getRecalibrationPeriodName(recalModel$validationDetails$restrictPlpDataSettings)
-
+    
+    attr(promotedModel, "predictionFunction") <- "PandemicPrediction::predictWithRecalibration"
+    
+    outcomeName <- getOutcomeName(mapRow$outcomeId)
+    featureSet <- getFeatureSetFromPath(mapRow$originalModelPath)
+    recalPeriodName <- getRecalibrationPeriodName(mapRow$recalPeriodSettings[[1]])
+    
     newFolderName <- paste(
-      outcomeName,
-      matchedModel$featureSet,
-      "OriginalInfluenza",
-      recalPeriodName,
-      sep = "_"
+      outcomeName, featureSet, "OriginalInfluenza", recalPeriodName, sep = "_"
     )
-
+    
     newModelPath <- file.path(destinationDir, newFolderName)
-    message(sprintf("Saving recalibrated model to: %s", newModelPath))
+    message(sprintf("Saving recalibrated model from Analysis_%d to: %s", mapRow$analysisId, newModelPath))
+    
     PatientLevelPrediction::savePlpModel(plpModel = promotedModel, dirPath = newModelPath)
 
-    summaryLog[[basename(dirname(dirname(runPlpPath)))]] <- newFolderName
+    summaryLog[[analysisFolderName]] <- newFolderName
   }
-
+  
   cat("\n====================================================\n")
   cat("Processing Complete. Summary:\n")
   cat("====================================================\n\n")
-
+  
   if (length(summaryLog) > 0) {
     for (originalName in names(summaryLog)) {
       cat(sprintf("Processed '%s' -> '%s'\n", originalName, summaryLog[[originalName]]))
@@ -154,21 +114,18 @@ promoteRecalibratedModels <- function(sourceDir, destinationDir, modelMap) {
   } else {
     cat("No models were processed.\n")
   }
-
+  
   return(invisible(NULL))
 }
 
-# Clear out the old directory for a clean run
 if (dir.exists(recalibratedModelsDir)) {
   message("Clearing out existing recalibrated models directory...")
   unlink(recalibratedModelsDir, recursive = TRUE)
 }
 
-originalModelMap <- createOriginalModelMap(modelsDir = originalModelsDir)
-print(originalModelMap)
+masterMap <- createMasterMapFromJson(jsonPath = recalibrationJsonPath)
 
 promoteRecalibratedModels(
-  sourceDir = recalibrationResultsDir,
   destinationDir = recalibratedModelsDir,
-  modelMap = originalModelMap
+  masterMap = masterMap
 )

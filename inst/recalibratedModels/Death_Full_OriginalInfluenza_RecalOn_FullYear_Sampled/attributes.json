@@ -1,6 +1,6 @@
 {
   "class": "plpModel",
-  "predictionFunction": "PatientLevelPrediction::predictGlm",
+  "predictionFunction": "PandemicPrediction::predictWithRecalibration",
   "modelType": "binary",
   "saveType": "RtoJson"
 }
