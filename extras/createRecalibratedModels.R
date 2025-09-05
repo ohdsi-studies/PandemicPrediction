@@ -7,8 +7,7 @@ getOutcomeName <- function(outcomeId) {
   dplyr::case_when(
     as.character(outcomeId) == "11" ~ "Death",
     as.character(outcomeId) == "13" ~ "Critical",
-    as.character(outcomeId) == "14" ~ "Hospital",
-    TRUE ~ "UnknownOutcome"
+    as.character(outcomeId) == "14" ~ "Hospital"
   )
 }
 
