@@ -6,7 +6,7 @@
 \usage{
 plotComparison(
   allResults,
-  outcome,
+  outcomes = NULL,
   modelOriginsToCompare,
   featureSetsToCompare,
   devPeriodsToCompare = NULL,
@@ -17,8 +17,6 @@ plotComparison(
 \arguments{
 \item{allResults}{Data frame containing all results}
 
-\item{outcome}{Outcome name to filter by ("Death", "Critical", "Hospital")}
-
 \item{modelOriginsToCompare}{Vector of model origins to compare (e.g., c("New Covid", "Original Influenza"))}
 
 \item{featureSetsToCompare}{Vector of feature sets to compare (e.g., c("Parsimonious", "Full"))}
@@ -26,6 +24,8 @@ plotComparison(
 \item{devPeriodsToCompare}{Optional vector of development periods to compare (e.g., c("First 3 Months", "Full Year 2020"))}
 
 \item{title}{Optional title for the plot}
+
+\item{outcome}{Outcome name to filter by ("Death", "Critical", "Hospital")}
 }
 \value{
 A ggplot object representing the comparison

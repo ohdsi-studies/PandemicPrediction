@@ -3,5 +3,6 @@
 export(getAnalysisResults)
 export(loadStudySpec)
 export(plotComparison)
+export(predictWithRecalibration)
 export(viewResults)
 importFrom(rlang,.data)
