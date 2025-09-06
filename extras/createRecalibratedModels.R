@@ -79,10 +79,15 @@ promoteRecalibratedModels <- function(destinationDir, masterMap) {
     
     attr(promotedModel, "originalPredictionFunction") <- attr(originalModel, "predictionFunction")
     
+    recalPeriodName <- getRecalibrationPeriodName(mapRow$recalPeriodSettings[[1]])
     attr(promotedModel, "recalibration") <- list(
       coefficients = recalCoefficients,
-      recalibratedOn = getRecalibrationPeriodName(mapRow$recalPeriodSettings[[1]])
+      recalibratedOn = recalPeriodName
     )
+    
+    promotedModel$modelDesign$modelSettings$recalibrationPeriod <- recalPeriodName
+
+  
     
     attr(promotedModel, "predictionFunction") <- "PandemicPrediction::predictWithRecalibration"
     

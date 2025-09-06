@@ -6,4 +6,5 @@
 .vscode
 myCodeToRun.R
 /results
+/run-results/
 /renv

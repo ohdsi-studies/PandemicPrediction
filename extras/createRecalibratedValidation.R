@@ -151,6 +151,8 @@ cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
   cohortFileNameValue = c("cohortId", "cohortName")
 )
 
+cohortDefinitionSet <- cohortDefinitionSet |>
+  dplyr::filter(.data$cohortId != 30) # only used for development
 cohortGeneratorModule <- Strategus::CohortGeneratorModule$new()
 cohortDefinitionShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitionSet)
 cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(generateStats = TRUE)
