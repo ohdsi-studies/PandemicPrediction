@@ -15,6 +15,7 @@ library(plotly)
 library(crosstalk)
 library(htmltools)
 library(ggthemes)
+library(colorspace)
 library(tidyr)
 library(PandemicPrediction)
 
@@ -120,17 +121,41 @@ expandedUnified <- expand_by_dev(unifiedResults, devLevels)
 devData <- expandedUnified |> dplyr::filter(.data$analysisId == "dev")
 valData <- expandedUnified |> dplyr::filter(.data$analysisId != "dev")
 
-allLevels <- sort(unique(c(valData$fullName, devData$fullName)))
+# Build per-model palette with strong separation by origin
+modelKey <- expandedUnified |>
+  dplyr::distinct(fullName, modelOrigin)
+
+influenzaModels <- modelKey |>
+  dplyr::filter(.data$modelOrigin == "Original Influenza") |>
+  dplyr::arrange(.data$fullName) |>
+  dplyr::pull(.data$fullName)
+
+covidModels <- modelKey |>
+  dplyr::filter(.data$modelOrigin == "New Covid") |>
+  dplyr::arrange(.data$fullName) |>
+  dplyr::pull(.data$fullName)
+
+# Order factor levels so the legend shows Influenza block then Covid block
+allLevels <- c(influenzaModels, covidModels)
 devData$fullName <- factor(devData$fullName, levels = allLevels)
 valData$fullName <- factor(valData$fullName, levels = allLevels)
 
-# Color by model origin (ensure consistent ordering)
-originLevels <- c("Original Influenza", "New Covid")
-devData$modelOrigin <- factor(devData$modelOrigin, levels = originLevels)
-valData$modelOrigin <- factor(valData$modelOrigin, levels = originLevels)
+# Origin-specific qualitative palettes (colorblind-friendly)
+palInf <- colorspace::qualitative_hcl(
+  n = length(influenzaModels),
+  h = c(195, 255),  # blue-cyan range
+  c = 85,
+  l = 55
+)
+palCov <- colorspace::qualitative_hcl(
+  n = length(covidModels),
+  h = c(350, 20),   # red-magenta range (wraps through 360)
+  c = 85,
+  l = 55
+)
 
-# Two-color, colorblind-friendly palette by origin
-originPalette <- c("#1f78b4", "#e31a1c")  # Influenza = blue, Covid = red
+# Final model palette in the same order as allLevels
+modelPalette <- c(palInf, palCov)
 
 xRange <- dplyr::bind_rows(
   dplyr::select(valData, start = startDate, end = endDate),
@@ -240,7 +265,7 @@ p <- plot_ly(source = "main_plot") |>
   # Validation segments (solid)
   add_segments(
     data = sharedVal,
-    split = ~fullName, color = ~modelOrigin, colors = originPalette,
+    split = ~fullName, color = ~fullName, colors = modelPalette,
     x = ~startDate, xend = ~endDate,
     y = ~AUROC, yend = ~AUROC,
     name = ~legendShort,
@@ -259,7 +284,7 @@ p <- plot_ly(source = "main_plot") |>
   # Development segments (dashed)
   add_segments(
     data = sharedDev,
-    split = ~fullName, color = ~modelOrigin, colors = originPalette,
+    split = ~fullName, color = ~fullName, colors = modelPalette,
     x = ~devStartDate, xend = ~devEndDate,
     y = ~AUROC, yend = ~AUROC,
     name = ~legendShort,
@@ -276,14 +301,14 @@ p <- plot_ly(source = "main_plot") |>
   # Validation markers at segment ends
   add_markers(
     data = sharedVal,
-    split = ~fullName, color = ~modelOrigin, colors = originPalette,
+    split = ~fullName, color = ~fullName, colors = modelPalette,
     x = ~startDate, y = ~AUROC,
     legendgroup = ~fullName,
     showlegend = FALSE, hoverinfo = "none"
   ) |>
   add_markers(
     data = sharedVal,
-    split = ~fullName, color = ~modelOrigin, colors = originPalette,
+    split = ~fullName, color = ~fullName, colors = modelPalette,
     x = ~endDate, y = ~AUROC,
     legendgroup = ~fullName,
     showlegend = FALSE, hoverinfo = "none"
