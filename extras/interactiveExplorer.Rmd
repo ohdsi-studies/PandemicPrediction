@@ -64,7 +64,8 @@ unifiedResults <- allResults |>
   )
 
 # --- Create ONE SINGLE SharedData object from the unified data ---
-sharedResults <- SharedData$new(unifiedResults, ~fullName)
+sharedAll <- SharedData$new(unifiedResults, ~fullName, group = "models")
+sharedVal <- SharedData$new(dplyr::filter(unifiedResults, analysisId != "dev"), ~fullName, group = "models")
 ```
 <style>
 /* Optional CSS for a cleaner layout */
@@ -98,7 +99,7 @@ div(
   filter_select(
     id = "outcome",
     label = "Select Outcome:",
-    sharedData = sharedResults,
+    sharedData = sharedAll,
     group = ~outcomeName
   ),
   hr(), # Horizontal line for separation
@@ -107,21 +108,21 @@ div(
   filter_checkbox(
     id = "modelorigin",
     label = "Model Origin:",
-    sharedData = sharedResults,
+    sharedData = sharedAll,
     group = ~modelOrigin,
     inline = FALSE # Stack the checkboxes vertically
   ),
   filter_checkbox(
     id = "featureset",
     label = "Feature Set:",
-    sharedData = sharedResults,
+    sharedData = sharedAll,
     group = ~featureSet,
     inline = FALSE
   ),
   filter_checkbox(
     id = "devperiod",
     label = "Development Period:",
-    sharedData = sharedResults,
+    sharedData = sharedAll,
     group = ~devPeriod,
     inline = FALSE
   )
@@ -140,21 +141,21 @@ div(
 # This is the magic that allows filters and plots to communicate.
 
 # Create the plot
-p <- plot_ly(data=sharedResults, source = "main_plot") |>
+p <- plot_ly(data = sharedAll, source = "main_plot") |>
   # --- Layer 1: Development Performance (Dashed Segments) ---
   add_segments(
-    x = ~plotStartDate, xend = ~plotEndDate,
-    y = ~AUROC, yend = ~AUROC,
-    color = ~fullName,
-    line = ~list(dash = lineType),
-    legendgroup = ~fullName,
-    name = ~legendLabel,
-    hoverinfo = "text",
-    text = ~hoverText,
-  ) |>
+      x = ~plotStartDate, xend = ~plotEndDate,
+      y = ~AUROC, yend = ~AUROC,
+      color = ~fullName,
+      linetype = ~lineType,
+      legendgroup = ~fullName,
+      name = ~legendLabel,
+      hoverinfo = "text",
+      text = ~hoverText
+    ) |>
   # --- Add markers at the start and end of validation segments ---
   add_markers(
-    data = allResults |> dbplyr::filter(analysisId != "dev"),
+    data = sharedVal,
     x = ~plotStartDate, y = ~AUROC,
     color = ~fullName,
     legendgroup = ~fullName,
@@ -162,7 +163,7 @@ p <- plot_ly(data=sharedResults, source = "main_plot") |>
     hoverinfo = "none" # No separate tooltip for the marker itself
   ) |>
   add_markers(
-    data = allResults |> dbplyr::filter(analysisId != "dev"),
+    data = sharedVal,
     x = ~plotEndDate, y = ~AUROC,
     color = ~fullName,
     legendgroup = ~fullName,
