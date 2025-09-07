@@ -124,22 +124,13 @@ allLevels <- sort(unique(c(valData$fullName, devData$fullName)))
 devData$fullName <- factor(devData$fullName, levels = allLevels)
 valData$fullName <- factor(valData$fullName, levels = allLevels)
 
-# Safer color palette (avoid white/too-light colors)
-safePalette <- function(n) {
-  if (n <= 8) {
-    pal <- ggthemes::colorblind_pal()(n)
-  } else {
-    pal <- ggthemes::tableau_color_pal("Tableau 20")(n)
-  }
-  getLum <- function(hex) {
-    rgb <- grDevices::col2rgb(hex) / 255
-    0.2126 * rgb[1, ] + 0.7152 * rgb[2, ] + 0.0722 * rgb[3, ]
-  }
-  tooLight <- getLum(pal) > 0.92
-  pal[tooLight] <- "#7F7F7F"
-  pal
-}
-palette <- safePalette(length(allLevels))
+# Color by model origin (ensure consistent ordering)
+originLevels <- c("Original Influenza", "New Covid")
+devData$modelOrigin <- factor(devData$modelOrigin, levels = originLevels)
+valData$modelOrigin <- factor(valData$modelOrigin, levels = originLevels)
+
+# Two-color, colorblind-friendly palette by origin
+originPalette <- c("#1f78b4", "#e31a1c")  # Influenza = blue, Covid = red
 
 xRange <- dplyr::bind_rows(
   dplyr::select(valData, start = startDate, end = endDate),
@@ -249,7 +240,7 @@ p <- plot_ly(source = "main_plot") |>
   # Validation segments (solid)
   add_segments(
     data = sharedVal,
-    split = ~fullName, color = ~fullName, colors = palette,
+    split = ~fullName, color = ~modelOrigin, colors = originPalette,
     x = ~startDate, xend = ~endDate,
     y = ~AUROC, yend = ~AUROC,
     name = ~legendShort,
@@ -268,7 +259,7 @@ p <- plot_ly(source = "main_plot") |>
   # Development segments (dashed)
   add_segments(
     data = sharedDev,
-    split = ~fullName, color = ~fullName, colors = palette,
+    split = ~fullName, color = ~modelOrigin, colors = originPalette,
     x = ~devStartDate, xend = ~devEndDate,
     y = ~AUROC, yend = ~AUROC,
     name = ~legendShort,
@@ -285,14 +276,14 @@ p <- plot_ly(source = "main_plot") |>
   # Validation markers at segment ends
   add_markers(
     data = sharedVal,
-    split = ~fullName, color = ~fullName, colors = palette,
+    split = ~fullName, color = ~modelOrigin, colors = originPalette,
     x = ~startDate, y = ~AUROC,
     legendgroup = ~fullName,
     showlegend = FALSE, hoverinfo = "none"
   ) |>
   add_markers(
     data = sharedVal,
-    split = ~fullName, color = ~fullName, colors = palette,
+    split = ~fullName, color = ~modelOrigin, colors = originPalette,
     x = ~endDate, y = ~AUROC,
     legendgroup = ~fullName,
     showlegend = FALSE, hoverinfo = "none"
