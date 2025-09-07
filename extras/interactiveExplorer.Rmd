@@ -14,6 +14,7 @@ library(dplyr)
 library(plotly)
 library(crosstalk)
 library(htmltools)
+library(ggthemes)
 library(PandemicPrediction)
 
 # --- Load the master results data frame ---
@@ -63,9 +64,46 @@ unifiedResults <- allResults |>
     )
   )
 
-# --- Create ONE SINGLE SharedData object from the unified data ---
+# --- SharedData and plotting prep (match ggplot styling) ---
 sharedAll <- SharedData$new(unifiedResults, ~fullName, group = "models")
-sharedVal <- SharedData$new(dplyr::filter(unifiedResults, analysisId != "dev"), ~fullName, group = "models")
+
+devData <- unifiedResults |> dplyr::filter(analysisId == "dev")
+valData <- unifiedResults |> dplyr::filter(analysisId != "dev")
+
+allLevels <- sort(unique(c(valData$fullName, devData$fullName)))
+devData$fullName <- factor(devData$fullName, levels = allLevels)
+valData$fullName <- factor(valData$fullName, levels = allLevels)
+
+palette <- ggthemes::tableau_color_pal("Tableau 20")(length(allLevels))
+
+xRange <- dplyr::bind_rows(
+  dplyr::select(valData, start = startDate, end = endDate),
+  dplyr::select(devData, start = devStartDate, end = devEndDate)
+) |>
+  dplyr::summarise(
+    xmin = min(start, na.rm = TRUE),
+    xmax = max(end, na.rm = TRUE)
+  ) |>
+  dplyr::mutate(
+    span = as.numeric(xmax - xmin),
+    legendX = xmax - pmax(2, ceiling(0.02 * span))
+  ) |>
+  dplyr::slice(1)
+
+legendData <- valData |>
+  dplyr::distinct(fullName, legendLabel) |>
+  dplyr::arrange(fullName) |>
+  dplyr::mutate(
+    n = dplyr::n(),
+    gap = pmin(0.07, (0.70 - 0.52) / pmax(1, n - 1)),
+    labelY = 0.52 + (dplyr::row_number() - 1) * gap,
+    labelX = xRange$legendX
+  ) |>
+  dplyr::select(-n, -gap)
+
+sharedDev <- SharedData$new(devData, ~fullName, group = "models")
+sharedVal <- SharedData$new(valData, ~fullName, group = "models")
+sharedLabels <- SharedData$new(legendData, ~fullName, group = "models")
 ```
 <style>
 /* Optional CSS for a cleaner layout */
@@ -141,42 +179,63 @@ div(
 # This is the magic that allows filters and plots to communicate.
 
 # Create the plot
-p <- plot_ly(data = sharedAll, source = "main_plot") |>
-  # --- Layer 1: Development Performance (Dashed Segments) ---
+p <- plot_ly(source = "main_plot") |>
+  # Validation segments (solid)
   add_segments(
-      x = ~plotStartDate, xend = ~plotEndDate,
-      y = ~AUROC, yend = ~AUROC,
-      color = ~fullName,
-      linetype = ~lineType,
-      legendgroup = ~fullName,
-      name = ~legendLabel,
-      hoverinfo = "text",
-      text = ~hoverText
-    ) |>
-  # --- Add markers at the start and end of validation segments ---
+    data = sharedVal,
+    split = ~fullName, color = ~fullName, colors = palette,
+    x = ~startDate, xend = ~endDate,
+    y = ~AUROC, yend = ~AUROC,
+    line = list(width = 1.2, dash = "solid"),
+    hoverinfo = "text", text = ~hoverText,
+    showlegend = FALSE
+  ) |>
+  # Development segments (dashed)
+  add_segments(
+    data = sharedDev,
+    split = ~fullName, color = ~fullName, colors = palette,
+    x = ~devStartDate, xend = ~devEndDate,
+    y = ~AUROC, yend = ~AUROC,
+    line = list(width = 1.2, dash = "dash"),
+    hoverinfo = "text", text = ~hoverText,
+    showlegend = FALSE
+  ) |>
+  # Validation markers at segment ends
   add_markers(
     data = sharedVal,
-    x = ~plotStartDate, y = ~AUROC,
-    color = ~fullName,
-    legendgroup = ~fullName,
-    showlegend = FALSE,
-    hoverinfo = "none" # No separate tooltip for the marker itself
+    split = ~fullName, color = ~fullName, colors = palette,
+    x = ~startDate, y = ~AUROC,
+    showlegend = FALSE, hoverinfo = "none"
   ) |>
   add_markers(
     data = sharedVal,
-    x = ~plotEndDate, y = ~AUROC,
-    color = ~fullName,
-    legendgroup = ~fullName,
-    showlegend = FALSE,
-    hoverinfo = "none"
+    split = ~fullName, color = ~fullName, colors = palette,
+    x = ~endDate, y = ~AUROC,
+    showlegend = FALSE, hoverinfo = "none"
   ) |>
-  # --- Layout and Styling ---
+  # Inline legend labels (color-coded, near right edge)
+  add_text(
+    data = sharedLabels,
+    split = ~fullName, color = ~fullName, colors = palette,
+    x = ~labelX, y = ~labelY, text = ~legendLabel,
+    textposition = "middle right",
+    textfont = list(size = 14),
+    showlegend = FALSE, hoverinfo = "none"
+  ) |>
   layout(
     title = "Interactive Model Performance Explorer",
-    xaxis = list(title = "Validation Period", type = "date"),
+    xaxis = list(
+      title = "Validation Period",
+      type = "date",
+      range = c(xRange$xmin, xRange$xmax),
+      tickformat = "%b %Y",
+      dtick = "M3",
+      tickangle = 45
+    ),
     yaxis = list(title = "AUROC", range = c(0.5, 1)),
-    legend = list(orientation = "v", y = 1, x = 1.05),
-    hovermode = "x unified"
+    hovermode = "x unified",
+    showlegend = FALSE,
+    margin = list(t = 60, r = 20, b = 60, l = 60)
   )
 
 # Print the final plot
