@@ -1,0 +1,274 @@
+---
+title: "Model Performance Explorer"
+format:
+  html:
+    theme: cosmo
+    dark: slate
+    theme-toggle: true
+    code-fold: false
+    toc: false
+server: shiny
+execute:
+  echo: false
+---
+
+```{r}
+# ---- Setup ----
+library(dplyr)
+library(plotly)
+library(colorspace)
+library(PandemicPrediction)
+
+# Load results (re-use your DBs if no RDS is present)
+if (file.exists("all_results.rds")) {
+  allResults <- readRDS("all_results.rds")
+} else {
+  allResults <- dplyr::bind_rows(
+    getAnalysisResults(
+      databasePath = "../results/development/databaseFile.sqlite",
+      evaluationType = "Test",
+      analysisId = "dev"
+    ),
+    getAnalysisResults(
+      databasePath = "../results/validation/databaseFile.sqlite",
+      evaluationType = "Validation",
+      analysisId = "val_original"
+    ),
+    getAnalysisResults(
+      databasePath = "../results/new-model-validation/databaseFile.sqlite",
+      evaluationType = "Validation",
+      analysisId = "val_new"
+    )
+  )
+}
+
+# Short, readable legend labels
+allResults <- allResults |>
+  dplyr::mutate(
+    outcomeShort = substr(.data$outcomeName, 1, 1),
+    featShort = substr(.data$featureSet, 1, 1),
+    originShort = dplyr::case_when(
+      .data$modelOrigin == "Original Influenza" ~ "Inf",
+      .data$modelOrigin == "New Covid" ~ "Cov",
+      TRUE ~ "Unk"
+    ),
+    devShort = dplyr::recode(
+      .data$devPeriod,
+      "First 3 Months" = "3m",
+      "First 6 Months" = "6m",
+      "First 9 Months" = "9m",
+      "Full Year 2020 (Sampled)" = "FY-S",
+      "Full Year 2020 (Full Pop.)" = "FY-FP",
+      .default = NA_character_
+    ),
+    legendShort = dplyr::if_else(
+      .data$modelOrigin == "New Covid",
+      paste0(.data$outcomeShort, "-", .data$featShort, " ", .data$originShort, " ", .data$devShort),
+      paste0(.data$outcomeShort, "-", .data$featShort, " ", .data$originShort)
+    )
+  )
+```
+
+```{r}
+# ---- UI ----
+sidebarLayout(
+  sidebarPanel(
+    width = 3,
+    selectInput(
+      inputId = "outcome",
+      label = "Outcome",
+      choices = sort(unique(allResults$outcomeName)),
+      selected = sort(unique(allResults$outcomeName)),
+      multiple = TRUE
+    ),
+    checkboxGroupInput(
+      inputId = "origin",
+      label = "Model origin",
+      choices = c("Original Influenza", "New Covid"),
+      selected = c("Original Influenza", "New Covid")
+    ),
+    checkboxGroupInput(
+      inputId = "feat",
+      label = "Feature set",
+      choices = sort(unique(allResults$featureSet)),
+      selected = sort(unique(allResults$featureSet))
+    ),
+    checkboxGroupInput(
+      inputId = "dev",
+      label = "Development period (Covid models)",
+      choices = sort(stats::na.omit(unique(allResults$devPeriod))),
+      selected = NULL
+    ),
+    helpText("Tip: Selecting a development period filters Covid models by that period but keeps Influenza models for comparison.")
+  ),
+  mainPanel(
+    width = 9,
+    plotlyOutput("perf", height = "720px")
+  )
+)
+```
+
+```{r}
+# ---- Server (reactive filters and plot) ----
+
+filtered <- reactive({
+  df <- allResults
+  # Outcome
+  if (length(input$outcome)) {
+    df <- df |> dplyr::filter(.data$outcomeName %in% input$outcome)
+  }
+  # Origin + Feature set
+  df <- df |>
+    dplyr::filter(
+      .data$modelOrigin %in% input$origin,
+      .data$featureSet %in% input$feat
+    )
+  # Dev period: keep Influenza even when specific Covid dev periods are selected
+  if (length(input$dev)) {
+    df <- df |>
+      dplyr::filter(.data$modelOrigin != "New Covid" | .data$devPeriod %in% input$dev)
+  }
+  df
+})
+
+output$perf <- plotly::renderPlotly({
+  df <- filtered()
+
+  # Split dev vs validation
+  devData <- df |> dplyr::filter(.data$analysisId == "dev")
+  valData <- df |> dplyr::filter(.data$analysisId != "dev")
+
+  validate(need(nrow(valData) > 0, "No validation data for current selections."))
+
+  # Per-model palette with strong origin separation
+  modelKey <- df |> dplyr::distinct(fullName, modelOrigin)
+
+  influenzaModels <- modelKey |>
+    dplyr::filter(.data$modelOrigin == "Original Influenza") |>
+    dplyr::arrange(.data$fullName) |>
+    dplyr::pull(.data$fullName)
+
+  covidModels <- modelKey |>
+    dplyr::filter(.data$modelOrigin == "New Covid") |>
+    dplyr::arrange(.data$fullName) |>
+    dplyr::pull(.data$fullName)
+
+  allLevels <- c(influenzaModels, covidModels)
+  devData$fullName <- factor(devData$fullName, levels = allLevels)
+  valData$fullName <- factor(valData$fullName, levels = allLevels)
+
+  palInf <- colorspace::qualitative_hcl(n = length(influenzaModels), h = c(195, 255), c = 85, l = 55)
+  palCov <- colorspace::qualitative_hcl(n = length(covidModels),    h = c(350,  20), c = 85, l = 55)
+  modelPalette <- c(palInf, palCov)
+
+  # Global x-range
+  xRange <- dplyr::bind_rows(
+    dplyr::select(valData, start = startDate, end = endDate),
+    dplyr::select(devData, start = devStartDate, end = devEndDate)
+  ) |>
+    dplyr::summarise(
+      xmin = min(start, na.rm = TRUE),
+      xmax = max(end, na.rm = TRUE)
+    )
+
+  # Hover text pre-formatting
+  valData <- valData |>
+    dplyr::mutate(
+      startDateTime = as.POSIXct(.data$startDate),
+      endDateTime = as.POSIXct(.data$endDate)
+    )
+  devData <- devData |>
+    dplyr::mutate(
+      devStartDateTime = as.POSIXct(.data$devStartDate),
+      devEndDateTime = as.POSIXct(.data$devEndDate)
+    )
+
+  # Build plot
+  p <- plot_ly(source = "perf_plot") |>
+    # Validation segments (solid)
+    add_segments(
+      data = valData,
+      split = ~fullName, color = ~fullName, colors = modelPalette,
+      x = ~startDate, xend = ~endDate,
+      y = ~AUROC, yend = ~AUROC,
+      name = ~legendShort,
+      legendgroup = ~fullName,
+      line = list(width = 1.2, dash = "solid"),
+      text = ~paste0(
+        "<b>", legendShort, "</b><br>",
+        "AUROC: ", sprintf("%.3f", AUROC), "<br>",
+        "Validation: ", format(startDateTime, "%Y-%m-%d"), " \u2192 ", format(endDateTime, "%Y-%m-%d"), "<br>",
+        "N: ", format(populationSize, big.mark = ",", scientific = FALSE),
+        "  |  Outcomes: ", format(outcomeCount, big.mark = ",", scientific = FALSE)
+      ),
+      hovertemplate = "%{text}<extra></extra>",
+      showlegend = TRUE
+    ) |>
+    # Development segments (dashed)
+    add_segments(
+      data = devData,
+      split = ~fullName, color = ~fullName, colors = modelPalette,
+      x = ~devStartDate, xend = ~devEndDate,
+      y = ~AUROC, yend = ~AUROC,
+      name = ~legendShort,
+      legendgroup = ~fullName,
+      line = list(width = 1.2, dash = "dash"),
+      text = ~paste0(
+        "<b>", legendShort, "</b><br>",
+        "AUROC: ", sprintf("%.3f", AUROC), "<br>",
+        "Development: ", format(devStartDateTime, "%Y-%m-%d"), " \u2192 ", format(devEndDateTime, "%Y-%m-%d")
+      ),
+      hovertemplate = "%{text}<extra></extra>",
+      showlegend = FALSE
+    ) |>
+    # Markers at validation segment ends
+    add_markers(
+      data = valData,
+      split = ~fullName, color = ~fullName, colors = modelPalette,
+      x = ~startDate, y = ~AUROC,
+      legendgroup = ~fullName,
+      showlegend = FALSE, hoverinfo = "none"
+    ) |>
+    add_markers(
+      data = valData,
+      split = ~fullName, color = ~fullName, colors = modelPalette,
+      x = ~endDate, y = ~AUROC,
+      legendgroup = ~fullName,
+      showlegend = FALSE, hoverinfo = "none"
+    ) |>
+    layout(
+      title = "Interactive Model Performance Explorer",
+      xaxis = list(
+        title = "Validation Period",
+        type = "date",
+        range = c(xRange$xmin, xRange$xmax),
+        tickformat = "%b %Y",
+        dtick = "M3",
+        tickangle = 45,
+        rangeslider = list(visible = TRUE),
+        showspikes = TRUE,
+        spikemode = "across",
+        spikesnap = "cursor",
+        spikecolor = "rgba(0,0,0,0.25)",
+        spikethickness = 1
+      ),
+      yaxis = list(title = "AUROC", range = c(0.5, 1)),
+      hovermode = "x unified",
+      hoverlabel = list(font = list(size = 11)),
+      showlegend = TRUE,
+      legend = list(
+        orientation = "v",
+        x = 1.02, xanchor = "left",
+        y = 1, yanchor = "top",
+        font = list(size = 11),
+        itemsizing = "constant",
+        itemwidth = 20,
+        itemclick = "toggleothers",
+        itemdoubleclick = "toggle"
+      ),
+      margin = list(t = 60, r = 180, b = 100, l = 60)
+    )
+
+  p
+})
+```
