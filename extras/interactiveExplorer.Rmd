@@ -14,6 +14,7 @@ library(dplyr)
 library(plotly)
 library(crosstalk)
 library(htmltools)
+library(htmlwidgets)
 library(ggthemes)
 library(colorspace)
 library(tidyr)
@@ -188,22 +189,21 @@ sharedDev <- SharedData$new(devData, ~fullName, group = "models")
 sharedVal <- SharedData$new(valData, ~fullName, group = "models")
 ```
 <style>
-/* Optional CSS for a cleaner layout */
-.container {
-display: flex;
-flex-direction: row;
-gap: 20px;
-}
-.filters {
-flex: 1;
-min-width: 200px;
-}
-.plot {
-flex: 4;
-}
-</style>
+  :root { --bg: #ffffff; --fg: #111111; --panel: #f7f7f7; --border: #dddddd; --link: #3a7bd5; }
+  body.dark { --bg: #1e1e1e; --fg: #e2e2e2; --panel: #2a2a2a; --border: #444444; --link: #82b1ff; }
+  body { background-color: var(--bg); color: var(--fg); }
+  a { color: var(--link); }
+  .container { display: flex; flex-direction: row; gap: 20px; }
+  .filters { flex: 1; min-width: 200px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 10px; }
+  .plot { flex: 4; }
+  .theme-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .theme-toggle input { transform: scale(1.1); }
+  </style>
 <div class="container">
 <div class="filters">
+<div class="theme-toggle">
+    <label><input type="checkbox" id="darkModeToggle"> Dark mode</label>
+  </div>
 Filters
 ```{r filters, echo=FALSE}
 # ============================================================================
@@ -345,6 +345,44 @@ p <- plot_ly(source = "main_plot") |>
     ),
     margin = list(t = 60, r = 180, b = 100, l = 60)
   )
+
+p <- htmlwidgets::onRender(p, "
+  function(el, x) {
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      var layoutUpdate = dark ? {
+        template: 'plotly_dark',
+        paper_bgcolor: '#1e1e1e',
+        plot_bgcolor: '#1e1e1e',
+        font: {color: '#e2e2e2'},
+        xaxis: {gridcolor: '#444', zerolinecolor: '#444'},
+        yaxis: {gridcolor: '#444', zerolinecolor: '#444'},
+        legend: {bgcolor: 'rgba(30,30,30,0.85)', bordercolor: '#555', borderwidth: 1}
+      } : {
+        template: 'plotly_white',
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#ffffff',
+        font: {color: '#222'},
+        xaxis: {gridcolor: '#e5e5e5', zerolinecolor: '#e5e5e5'},
+        yaxis: {gridcolor: '#e5e5e5', zerolinecolor: '#e5e5e5'},
+        legend: {bgcolor: 'rgba(255,255,255,0.85)', bordercolor: '#ddd', borderwidth: 1}
+      };
+      Plotly.relayout(el, layoutUpdate);
+    }
+    var toggle = document.getElementById('darkModeToggle');
+    var mql = window.matchMedia('(prefers-color-scheme: dark)');
+    // Initialize from OS preference unless user already toggled
+    if (toggle && !toggle.hasAttribute('data-initialized')) {
+      toggle.checked = mql.matches;
+      toggle.setAttribute('data-initialized','1');
+    }
+    var startDark = toggle ? toggle.checked : mql.matches;
+    applyTheme(startDark);
+    if (toggle) {
+      toggle.addEventListener('change', function(e){ applyTheme(e.target.checked); });
+    }
+  }
+  ")
 
 # Print the final plot
 p
