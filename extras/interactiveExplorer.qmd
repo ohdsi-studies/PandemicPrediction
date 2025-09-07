@@ -23,27 +23,48 @@ library(colorspace)
 library(PandemicPrediction)
 library(shiny)
 
+resultsRoot <- Sys.getenv("PP_RESULTS_DIR", "../results")
+
+safeGet <- function(relPath, evaluationType, analysisId) {
+  path <- file.path(resultsRoot, relPath)
+  if (!file.exists(path)) {
+    message("Skipping missing DB: ", path)
+    return(dplyr::tibble())
+  }
+  tryCatch(
+    getAnalysisResults(
+      databasePath = path,
+      evaluationType = evaluationType,
+      analysisId = analysisId
+    ),
+    error = function(e) {
+      warning("Skipping ", path, " due to error: ", conditionMessage(e))
+      dplyr::tibble()
+    }
+  )
+}
+
 # Load results (re-use your DBs if no RDS is present)
 if (file.exists("all_results.rds")) {
   allResults <- readRDS("all_results.rds")
 } else {
-  allResults <- dplyr::bind_rows(
-    getAnalysisResults(
-      databasePath = "../results/development/databaseFile.sqlite",
-      evaluationType = "Test",
-      analysisId = "dev"
-    ),
-    getAnalysisResults(
-      databasePath = "../results/validation/databaseFile.sqlite",
-      evaluationType = "Validation",
-      analysisId = "val_original"
-    ),
-    getAnalysisResults(
-      databasePath = "../results/new-model-validation/databaseFile.sqlite",
-      evaluationType = "Validation",
-      analysisId = "val_new"
+  dev <- safeGet("development/databaseFile.sqlite", "Test", "dev")
+  valOrig <- safeGet("validation/databaseFile.sqlite", "Validation", "val_original")
+  valNew <- safeGet("new-model-validation/databaseFile.sqlite", "Validation", "val_new")
+
+  allResults <- dplyr::bind_rows(dev, valOrig, valNew)
+
+  if (nrow(allResults) == 0) {
+    warning("No results found. Provide all_results.rds or set PP_RESULTS_DIR to a folder containing the SQLite results.")
+    allResults <- tibble::tibble(
+      analysisId = character(), modelOrigin = character(), featureSet = character(), devPeriod = character(),
+      startDate = as.Date(character()), endDate = as.Date(character()),
+      devStartDate = as.Date(character()), devEndDate = as.Date(character()),
+      targetId = integer(), outcomeId = integer(), targetName = character(), outcomeName = character(),
+      fullName = character(), legendLabel = character(), AUROC = numeric(), populationSize = integer(),
+      outcomeCount = integer(), Eavg = numeric()
     )
-  )
+  }
 }
 
 # Short, readable legend labels
