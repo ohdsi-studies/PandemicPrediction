@@ -13,11 +13,13 @@ execute:
 ---
 
 ```{r}
+  #| context: setup
 # ---- Setup ----
 library(dplyr)
 library(plotly)
 library(colorspace)
 library(PandemicPrediction)
+library(shiny)
 
 # Load results (re-use your DBs if no RDS is present)
 if (file.exists("all_results.rds")) {
@@ -109,6 +111,7 @@ sidebarLayout(
 ```
 
 ```{r}
+  #| context: server
 # ---- Server (reactive filters and plot) ----
 
 filtered <- reactive({
@@ -138,7 +141,7 @@ output$perf <- plotly::renderPlotly({
   devData <- df |> dplyr::filter(.data$analysisId == "dev")
   valData <- df |> dplyr::filter(.data$analysisId != "dev")
 
-  validate(need(nrow(valData) > 0, "No validation data for current selections."))
+  shiny::validate(shiny::need(nrow(valData) > 0, "No validation data for current selections."))
 
   # Per-model palette with strong origin separation
   modelKey <- df |> dplyr::distinct(fullName, modelOrigin)
