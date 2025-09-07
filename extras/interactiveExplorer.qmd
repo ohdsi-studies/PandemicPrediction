@@ -10,6 +10,7 @@ format:
 server: shiny
 execute:
   echo: false
+  dir: file
 ---
 
 ```{r}
