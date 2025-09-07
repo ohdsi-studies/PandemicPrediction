@@ -103,7 +103,10 @@ devLevels <- unifiedResults |>
 expand_by_dev <- function(df, devLevels) {
   inf <- df |> dplyr::filter(.data$modelOrigin != "New Covid")
   if (length(devLevels) > 0 && nrow(inf) > 0) {
-    inf_exp <- tidyr::crossing(inf, devPeriod = devLevels)
+    inf_exp <- tidyr::crossing(
+      inf |> dplyr::select(-dplyr::any_of("devPeriod")),
+      devPeriod = devLevels
+    )
     dplyr::bind_rows(
       df |> dplyr::filter(.data$modelOrigin == "New Covid"),
       inf_exp
