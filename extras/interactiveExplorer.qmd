@@ -13,7 +13,8 @@ execute:
 ---
 
 ```{r}
-  #| context: setup
+#| label: setup
+#| context: setup
 # ---- Setup ----
 library(dplyr)
 library(plotly)
@@ -111,7 +112,8 @@ sidebarLayout(
 ```
 
 ```{r}
-  #| context: server
+#| label: server
+#| context: server
 # ---- Server (reactive filters and plot) ----
 
 filtered <- reactive({
