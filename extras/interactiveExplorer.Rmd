@@ -255,14 +255,14 @@ p <- plot_ly(source = "main_plot") |>
     name = ~legendShort,
     legendgroup = ~fullName,
     line = list(width = 1.2, dash = "solid"),
-    customdata = ~cbind(legendShort, populationSize, outcomeCount, startDateTime, endDateTime),
-    hovertemplate = paste(
-      "<b>%{customdata[0]}</b><br>",
-      "AUROC: %{y:.3f}<br>",
-      "Validation: %{customdata[3]|%Y-%m-%d} → %{customdata[4]|%Y-%m-%d}<br>",
-      "N: %{customdata[1]:,}  |  Outcomes: %{customdata[2]:,}",
-      "<extra></extra>"
+    text = ~paste0(
+      "<b>", legendShort, "</b><br>",
+      "AUROC: ", sprintf("%.3f", AUROC), "<br>",
+      "Validation: ", format(startDateTime, "%Y-%m-%d"), " \u2192 ", format(endDateTime, "%Y-%m-%d"), "<br>",
+      "N: ", format(populationSize, big.mark = ",", scientific = FALSE),
+      "  |  Outcomes: ", format(outcomeCount, big.mark = ",", scientific = FALSE)
     ),
+    hovertemplate = "%{text}<extra></extra>",
     showlegend = TRUE
   ) |>
   # Development segments (dashed)
@@ -274,13 +274,12 @@ p <- plot_ly(source = "main_plot") |>
     name = ~legendShort,
     legendgroup = ~fullName,
     line = list(width = 1.2, dash = "dash"),
-    customdata = ~cbind(legendShort, devStartDateTime, devEndDateTime),
-    hovertemplate = paste(
-      "<b>%{customdata[0]}</b><br>",
-      "AUROC: %{y:.3f}<br>",
-      "Development: %{customdata[1]|%Y-%m-%d} → %{customdata[2]|%Y-%m-%d}",
-      "<extra></extra>"
+    text = ~paste0(
+      "<b>", legendShort, "</b><br>",
+      "AUROC: ", sprintf("%.3f", AUROC), "<br>",
+      "Development: ", format(devStartDateTime, "%Y-%m-%d"), " \u2192 ", format(devEndDateTime, "%Y-%m-%d")
     ),
+    hovertemplate = "%{text}<extra></extra>",
     showlegend = FALSE
   ) |>
   # Validation markers at segment ends
