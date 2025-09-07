@@ -90,20 +90,9 @@ xRange <- dplyr::bind_rows(
   ) |>
   dplyr::slice(1)
 
-legendData <- valData |>
-  dplyr::distinct(fullName, legendLabel) |>
-  dplyr::arrange(fullName) |>
-  dplyr::mutate(
-    n = dplyr::n(),
-    gap = pmin(0.07, (0.70 - 0.52) / pmax(1, n - 1)),
-    labelY = 0.52 + (dplyr::row_number() - 1) * gap,
-    labelX = xRange$legendX
-  ) |>
-  dplyr::select(-n, -gap)
 
 sharedDev <- SharedData$new(devData, ~fullName, group = "models")
 sharedVal <- SharedData$new(valData, ~fullName, group = "models")
-sharedLabels <- SharedData$new(legendData, ~fullName, group = "models")
 ```
 <style>
 /* Optional CSS for a cleaner layout */
@@ -188,7 +177,8 @@ p <- plot_ly(source = "main_plot") |>
     y = ~AUROC, yend = ~AUROC,
     line = list(width = 1.2, dash = "solid"),
     hoverinfo = "text", text = ~hoverText,
-    showlegend = FALSE
+    showlegend = TRUE,
+    legendgroup = ~fullName
   ) |>
   # Development segments (dashed)
   add_segments(
@@ -198,6 +188,7 @@ p <- plot_ly(source = "main_plot") |>
     y = ~AUROC, yend = ~AUROC,
     line = list(width = 1.2, dash = "dash"),
     hoverinfo = "text", text = ~hoverText,
+    legendgroup = ~fullName,
     showlegend = FALSE
   ) |>
   # Validation markers at segment ends
@@ -205,21 +196,14 @@ p <- plot_ly(source = "main_plot") |>
     data = sharedVal,
     split = ~fullName, color = ~fullName, colors = palette,
     x = ~startDate, y = ~AUROC,
+    legendgroup = ~fullName,
     showlegend = FALSE, hoverinfo = "none"
   ) |>
   add_markers(
     data = sharedVal,
     split = ~fullName, color = ~fullName, colors = palette,
     x = ~endDate, y = ~AUROC,
-    showlegend = FALSE, hoverinfo = "none"
-  ) |>
-  # Inline legend labels (color-coded, near right edge)
-  add_text(
-    data = sharedLabels,
-    split = ~fullName, color = ~fullName, colors = palette,
-    x = ~labelX, y = ~labelY, text = ~legendLabel,
-    textposition = "middle right",
-    textfont = list(size = 14),
+    legendgroup = ~fullName,
     showlegend = FALSE, hoverinfo = "none"
   ) |>
   layout(
@@ -234,8 +218,16 @@ p <- plot_ly(source = "main_plot") |>
     ),
     yaxis = list(title = "AUROC", range = c(0.5, 1)),
     hovermode = "x unified",
-    showlegend = FALSE,
-    margin = list(t = 60, r = 20, b = 60, l = 60)
+    showlegend = TRUE,
+    legend = list(
+      orientation = "v",
+      x = 1.02, xanchor = "left",
+      y = 1, yanchor = "top",
+      font = list(size = 12),
+      itemclick = "toggleothers",
+      itemdoubleclick = "toggle"
+    ),
+    margin = list(t = 60, r = 240, b = 60, l = 60)
   )
 
 # Print the final plot
