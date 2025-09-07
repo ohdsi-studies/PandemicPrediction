@@ -201,10 +201,9 @@ sharedVal <- SharedData$new(valData, ~fullName, group = "models")
   </style>
 <div class="container">
 <div class="filters">
-<div class="theme-toggle">
-    <label><input type="checkbox" id="darkModeToggle"> Dark mode</label>
-  </div>
-Filters
+```{r theme_toggle, echo=FALSE, results='asis'}
+htmltools::HTML('<div class="theme-toggle"><label><input type="checkbox" id="darkModeToggle"> Dark mode</label></div><h4>Filters</h4>')
+```
 ```{r filters, echo=FALSE}
 # ============================================================================
 # UI FILTER CONTROLS
