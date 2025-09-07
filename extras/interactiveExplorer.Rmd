@@ -1,0 +1,185 @@
+---
+title: "Interactive Prediction Model Performance Explorer"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# ============================================================================
+# SETUP AND DATA LOADING
+# ============================================================================
+# This chunk loads all necessary packages and the final results data.
+# It is completely self-contained.
+
+library(dplyr)
+library(plotly)
+library(crosstalk)
+library(htmltools)
+library(PandemicPrediction)
+
+# --- Load the master results data frame ---
+# Make sure you have saved your 'allResults' object to this file first.
+# Example: saveRDS(allResults, "all_results.rds")
+if (file.exists("all_results.rds")) {
+  allResults <- readRDS("all_results.rds")
+} else {
+  allResults <- dplyr::bind_rows(
+  getAnalysisResults(
+    databasePath = "../results/development/databaseFile.sqlite",
+    evaluationType = "Test",
+    analysisId = "dev"
+  ),
+  getAnalysisResults(
+    databasePath = "../results/validation/databaseFile.sqlite",
+    evaluationType = "Validation",
+    analysisId = "val_original"
+  ),
+  getAnalysisResults(
+    databasePath = "../results/new-model-validation/databaseFile.sqlite",
+    evaluationType = "Validation",
+    analysisId = "val_new"
+  )
+)
+}
+unifiedResults <- allResults |>
+  dplyr::mutate(
+    plotStartDate = dplyr::if_else(analysisId == "dev", devStartDate, startDate),
+    plotEndDate = dplyr::if_else(analysisId == "dev", devEndDate, endDate),
+    lineType = dplyr::if_else(analysisId == "dev", "dash", "solid"),
+    hoverText = dplyr::case_when(
+      analysisId == "dev" ~ paste(
+        "<b>Development Performance</b>",
+        "<br><b>Model:</b>", legendLabel,
+        "<br><b>AUROC:</b>", round(AUROC, 4),
+        "<br><b>Dev Period:</b>", format(devStartDate, "%Y-%m-%d"), "to", format(devEndDate, "%Y-%m-%d")
+      ),
+      TRUE ~ paste(
+        "<b>Validation Performance</b>",
+        "<br><b>Model:</b>", legendLabel,
+        "<br><b>AUROC:</b>", round(AUROC, 4),
+        "<br><b>Validation Period:</b>", format(startDate, "%Y-%m-%d"), "to", format(endDate, "%Y-%m-%d"),
+        "<br><b>Population:</b>", populationSize,
+        "<br><b>Outcomes:</b>", outcomeCount
+      )
+    )
+  )
+
+# --- Create ONE SINGLE SharedData object from the unified data ---
+sharedResults <- SharedData$new(unifiedResults, ~fullName)
+```
+<style>
+/* Optional CSS for a cleaner layout */
+.container {
+display: flex;
+flex-direction: row;
+gap: 20px;
+}
+.filters {
+flex: 1;
+min-width: 200px;
+}
+.plot {
+flex: 4;
+}
+</style>
+<div class="container">
+<div class="filters">
+Filters
+```{r filters, echo=FALSE}
+# ============================================================================
+# UI FILTER CONTROLS
+# ============================================================================
+
+# --- Create a Crosstalk "SharedData" object ---
+# This is the magic that allows filters and plots to communicate.
+
+# These create the interactive dropdowns and checkboxes.
+div(
+  style = "font-size: 14px;", # Smaller font for the filter panel
+  filter_select(
+    id = "outcome",
+    label = "Select Outcome:",
+    sharedData = sharedResults,
+    group = ~outcomeName
+  ),
+  hr(), # Horizontal line for separation
+
+  h4("Model Attributes"),
+  filter_checkbox(
+    id = "modelorigin",
+    label = "Model Origin:",
+    sharedData = sharedResults,
+    group = ~modelOrigin,
+    inline = FALSE # Stack the checkboxes vertically
+  ),
+  filter_checkbox(
+    id = "featureset",
+    label = "Feature Set:",
+    sharedData = sharedResults,
+    group = ~featureSet,
+    inline = FALSE
+  ),
+  filter_checkbox(
+    id = "devperiod",
+    label = "Development Period:",
+    sharedData = sharedResults,
+    group = ~devPeriod,
+    inline = FALSE
+  )
+)
+```
+</div>
+<div class="plot">
+```{r plot, echo=FALSE, message=FALSE, warning=FALSE}
+# ============================================================================
+# INTERACTIVE PLOT
+# ============================================================================
+# This code creates the main plot using plotly, linked to the filters.
+
+# Prepare the two data layers: validation lines and development lines
+# --- Create a Crosstalk "SharedData" object ---
+# This is the magic that allows filters and plots to communicate.
+
+# Create the plot
+p <- plot_ly(data=sharedResults, source = "main_plot") |>
+  # --- Layer 1: Development Performance (Dashed Segments) ---
+  add_segments(
+    x = ~plotStartDate, xend = ~plotEndDate,
+    y = ~AUROC, yend = ~AUROC,
+    color = ~fullName,
+    line = ~list(dash = lineType),
+    legendgroup = ~fullName,
+    name = ~legendLabel,
+    hoverinfo = "text",
+    text = ~hoverText,
+  ) |>
+  # --- Add markers at the start and end of validation segments ---
+  add_markers(
+    data = allResults |> dbplyr::filter(analysisId != "dev"),
+    x = ~plotStartDate, y = ~AUROC,
+    color = ~fullName,
+    legendgroup = ~fullName,
+    showlegend = FALSE,
+    hoverinfo = "none" # No separate tooltip for the marker itself
+  ) |>
+  add_markers(
+    data = allResults |> dbplyr::filter(analysisId != "dev"),
+    x = ~plotEndDate, y = ~AUROC,
+    color = ~fullName,
+    legendgroup = ~fullName,
+    showlegend = FALSE,
+    hoverinfo = "none"
+  ) |>
+  # --- Layout and Styling ---
+  layout(
+    title = "Interactive Model Performance Explorer",
+    xaxis = list(title = "Validation Period", type = "date"),
+    yaxis = list(title = "AUROC", range = c(0.5, 1)),
+    legend = list(orientation = "v", y = 1, x = 1.05),
+    hovermode = "x unified"
+  )
+
+# Print the final plot
+p
+```  
+</div>
+</div>
