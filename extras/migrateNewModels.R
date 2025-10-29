@@ -1,8 +1,8 @@
 library(jsonlite)
 library(PatientLevelPrediction)
 
-sourceModelsDir <- "./results/development/models/"
-destinationDir <- "./inst/newModels/"
+sourceModelsDir <- "./results/development-logits/strategusOutput/PatientLevelPredictionModule/models"
+destinationDir <- "./inst/newModels-logits/"
 
 # Map original outcome IDs to descriptive names
 getOutcomeName <- function(outcomeId) {
@@ -62,9 +62,9 @@ organizePlpModels <- function(sourceDir, destDir) {
     }
 
     outcomeName <- getOutcomeName(outcomeId)
-    
+
     sampleSize <- modelDesign$restrictPlpDataSettings$sampleSize
-    
+
     populationSuffix <- "" # Default to nothing
     if (as.Date(endDate, "%Y%m%d") - as.Date(startDate, "%Y%m%d") > 360) {
         if (!is.null(sampleSize)) {
@@ -73,7 +73,7 @@ organizePlpModels <- function(sourceDir, destDir) {
             populationSuffix <- "FullPop"
         }
     }
-    
+
     newFolderName <- paste(
       outcomeName,
       featureSet,
@@ -83,7 +83,7 @@ organizePlpModels <- function(sourceDir, destDir) {
       endDate,
       sep = "_"
     ) |>
-    stringr::str_replace_all("__", "_") 
+    stringr::str_replace_all("__", "_")
 
     newModelPath <- file.path(destDir, newFolderName)
 

@@ -12,12 +12,12 @@
     "attr_class": "data.frame",
     "attr_row.names": [1, 2, 3, 4]
   },
-  "trainingTime": "51.6507058143616 secs",
-  "trainingDate": "2025-08-28",
+  "trainingTime": "1.02228620052338 mins",
+  "trainingDate": "2025-10-29",
   "modelName": "logistic",
   "finalModelParameters": {
-    "variance": 153.2744,
-    "log_likelihood": -22857.9321
+    "variance": 139.9802,
+    "log_likelihood": -22863.7095
   },
   "hyperParamSearch": {
     "metric": ["AUC", "AUC", "AUC"],
