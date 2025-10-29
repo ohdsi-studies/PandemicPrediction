@@ -12,17 +12,17 @@
     "attr_class": "data.frame",
     "attr_row.names": ["2", "1", "11", "12"]
   },
-  "trainingTime": "3.43067248264949 mins",
-  "trainingDate": "2025-08-28",
+  "trainingTime": "4.11016449928284 mins",
+  "trainingDate": "2025-10-29",
   "modelName": "logistic",
   "finalModelParameters": {
-    "variance": 0.0138,
-    "log_likelihood": -29237.8761
+    "variance": 0.0141,
+    "log_likelihood": -29228.0273
   },
   "hyperParamSearch": {
     "metric": ["AUC", "AUC", "AUC"],
     "fold": [1, 2, 3],
-    "value": [0.8117, 0.8154, 0.8163],
+    "value": [0.8116, 0.8154, 0.8161],
     "startingVariance": [0.01, 0.01, 0.01],
     "lowerLimit": [0.01, 0.01, 0.01],
     "upperLimit": [20, 20, 20],
