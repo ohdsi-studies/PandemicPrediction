@@ -6,8 +6,8 @@
   "originalPredictionFunction": "PatientLevelPrediction::predictGlm",
   "recalibration": {
     "coefficients": {
-      "adjustGradient": 0.0938,
-      "adjustIntercept": -0.4008
+      "adjustGradient": 0.0849,
+      "adjustIntercept": -0.4853
     },
     "recalibratedOn": "RecalOn_FullYear_FullPop"
   }
