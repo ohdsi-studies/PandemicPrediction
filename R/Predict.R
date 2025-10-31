@@ -4,7 +4,10 @@
 #' This function is designed to be called by `PatientLevelPrediction::predictPlp`.
 #' It first calls the model's original prediction function (e.g., `predictGlm`)
 #' and then applies a weak recalibration transformation using coefficients
-#' stored on the plpModel object itself.
+#' stored on the plpModel object itself. In addition to returning calibrated
+#' probabilities in the `value` column, this function also returns a
+#' `linearPredictor` column so that rank-based metrics (e.g., AUROC) can be
+#' computed on the linear predictor when available.
 #'
 #' @param plpModel    The plpModel object. This object is expected to have a
 #'                    `$recalibration` list containing `$coefficients`. Which are
@@ -32,26 +35,39 @@ predictWithRecalibration <- function(plpModel, data, cohort) {
     )
   )
 
-  if (is.null(attr(plpModel, "recalibration"))) {
-    ParallelLogger::logWarn("No recalibration coefficients found on this model. Returning original predictions.")
-    return(initialPrediction)
+  # Derive the original linear predictor (log-odds). Prefer provided column; fall back to qlogis(prob).
+  epsilon <- .Machine$double.eps
+  if ("linearPredictor" %in% colnames(initialPrediction)) {
+    originalLP <- initialPrediction$linearPredictor
+  } else {
+    # Compute from probability, guarding against 0/1
+    baseProb <- initialPrediction$value
+    baseProb <- pmin(pmax(baseProb, epsilon), 1 - epsilon)
+    originalLP <- stats::qlogis(baseProb)
   }
 
+  # If no recalibration info is present, return original predictions but include linearPredictor
+  if (is.null(attr(plpModel, "recalibration"))) {
+    ParallelLogger::logWarn("No recalibration coefficients found on this model. Returning original predictions (with linearPredictor).")
+    finalPrediction <- initialPrediction
+    if (!("linearPredictor" %in% colnames(finalPrediction))) {
+      finalPrediction$linearPredictor <- originalLP
+    }
+    return(finalPrediction)
+  }
+
+  # Apply weak recalibration in log-odds space and map back to probability
   coeffs <- attr(plpModel, "recalibration")$coefficients
   message(
     "Applying recalibration with Intercept: ",
     coeffs$adjustIntercept, ", Gradient: ", coeffs$adjustGradient
   )
-  recalibratedValues <- initialPrediction$value
 
-  epsilon <- .Machine$double.eps
-  recalibratedValues <- pmin(pmax(recalibratedValues, epsilon), 1 - epsilon)
-
-  finalValues <- stats::plogis(
-    (stats::qlogis(recalibratedValues) * coeffs$adjustGradient) + coeffs$adjustIntercept
-  )
+  recalibratedLP <- (originalLP * coeffs$adjustGradient) + coeffs$adjustIntercept
+  finalValues <- stats::plogis(recalibratedLP)
 
   finalPrediction <- initialPrediction
+  finalPrediction$linearPredictor <- recalibratedLP
   finalPrediction$value <- finalValues
   return(finalPrediction)
 }
