@@ -63,32 +63,30 @@
       "module": "PatientLevelPredictionValidationModule",
       "settings": {
         "validationList": [
-          [
-            {
-              "targetId": 31,
-              "outcomeId": 11,
-              "populationSettings": null,
-              "plpModelList": [
-                {
-                  "type": "package",
-                  "modelFolder": "models/dato",
-                  "package": "PandemicPrediction",
-                  "attr_class": "plpModel"
-                }
-              ],
-              "restrictPlpDataSettings": {
-                "studyStartDate": "20200101",
-                "studyEndDate": "20200331",
-                "firstExposureOnly": false,
-                "washoutPeriod": 0,
-                "sampleSize": null,
-                "attr_class": "restrictPlpDataSettings"
-              },
-              "recalibrate": "weakRecalibration",
-              "runCovariateSummary": false,
-              "attr_class": "validationDesign"
-            }
-          ]
+          {
+            "targetId": 31,
+            "outcomeId": 11,
+            "populationSettings": null,
+            "plpModelList": [
+              {
+                "type": "package",
+                "modelFolder": "models/dato",
+                "package": "PandemicPrediction",
+                "attr_class": "plpModel"
+              }
+            ],
+            "restrictPlpDataSettings": {
+              "studyStartDate": "20200101",
+              "studyEndDate": "20200331",
+              "firstExposureOnly": false,
+              "washoutPeriod": 0,
+              "sampleSize": null,
+              "attr_class": "restrictPlpDataSettings"
+            },
+            "recalibrate": "weakRecalibration",
+            "runCovariateSummary": false,
+            "attr_class": "validationDesign"
+          }
         ],
         "logLevel": "INFO"
       },
