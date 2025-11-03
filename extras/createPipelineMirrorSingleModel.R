@@ -115,7 +115,7 @@ val_recalibration <- PatientLevelPrediction::createValidationDesign(
 
 predictionValidationModule <- Strategus::PatientLevelPredictionValidationModule$new()
 predRecSpec <- predictionValidationModule$createModuleSpecifications(
-  validationList = list(val_recalibration)
+  validationList = list(val_recalibration[[1]])
 )
 
 analysisSpec_recal <- Strategus::createEmptyAnalysisSpecificiations() |>
