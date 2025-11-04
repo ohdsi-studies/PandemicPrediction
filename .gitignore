@@ -8,3 +8,6 @@ myCodeToRun.R
 /results
 /run-results/
 /renv
+.aider*
+
+/.quarto/
