@@ -9,13 +9,15 @@ cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
   cohortFileNameFormat = "%s_%s",
   cohortFileNameValue = c("cohortId", "cohortName")
 )
-cohortDefinitionSet <- cohortDefinitionSet |>
-  dplyr::filter(.data$cohortId != 30) # only used for development
 
 # add cohortGenerator
 cohortGeneratorModule <- Strategus::CohortGeneratorModule$new()
-cohortDefinitionShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(cohortDefinitionSet)
-cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(generateStats = TRUE)
+cohortDefinitionShared <- cohortGeneratorModule$createCohortSharedResourceSpecifications(
+  cohortDefinitionSet
+)
+cohortGeneratorModuleSpecifications <- cohortGeneratorModule$createModuleSpecifications(
+  generateStats = TRUE
+)
 
 
 # UNIVERSAL ANALYSIS SETTINGS --------------------------------------------------
@@ -45,7 +47,10 @@ generateRestrictDataSettings <- function(start, end, interval = months(3)) {
   return(settings_list)
 }
 
-restrictPlpDataSettings <- generateRestrictDataSettings("2020-01-01", "2023-06-01")
+restrictPlpDataSettings <- generateRestrictDataSettings(
+  "2020-01-01",
+  "2023-06-01"
+)
 
 # maybe move this into PLP?
 createPackageModel <- function(modelFolder, package) {
@@ -135,5 +140,5 @@ analysisSpecifications <- Strategus::createEmptyAnalysisSpecificiations() |>
 
 ParallelLogger::saveSettingsToJson(
   object = analysisSpecifications,
-  fileName = "./inst/study_execution_jsons/cover_validation.json"
+  fileName = "./inst/study_execution_jsons/validation.json"
 )
