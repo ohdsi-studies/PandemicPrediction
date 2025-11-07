@@ -11,7 +11,17 @@ plotComparison(
   featureSetsToCompare,
   devPeriodsToCompare = NULL,
   facetBy = NULL,
-  title = NULL
+  metric = "AUROC",
+  legendCorner = "auto",
+  showMilestones = TRUE,
+  vaccineLineColor = "#EF4444FF",
+  variantLineColor = "#9CA3AFFF",
+  title = NULL,
+  showOutcomeRatePanel = FALSE,
+  outcomeRatePanelStyle = c("area", "bars"),
+  outcomeRatePanelFill = "#6B7280FF",
+  outcomeRatePanelAlpha = 0.6,
+  outcomeRatePanelHeights = c(0.78, 0.22)
 )
 }
 \arguments{
@@ -22,6 +32,19 @@ plotComparison(
 \item{featureSetsToCompare}{Vector of feature sets to compare (e.g., c("Parsimonious", "Full"))}
 
 \item{devPeriodsToCompare}{Optional vector of development periods to compare (e.g., c("First 3 Months", "Full Year 2020"))}
+
+\item{facetBy}{Optional vector of column names to facet by (e.g., c("outcomeName"))}
+
+\item{metric}{Metric to plot (default is "AUROC")}
+
+\item{legendCorner}{Position of the legend ("tl", "tr", "bl", "br", or "auto")
+where "auto" places the legend to avoid overlapping data points. Default is "auto".}
+
+\item{showMilestones}{Whether to show milestone lines (default is TRUE)}
+
+\item{vaccineLineColor}{Color for vaccine milestone lines (default is "#EF4444FF")}
+
+\item{variantLineColor}{Color for variant milestone lines (default is "#9CA3AFFF}
 
 \item{title}{Optional title for the plot}
 

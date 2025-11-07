@@ -1,5 +1,5 @@
 recalibrationJsonPath <- "./inst/study_execution_jsons/recalibration.json"
-recalibrationResultsDir <- "./results/recalibration/"
+recalibrationResultsDir <- "./results/recalibration/strategusWork/PatientLevelPredictionValidationModule/OPTUM Extended DOD/"
 recalibratedModelsDir <- "./inst/recalibratedModels/"
 
 getOutcomeName <- function(outcomeId) {

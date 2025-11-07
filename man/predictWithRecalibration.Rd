@@ -22,5 +22,8 @@ A prediction data frame with the recalibrated risk values.
 This function is designed to be called by `PatientLevelPrediction::predictPlp`.
 It first calls the model's original prediction function (e.g., `predictGlm`)
 and then applies a weak recalibration transformation using coefficients
-stored on the plpModel object itself.
+stored on the plpModel object itself. In addition to returning calibrated
+probabilities in the `value` column, this function also returns a
+`linearPredictor` column so that rank-based metrics (e.g., AUROC) can be
+computed on the linear predictor when available.
 }

@@ -12,8 +12,8 @@
     "attr_class": "data.frame",
     "attr_row.names": [1, 2, 3, 4]
   },
-  "trainingTime": "23.747181892395 secs",
-  "trainingDate": "2025-10-29",
+  "trainingTime": "24.6340429782867 secs",
+  "trainingDate": "2025-11-04",
   "modelName": "logistic",
   "finalModelParameters": {
     "variance": 27.5304,

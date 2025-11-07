@@ -12,8 +12,8 @@
     "attr_class": "data.frame",
     "attr_row.names": ["3", "1", "11", "12"]
   },
-  "trainingTime": "8.34165906906128 secs",
-  "trainingDate": "2025-10-29",
+  "trainingTime": "6.98799896240234 secs",
+  "trainingDate": "2025-11-04",
   "modelName": "logistic",
   "finalModelParameters": {
     "variance": 1.3725,
@@ -22,7 +22,7 @@
   "hyperParamSearch": {
     "metric": ["AUC", "AUC", "AUC"],
     "fold": [1, 2, 3],
-    "value": [0.7597, 0.7564, 0.7463],
+    "value": [0.7597, 0.7564, 0.7464],
     "startingVariance": [0.01, 0.01, 0.01],
     "lowerLimit": [0.01, 0.01, 0.01],
     "upperLimit": [20, 20, 20],

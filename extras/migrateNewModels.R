@@ -1,8 +1,8 @@
 library(jsonlite)
 library(PatientLevelPrediction)
 
-sourceModelsDir <- "./results/development-logits/strategusOutput/PatientLevelPredictionModule/models"
-destinationDir <- "./inst/newModels-logits/"
+sourceModelsDir <- "./results/development/strategusOutput/PatientLevelPredictionModule/models"
+destinationDir <- "./inst/newModels/"
 
 # Map original outcome IDs to descriptive names
 getOutcomeName <- function(outcomeId) {
