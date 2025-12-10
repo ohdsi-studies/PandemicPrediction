@@ -1,0 +1,14 @@
+{
+  "class": "plpModel",
+  "predictionFunction": "PandemicPrediction::predictWithRecalibration",
+  "modelType": "binary",
+  "saveType": "RtoJson",
+  "originalPredictionFunction": "PatientLevelPrediction::predictGlm",
+  "recalibration": {
+    "coefficients": {
+      "adjustIntercept": -1.3735,
+      "adjustGradient": 0.0788
+    },
+    "recalibratedOn": "20210401_20210630_Fatality"
+  }
+}
