@@ -95,7 +95,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20200101_20200331_Fatality_Apply_20200401_20200630_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202001_A_202004",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -119,7 +119,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20200401_20200630_Fatality_Apply_20200701_20200930_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202004_A_202007",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -143,7 +143,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20200701_20200930_Fatality_Apply_20201001_20201231_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202007_A_202010",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -167,7 +167,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20201001_20201231_Fatality_Apply_20210101_20210331_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202010_A_202101",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -191,7 +191,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20210101_20210331_Fatality_Apply_20210401_20210630_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202101_A_202104",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -215,7 +215,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20210401_20210630_Fatality_Apply_20210701_20210930_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202104_A_202107",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -239,7 +239,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20210701_20210930_Fatality_Apply_20211001_20211231_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202107_A_202110",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -263,7 +263,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20211001_20211231_Fatality_Apply_20220101_20220331_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202110_A_202201",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -287,7 +287,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20220101_20220331_Fatality_Apply_20220401_20220630_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202201_A_202204",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -311,7 +311,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20220401_20220630_Fatality_Apply_20220701_20220930_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202204_A_202207",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -335,7 +335,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20220701_20220930_Fatality_Apply_20221001_20221231_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202207_A_202210",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -359,7 +359,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20221001_20221231_Fatality_Apply_20230101_20230331_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202210_A_202301",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -383,7 +383,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Full_proxy_frozen_full_RecalFrom_20230101_20230331_Fatality_Apply_20230401_20230601_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_full_R_202301_A_202304",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -407,7 +407,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20200101_20200331_Hospitalization_Apply_20200401_20200630_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202001_A_202004",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -431,7 +431,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20200401_20200630_Hospitalization_Apply_20200701_20200930_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202004_A_202007",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -455,7 +455,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20200701_20200930_Hospitalization_Apply_20201001_20201231_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202007_A_202010",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -479,7 +479,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20201001_20201231_Hospitalization_Apply_20210101_20210331_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202010_A_202101",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -503,7 +503,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20210101_20210331_Hospitalization_Apply_20210401_20210630_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202101_A_202104",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -527,7 +527,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20210401_20210630_Hospitalization_Apply_20210701_20210930_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202104_A_202107",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -551,7 +551,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20210701_20210930_Hospitalization_Apply_20211001_20211231_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202107_A_202110",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -575,7 +575,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20211001_20211231_Hospitalization_Apply_20220101_20220331_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202110_A_202201",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -599,7 +599,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20220101_20220331_Hospitalization_Apply_20220401_20220630_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202201_A_202204",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -623,7 +623,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20220401_20220630_Hospitalization_Apply_20220701_20220930_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202204_A_202207",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -647,7 +647,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20220701_20220930_Hospitalization_Apply_20221001_20221231_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202207_A_202210",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -671,7 +671,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20221001_20221231_Hospitalization_Apply_20230101_20230331_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202210_A_202301",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -695,7 +695,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Full_proxy_frozen_full_RecalFrom_20230101_20230331_Hospitalization_Apply_20230401_20230601_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_full_R_202301_A_202304",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -719,7 +719,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20200101_20200331_RespiratoryFailure_Apply_20200401_20200630_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202001_A_202004",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -743,7 +743,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20200401_20200630_RespiratoryFailure_Apply_20200701_20200930_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202004_A_202007",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -767,7 +767,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20200701_20200930_RespiratoryFailure_Apply_20201001_20201231_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202007_A_202010",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -791,7 +791,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20201001_20201231_RespiratoryFailure_Apply_20210101_20210331_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202010_A_202101",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -815,7 +815,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20210101_20210331_RespiratoryFailure_Apply_20210401_20210630_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202101_A_202104",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -839,7 +839,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20210401_20210630_RespiratoryFailure_Apply_20210701_20210930_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202104_A_202107",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -863,7 +863,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20210701_20210930_RespiratoryFailure_Apply_20211001_20211231_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202107_A_202110",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -887,7 +887,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20211001_20211231_RespiratoryFailure_Apply_20220101_20220331_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202110_A_202201",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -911,7 +911,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20220101_20220331_RespiratoryFailure_Apply_20220401_20220630_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202201_A_202204",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -935,7 +935,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20220401_20220630_RespiratoryFailure_Apply_20220701_20220930_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202204_A_202207",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -959,7 +959,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20220701_20220930_RespiratoryFailure_Apply_20221001_20221231_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202207_A_202210",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -983,7 +983,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20221001_20221231_RespiratoryFailure_Apply_20230101_20230331_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202210_A_202301",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1007,7 +1007,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Full_proxy_frozen_full_RecalFrom_20230101_20230331_RespiratoryFailure_Apply_20230401_20230601_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_full_R_202301_A_202304",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1031,7 +1031,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20200101_20200331_Fatality_Apply_20200401_20200630_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202001_A_202004",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1055,7 +1055,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20200401_20200630_Fatality_Apply_20200701_20200930_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202004_A_202007",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1079,7 +1079,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20200701_20200930_Fatality_Apply_20201001_20201231_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202007_A_202010",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1103,7 +1103,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20201001_20201231_Fatality_Apply_20210101_20210331_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202010_A_202101",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1127,7 +1127,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20210101_20210331_Fatality_Apply_20210401_20210630_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202101_A_202104",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1151,7 +1151,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20210401_20210630_Fatality_Apply_20210701_20210930_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202104_A_202107",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1175,7 +1175,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20210701_20210930_Fatality_Apply_20211001_20211231_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202107_A_202110",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1199,7 +1199,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20211001_20211231_Fatality_Apply_20220101_20220331_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202110_A_202201",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1223,7 +1223,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20220101_20220331_Fatality_Apply_20220401_20220630_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202201_A_202204",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1247,7 +1247,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20220401_20220630_Fatality_Apply_20220701_20220930_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202204_A_202207",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1271,7 +1271,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20220701_20220930_Fatality_Apply_20221001_20221231_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202207_A_202210",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1295,7 +1295,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20221001_20221231_Fatality_Apply_20230101_20230331_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202210_A_202301",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1319,7 +1319,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Fatality_Parsimonious_proxy_frozen_pars_RecalFrom_20230101_20230331_Fatality_Apply_20230401_20230601_Fatality",
+                "modelFolder": "rollingRecalibratedModels/Fata_pars_R_202301_A_202304",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1343,7 +1343,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20200101_20200331_Hospitalization_Apply_20200401_20200630_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202001_A_202004",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1367,7 +1367,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20200401_20200630_Hospitalization_Apply_20200701_20200930_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202004_A_202007",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1391,7 +1391,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20200701_20200930_Hospitalization_Apply_20201001_20201231_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202007_A_202010",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1415,7 +1415,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20201001_20201231_Hospitalization_Apply_20210101_20210331_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202010_A_202101",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1439,7 +1439,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20210101_20210331_Hospitalization_Apply_20210401_20210630_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202101_A_202104",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1463,7 +1463,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20210401_20210630_Hospitalization_Apply_20210701_20210930_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202104_A_202107",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1487,7 +1487,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20210701_20210930_Hospitalization_Apply_20211001_20211231_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202107_A_202110",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1511,7 +1511,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20211001_20211231_Hospitalization_Apply_20220101_20220331_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202110_A_202201",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1535,7 +1535,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20220101_20220331_Hospitalization_Apply_20220401_20220630_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202201_A_202204",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1559,7 +1559,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20220401_20220630_Hospitalization_Apply_20220701_20220930_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202204_A_202207",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1583,7 +1583,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20220701_20220930_Hospitalization_Apply_20221001_20221231_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202207_A_202210",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1607,7 +1607,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20221001_20221231_Hospitalization_Apply_20230101_20230331_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202210_A_202301",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1631,7 +1631,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/Hospitalization_Parsimonious_proxy_frozen_pars_RecalFrom_20230101_20230331_Hospitalization_Apply_20230401_20230601_Hospitalization",
+                "modelFolder": "rollingRecalibratedModels/Hosp_pars_R_202301_A_202304",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1655,7 +1655,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20200101_20200331_RespiratoryFailure_Apply_20200401_20200630_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202001_A_202004",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1679,7 +1679,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20200401_20200630_RespiratoryFailure_Apply_20200701_20200930_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202004_A_202007",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1703,7 +1703,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20200701_20200930_RespiratoryFailure_Apply_20201001_20201231_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202007_A_202010",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1727,7 +1727,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20201001_20201231_RespiratoryFailure_Apply_20210101_20210331_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202010_A_202101",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1751,7 +1751,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20210101_20210331_RespiratoryFailure_Apply_20210401_20210630_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202101_A_202104",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1775,7 +1775,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20210401_20210630_RespiratoryFailure_Apply_20210701_20210930_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202104_A_202107",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1799,7 +1799,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20210701_20210930_RespiratoryFailure_Apply_20211001_20211231_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202107_A_202110",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1823,7 +1823,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20211001_20211231_RespiratoryFailure_Apply_20220101_20220331_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202110_A_202201",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1847,7 +1847,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20220101_20220331_RespiratoryFailure_Apply_20220401_20220630_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202201_A_202204",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1871,7 +1871,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20220401_20220630_RespiratoryFailure_Apply_20220701_20220930_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202204_A_202207",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1895,7 +1895,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20220701_20220930_RespiratoryFailure_Apply_20221001_20221231_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202207_A_202210",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1919,7 +1919,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20221001_20221231_RespiratoryFailure_Apply_20230101_20230331_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202210_A_202301",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
@@ -1943,7 +1943,7 @@
             "plpModelList": [
               {
                 "type": "package",
-                "modelFolder": "rollingRecalibratedModels/RespiratoryFailure_Parsimonious_proxy_frozen_pars_RecalFrom_20230101_20230331_RespiratoryFailure_Apply_20230401_20230601_RespiratoryFailure",
+                "modelFolder": "rollingRecalibratedModels/Resp_pars_R_202301_A_202304",
                 "package": "PandemicPrediction",
                 "attr_class": "plpModel"
               }
