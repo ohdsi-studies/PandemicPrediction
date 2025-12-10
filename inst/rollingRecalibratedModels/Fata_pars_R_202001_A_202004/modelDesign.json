@@ -166,15 +166,6 @@
       "attr_modelType": "binary",
       "attr_saveType": "RtoJson"
     },
-    "settings": {
-      "modelType": "CoverF",
-      "seed": 1,
-      "name": "coverF",
-      "saveType": "RtoJson",
-      "modelName": "coverF",
-      "requiresDenseMatrix": false
-    },
-    "modelName": "coverF",
     "recalibrationPeriod": "20200101_20200331_Fatality",
     "attr_class": "modelSettings"
   },

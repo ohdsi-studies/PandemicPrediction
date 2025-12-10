@@ -166,17 +166,8 @@
         "name": "Existing GLM"
       },
       "attr_modelType": "binary",
-      "attr_saveType": "RtoJson"
+      "attr_saveType": "RToJson"
     },
-    "settings": {
-      "modelType": "GLM",
-      "seed": 1,
-      "name": "Existing GLM",
-      "saveType": "RtoJson",
-      "modelName": "Existing GLM",
-      "requiresDenseMatrix": false
-    },
-    "modelName": "Existing GLM",
     "recalibrationPeriod": "20221001_20221231_RespiratoryFailure",
     "attr_class": "modelSettings"
   },

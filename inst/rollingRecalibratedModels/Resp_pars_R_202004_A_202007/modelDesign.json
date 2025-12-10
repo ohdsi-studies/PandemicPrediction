@@ -166,15 +166,6 @@
       "attr_modelType": "binary",
       "attr_saveType": "RtoJson"
     },
-    "settings": {
-      "modelType": "coverI",
-      "seed": 1,
-      "name": "coverI",
-      "saveType": "RtoJson",
-      "modelName": "coverI",
-      "requiresDenseMatrix": false
-    },
-    "modelName": "coverI",
     "recalibrationPeriod": "20200401_20200630_RespiratoryFailure",
     "attr_class": "modelSettings"
   },

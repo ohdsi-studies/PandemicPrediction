@@ -166,15 +166,6 @@
       "attr_modelType": "binary",
       "attr_saveType": "RtoJson"
     },
-    "settings": {
-      "modelType": "coverH",
-      "seed": 1,
-      "name": "coverH",
-      "saveType": "RtoJson",
-      "modelName": "coverH",
-      "requiresDenseMatrix": false
-    },
-    "modelName": "coverH",
     "recalibrationPeriod": "20200701_20200930_Hospitalization",
     "attr_class": "modelSettings"
   },
