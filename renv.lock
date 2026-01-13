@@ -266,7 +266,7 @@
       "NeedsCompilation": "no",
       "Author": "Winston Chang [aut, cre]",
       "Maintainer": "Winston Chang <winston@stdout.org>",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
       "Encoding": "UTF-8"
     },
     "RColorBrewer": {

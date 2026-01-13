@@ -11,3 +11,39 @@ myCodeToRun.R
 .aider*
 
 /.quarto/
+
+# Local environment / secrets
+.Renviron
+secrets/
+populateSecrets.R
+
+# Local outputs / artifacts
+sqlite/
+sqlite
+*.tar.gz
+Rplots.pdf
+errorReportSql.txt
+validationLog.txt
+validationResults.csv
+resultsBootstrappedFatality.csv
+df.csv
+
+# Local docker/dev helpers
+Dockerfile
+docker-compose.yml
+dockerCodeToRun.R
+
+# Local diagrams/icons
+calibration_icon.svg
+discrimination_icon.svg
+diagram.svg
+
+# Local scratch scripts
+extras/auditRecalibration.R
+extras/generate_plots.R
+extras/investigate.R
+extras/investigateIssues.R
+extras/migrateCoverModels.R
+extras/plan.md
+extras/plotSmoothCalTest.R
+extras/setupEnvironment.R

@@ -62,6 +62,63 @@ computeOutcomeRateSummary <- function(resultsToPlot, facetBy = NULL) {
       .groups = "drop"
     )
 }
+
+featureShort <- function(x) ifelse(tolower(x) == "parsimonious", "pars", "full")
+
+wFromDevPeriod <- function(devPeriod) {
+  d <- tolower(trimws(devPeriod))
+  d <- gsub("\\s+", " ", d)
+  dplyr::case_when(
+    is.na(d) ~ NA_character_,
+    grepl("first 3", d) ~ "3m",
+    grepl("first 6", d) ~ "6m",
+    grepl("first 9", d) ~ "9m",
+    grepl("sampled|150k", d) ~ "12m_150k",
+    grepl("full year|full pop|full population", d) ~ "12m_full",
+    TRUE ~ NA_character_
+  )
+}
+
+wFromRecalPeriod <- function(recal) {
+  r <- tolower(trimws(recal))
+  r <- gsub("\\s+", " ", r)
+  dplyr::case_when(
+    is.na(r) | r == "" ~ NA_character_,
+    grepl("first[_ ]?3", r) ~ "3m",
+    grepl("first[_ ]?6", r) ~ "6m",
+    grepl("first[_ ]?9", r) ~ "9m",
+    grepl("sampled|150k", r) ~ "12m_150k",
+    grepl("full|year|pop", r) ~ "12m_full",
+    TRUE ~ NA_character_
+  )
+}
+
+makeModelKey <- function(origin, featureSet, wDev, wRecal) {
+  fs <- featureShort(featureSet)
+  o <- tolower(origin)
+  dplyr::case_when(
+    o == "new covid" & is.na(wDev) ~ NA_character_,
+    o == "new covid" ~ paste0("covid_", fs, "_", wDev),
+    o == "original influenza" ~ paste0("proxy_frozen_", fs),
+    o == "recalibrated influenza" & is.na(wRecal) ~ NA_character_,
+    o == "recalibrated influenza" ~ paste0("proxy_recal_", fs, "_", wRecal),
+    TRUE ~ NA_character_
+  )
+}
+
+appendOutcomeSuffix <- function(modelKey, outcomeId, append = FALSE) {
+  if (!append) {
+    return(modelKey)
+  }
+  oc <- dplyr::case_when(
+    outcomeId == 11 ~ "F",
+    outcomeId == 13 ~ "I",
+    outcomeId == 14 ~ "H",
+    TRUE ~ "X"
+  )
+  paste0(modelKey, "_", oc)
+}
+
 #' Retrieve and process analysis results from the database
 #' #' @param databasePath Path to the SQLite database file
 #' @param evaluationType Type of evaluation (e.g., "Test", "Validation")
@@ -82,14 +139,76 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
     FROM cohorts;"
   )
 
-  featureNameMap <- list(
-    "1" = "Parsimonious",
-    "2" = "Full"
+  covariateSettings <- DBI::dbGetQuery(
+    con,
+    "SELECT covariate_setting_id, covariate_settings_json FROM covariate_settings;"
   )
-  covariateLookup <- dplyr::tibble(
-    covariate_setting_id = as.integer(names(featureNameMap)),
-    featureSet = unlist(featureNameMap)
-  )
+
+  determineFeatureSet <- function(jsonText) {
+    if (is.na(jsonText) || !nzchar(jsonText)) {
+      return("Full")
+    }
+    parsed <- tryCatch(
+      jsonlite::fromJSON(jsonText, simplifyVector = FALSE),
+      error = function(e) NULL
+    )
+    if (is.null(parsed)) {
+      return("Full")
+    }
+
+    entries <- parsed
+    if (!is.list(entries)) {
+      entries <- list(entries)
+    } else if (!length(entries)) {
+      entries <- list()
+    } else if (!is.null(entries$attr_fun)) {
+      entries <- list(entries)
+    }
+
+    hasParsimoniousSignals <- any(vapply(
+      entries,
+      function(entry) {
+        if (!is.list(entry)) {
+          return(FALSE)
+        }
+        attrFun <- entry[["attr_fun"]]
+        if (
+          !is.null(attrFun) &&
+            attrFun == "PatientLevelPrediction::getCohortCovariateData"
+        ) {
+          return(TRUE)
+        }
+        analysisId <- entry[["analysisId"]]
+        if (!is.null(analysisId)) {
+          analysisIdNumeric <- suppressWarnings(as.numeric(analysisId))
+          if (!is.na(analysisIdNumeric) && analysisIdNumeric == 699) {
+            return(TRUE)
+          }
+        }
+        covariateName <- entry[["covariateName"]]
+        if (
+          !is.null(covariateName) &&
+            grepl("^history of", covariateName, ignore.case = TRUE)
+        ) {
+          return(TRUE)
+        }
+        return(FALSE)
+      },
+      FUN.VALUE = logical(1)
+    ))
+
+    if (hasParsimoniousSignals) "Parsimonious" else "Full"
+  }
+
+  covariateLookup <- covariateSettings |>
+    dplyr::mutate(
+      featureSet = vapply(
+        .data$covariate_settings_json,
+        determineFeatureSet,
+        FUN.VALUE = character(1)
+      )
+    ) |>
+    dplyr::select("covariate_setting_id", "featureSet")
   devPeriodLookup <- DBI::dbGetQuery(
     con,
     "
@@ -201,10 +320,16 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
         val <- safeExtract(js, path = list("recalibrationPeriod"))
       }
       if (is.na(val) || val == "") {
-        val <- safeExtract(js, path = list("param", "attr_settings", "recalibrationPeriod"))
+        val <- safeExtract(
+          js,
+          path = list("param", "attr_settings", "recalibrationPeriod")
+        )
       }
       if (is.na(val) || val == "") {
-        val <- safeExtract(js, path = list("modelSettings", "recalibrationPeriod"))
+        val <- safeExtract(
+          js,
+          path = list("modelSettings", "recalibrationPeriod")
+        )
       }
       if (is.na(val) || val == "") NA_character_ else as.character(val)
     },
@@ -249,11 +374,11 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
       Eavg = as.numeric(.data$Eavg),
       meanPrediction = as.numeric(.data$`calibrationInLarge mean prediction`),
       observedRisk = as.numeric(.data$`calibrationInLarge observed risk`),
+      observedMeanDiff = .data$observedRisk - .data$meanPrediction,
       startDate = as.Date(.data$studyStartDate, format = "%Y%m%d"),
       endDate = as.Date(.data$studyEndDate, format = "%Y%m%d"),
       periodMidpoint = .data$startDate + (.data$endDate - .data$startDate) / 2
     )
-
   resultsFinal <- resultsWide |>
     dplyr::mutate(
       analysisId = !!analysisId,
@@ -262,12 +387,33 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
         analysisId == "val_new" ~ "New Covid",
         analysisId == "val_original" ~ "Original Influenza",
         analysisId == "val_new_recalibrated" ~ "Recalibrated Influenza",
+        analysisId == "val_rolling_recalibrated" ~ "Rolling Recalibrated Influenza",
         TRUE ~ "Unknown"
       ),
-      devPeriod = ifelse(
-        is.na(.data$devPeriod),
-        NA_character_,
-        .data$devPeriod
+      # Only retain development period for New Covid models; otherwise set NA for clarity
+      devPeriod = dplyr::if_else(
+        .data$modelOrigin == "New Covid",
+        .data$devPeriod,
+        NA_character_
+      ),
+      wDev = wFromDevPeriod(.data$devPeriod),
+      wRecal = wFromRecalPeriod(.data$recalibrationPeriod),
+      # canonical model key (no outcome suffix by default)
+      modelKeyBase = makeModelKey(
+        .data$modelOrigin,
+        .data$featureSet,
+        .data$wDev,
+        .data$wRecal
+      ),
+      modelKey = appendOutcomeSuffix(
+        .data$modelKeyBase,
+        .data$outcomeId,
+        append = FALSE
+      ),
+      # prediction scale tag
+      predictionsScale = dplyr::case_when(
+        .data$modelOrigin == "Recalibrated Influenza" ~ "interceptSlope",
+        TRUE ~ "raw"
       ),
       fullName = paste(
         mapply(getName, .data$targetId, .data$outcomeId),
@@ -316,6 +462,8 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
       "periodMidpoint",
       "devStartDate",
       "devEndDate",
+      "wDev",
+      "wRecal",
       "targetId",
       "outcomeId",
       "targetName",
@@ -327,10 +475,86 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
       "outcomeCount",
       "Eavg",
       "meanPrediction",
-      "observedRisk"
+      "observedRisk",
+      "observedMeanDiff"
     ) |>
     dplyr::arrange(.data$startDate, .data$fullName)
   return(resultsFinal)
+}
+
+#' Compare discrimination metrics across two analyses
+#'
+#' @param results Tibble of model performance rows (e.g., `allResults`).
+#' @param analysisIdA Identifier of the reference analysis (e.g., `"val_original"`).
+#' @param analysisIdB Identifier of the comparison analysis (e.g., `"val_new_recalibrated"`).
+#' @param metrics Character vector of metric columns to compare. Defaults to `"AUROC"`.
+#' @param joinVars Character vector of columns used to align the rows between analyses.
+#'   Defaults to matching on `targetId`, `outcomeId`, `legendLabel`, `startDate`, and `endDate`.
+#'
+#' @return A tibble containing the matched rows with metric values from both analyses
+#'   and a `_diff` column (analysis B minus analysis A) for each requested metric.
+#' @export
+compareDiscrimination <- function(
+  results,
+  analysisIdA,
+  analysisIdB,
+  metrics = "AUROC",
+  joinVars = c("targetId", "outcomeId", "legendLabel", "startDate", "endDate")
+) {
+  missingMetrics <- setdiff(metrics, colnames(results))
+  if (length(missingMetrics) > 0) {
+    stop(
+      "Metrics not found in results: ",
+      paste(missingMetrics, collapse = ", ")
+    )
+  }
+
+  missingJoinVars <- setdiff(joinVars, colnames(results))
+  if (length(missingJoinVars) > 0) {
+    stop(
+      "Join variables not found in results: ",
+      paste(missingJoinVars, collapse = ", ")
+    )
+  }
+
+  dataA <- results |>
+    dplyr::filter(.data$analysisId == analysisIdA) |>
+    dplyr::select(dplyr::all_of(joinVars), dplyr::all_of(metrics)) |>
+    dplyr::rename_with(
+      ~ paste0(.x, "_", analysisIdA),
+      dplyr::all_of(metrics)
+    )
+
+  dataB <- results |>
+    dplyr::filter(.data$analysisId == analysisIdB) |>
+    dplyr::select(dplyr::all_of(joinVars), dplyr::all_of(metrics)) |>
+    dplyr::rename_with(
+      ~ paste0(.x, "_", analysisIdB),
+      dplyr::all_of(metrics)
+    )
+
+  joined <- dplyr::inner_join(dataA, dataB, by = joinVars)
+
+  if (nrow(joined) == 0) {
+    warning(
+      "No overlapping rows found between analyses '",
+      analysisIdA,
+      "' and '",
+      analysisIdB,
+      "' using joinVars: ",
+      paste(joinVars, collapse = ", ")
+    )
+    return(joined)
+  }
+
+  for (metric in metrics) {
+    joined[[paste0(metric, "_diff")]] <-
+      joined[[paste0(metric, "_", analysisIdB)]] -
+      joined[[paste0(metric, "_", analysisIdA)]]
+  }
+
+  joined |>
+    dplyr::arrange(dplyr::across(dplyr::all_of(joinVars)))
 }
 
 # helper for plotting
@@ -508,7 +732,7 @@ autoPlaceLegendNPC <- function(
 ) {
   # Padding constants (NPC)
   xPadRight <- 0.01
-  yPadTop <- 0.05
+  yPadTop <- 0.02
   yPadBottom <- 0.05
 
   npcx <- 1 - xPadRight
@@ -544,9 +768,11 @@ autoPlaceLegendNPC <- function(
     rng <- max(yUpper - yLower, .Machine$double.eps)
     scaledY <- (rightY - yLower) / rng
 
+    # Ensure the occupancy check accounts for both the legend height and
+    # the vertical padding, so the legend box does not overlap lines.
     margin <- 0.02
-    bottomCap <- min(vpHeight + margin, 0.5)
-    topFloor <- max(1 - (vpHeight + margin), 0.5)
+    bottomCap <- min(yPadBottom + vpHeight + margin, 0.5)
+    topFloor <- max(1 - (yPadTop + vpHeight + margin), 0.5)
 
     occupiedBottom <- any(scaledY <= bottomCap, na.rm = TRUE)
     occupiedTop <- any(scaledY >= topFloor, na.rm = TRUE)
@@ -733,8 +959,12 @@ buildFacetLegendGrobs <- function(
           legendCorner
         )
         side <- if (!is.na(pos$npcy) && pos$npcy >= 0.5) "top" else "bottom"
+        # Anchor the top legend close to the top border (respect small padding),
+        # using top alignment so the grob sits as high as possible without
+        # forcing a larger clearance than necessary.
+        topPad <- 0.02
         npcyAdj <- if (side == "top") {
-          pmin(1 - vpHeight, pos$npcy + vpHeight)
+          pmin(1 - 1e-3, 1 - topPad)
         } else {
           pos$npcy
         }
@@ -763,7 +993,8 @@ buildBasePlot <- function(
   yUpper,
   metric,
   hasDevSegments,
-  title
+  title,
+  connectDevToVal = TRUE
 ) {
   ggplot2::ggplot(
     data = resultsToPlot,
@@ -778,18 +1009,35 @@ buildBasePlot <- function(
       mapping = ggplot2::aes(linetype = "Validation Performance")
     ) +
     ggplot2::geom_point(size = 3.5) +
-    ggplot2::geom_segment(
-      data = devPlotPerformance,
-      mapping = ggplot2::aes(
-        x = .data$devStartDate,
-        xend = .data$devEndDate,
-        y = !!yVar,
-        yend = !!yVar,
-        colour = .data$fullName,
-        linetype = "Development Performance"
-      ),
-      linewidth = 1.2
-    ) +
+    {
+      # Extend the development segment so it meets the first validation midpoint
+      if (nrow(devPlotPerformance) > 0) {
+        firstVal <- resultsToPlot |>
+          dplyr::group_by(.data$fullName) |>
+          dplyr::summarise(firstMid = suppressWarnings(min(.data$periodMidpoint, na.rm = TRUE)), .groups = "drop")
+        devSegs <- devPlotPerformance |>
+          dplyr::left_join(firstVal, by = "fullName") |>
+          dplyr::mutate(
+            x_start_ext = .data$devStartDate,
+            x_end_ext = dplyr::coalesce(.data$firstMid, .data$devEndDate),
+            x_end_ext = dplyr::if_else(!is.na(.data$devEndDate) & !is.na(.data$x_end_ext) & .data$x_end_ext < .data$devEndDate,
+                                       .data$devEndDate, .data$x_end_ext)
+          )
+        ggplot2::geom_segment(
+          data = devSegs,
+          mapping = ggplot2::aes(
+            x = .data$x_start_ext,
+            xend = .data$x_end_ext,
+            y = !!yVar,
+            yend = !!yVar,
+            colour = .data$fullName,
+            linetype = "Development Performance"
+          ),
+          linewidth = 1.2,
+          lineend = "butt"
+        )
+      }
+    } +
     ggplot2::theme_bw(base_size = 18) +
     ggplot2::scale_x_date(
       date_breaks = "3 months",
@@ -920,6 +1168,54 @@ ptToMm <- function(pt) pt * 25.4 / 72
   }
 }
 
+# Decide milestone label side (top/bottom) per facet by
+# inspecting headroom near milestone dates.
+.pickMilestoneSide <- function(
+  resultsFacet,
+  metric,
+  yLower,
+  yUpper,
+  milestoneDates = NULL,
+  windowDays = 60
+) {
+  if (is.null(resultsFacet) || is.null(metric) || !(metric %in% names(resultsFacet))) {
+    return("bottom")
+  }
+  x <- resultsFacet$periodMidpoint
+  y <- resultsFacet[[metric]]
+  ok <- is.finite(x) & is.finite(y)
+  x <- x[ok]
+  y <- y[ok]
+  if (!length(y)) return("bottom")
+
+  # Focus on data near milestone dates to decide where there is more free space
+  if (!is.null(milestoneDates) && length(milestoneDates)) {
+    wd <- as.numeric(windowDays)
+    nearMask <- Reduce(
+      `|`,
+      lapply(as.Date(milestoneDates), function(d) abs(as.numeric(x - d)) <= wd),
+      init = rep(FALSE, length(x))
+    )
+    yUse <- if (any(nearMask)) y[nearMask] else y
+  } else {
+    yUse <- y
+  }
+
+  # Compare available vertical room to top vs bottom using robust quantiles
+  rng <- max(yUpper - yLower, .Machine$double.eps)
+  topRoom <- yUpper - stats::quantile(yUse, probs = 0.9, na.rm = TRUE, type = 7)
+  botRoom <- stats::quantile(yUse, probs = 0.1, na.rm = TRUE, type = 7) - yLower
+
+  if (!is.finite(topRoom)) topRoom <- 0
+  if (!is.finite(botRoom)) botRoom <- 0
+
+  # Prefer the side with meaningful headroom; fall back to larger room
+  minRoom <- 0.03 * rng
+  if (topRoom < minRoom && botRoom >= minRoom) return("bottom")
+  if (botRoom < minRoom && topRoom >= minRoom) return("top")
+  if (botRoom >= topRoom) "bottom" else "top"
+}
+
 .addMilestoneLayers <- function(
   p,
   milestones,
@@ -957,16 +1253,28 @@ ptToMm <- function(pt) pt * 25.4 / 72
   vaccines <- milestones[milestones$type == "vaccine", , drop = FALSE]
   variants <- milestones[milestones$type == "variant", , drop = FALSE]
 
+  # Pre-compute NPC X for label alignment so labels stay centered on the line
+  # and we can keep them inside the panel using NPC Y.
+  panelMin <- as.numeric(xRange[1])
+  panelMax <- as.numeric(xRange[2])
+  spanNum <- max(panelMax - panelMin, .Machine$double.eps)
+  if (nrow(vaccines)) {
+    vaccines$npcx <- (as.numeric(vaccines$date) - panelMin) / spanNum
+  }
+  if (nrow(variants)) {
+    variants$npcx <- (as.numeric(variants$date) - panelMin) / spanNum
+  }
+
   labelMm <- ptToMm(labelPt)
 
   # Helper to build layers for a single facet side
   buildLayers <- function(side, vpH, facetKeys = NULL) {
     isTop <- identical(tolower(side), "top")
-    yLabel <- if (isTop) {
-      yUpper - topPadFrac * (yUpper - yLower)
-    } else {
-      yLower + topPadFrac * (yUpper - yLower)
-    }
+    rng <- yUpper - yLower
+    # Anchor labels using NPC Y close to borders while keeping inside
+    topPadNPC <- 0.01
+    botPadNPC <- 0.01
+    npcy <- if (isTop) (1 - topPadNPC) else botPadNPC
     vjustLB <- if (isTop) 1 else 0
 
     vG <- list()
@@ -975,7 +1283,7 @@ ptToMm <- function(pt) pt * 25.4 / 72
       if (!is.null(facetKeys)) {
         vDf <- cbind(facetKeys[rep(1, nrow(vDf)), , drop = FALSE], vDf)
       }
-      vDf$labY <- yLabel
+      vDf$npcy <- npcy
       vG <- list(
         ggplot2::geom_vline(
           data = vDf,
@@ -985,11 +1293,11 @@ ptToMm <- function(pt) pt * 25.4 / 72
           lineend = "butt"
         ),
         if (showLabels) {
-          ggplot2::geom_text(
+          ggpp::geom_text_npc(
             data = vDf,
             mapping = ggplot2::aes(
-              x = .data$date,
-              y = .data$labY,
+              npcx = .data$npcx,
+              npcy = .data$npcy,
               label = .data$label
             ),
             colour = vaccineLineColor,
@@ -1011,7 +1319,7 @@ ptToMm <- function(pt) pt * 25.4 / 72
       if (!is.null(facetKeys)) {
         aDf <- cbind(facetKeys[rep(1, nrow(aDf)), , drop = FALSE], aDf)
       }
-      aDf$labY <- yLabel
+      aDf$npcy <- npcy
       varG <- list(
         ggplot2::geom_vline(
           data = aDf,
@@ -1022,11 +1330,11 @@ ptToMm <- function(pt) pt * 25.4 / 72
           lineend = "butt"
         ),
         if (showLabels) {
-          ggplot2::geom_text(
+          ggpp::geom_text_npc(
             data = aDf,
             mapping = ggplot2::aes(
-              x = .data$date,
-              y = .data$labY,
+              npcx = .data$npcx,
+              npcy = .data$npcy,
               label = .data$label
             ),
             colour = variantLineColor,
@@ -1056,7 +1364,27 @@ ptToMm <- function(pt) pt * 25.4 / 72
     # Build list of layers for each facet level
     for (i in seq_len(nrow(legendPlacement))) {
       fk <- legendPlacement[i, facetBy, drop = FALSE]
-      sideI <- legendPlacement$side[i]
+      # Determine results for this facet
+      resFacet <- if (!is.null(resultsData)) {
+        tryCatch({
+          if (!is.null(facetBy) && length(facetBy) > 0) {
+            dplyr::semi_join(resultsData, fk, by = facetBy)
+          } else {
+            resultsData
+          }
+        }, error = function(e) NULL)
+      } else {
+        NULL
+      }
+
+      sideI <- .pickMilestoneSide(
+        resultsFacet = resFacet,
+        metric = metric,
+        yLower = yLower,
+        yUpper = yUpper,
+        milestoneDates = milestones$date,
+        windowDays = 45
+      )
       vpHI <- legendPlacement$vpHeight[i]
       layersI <- buildLayers(sideI, vpHI, facetKeys = fk)
       for (g in layersI) {
@@ -1075,24 +1403,16 @@ ptToMm <- function(pt) pt * 25.4 / 72
     0
   }
 
-  labPos <- .pickMilestoneLabelYLikeLegend(
-    resultsData = resultsData,
+  # Not faceted: decide side from data near milestones
+  side0 <- .pickMilestoneSide(
+    resultsFacet = resultsData,
     metric = metric,
     yLower = yLower,
     yUpper = yUpper,
-    padFrac = topPadFrac,
-    legendCorner = legendCorner,
-    legendSide = if (
-      !is.null(legendPlacement) && "side" %in% names(legendPlacement)
-    ) {
-      unique(legendPlacement$side)[1]
-    } else {
-      NULL
-    },
-    vpHeight = if (is.finite(vpH)) vpH else 0
+    milestoneDates = milestones$date,
+    windowDays = 45
   )
-
-  layers <- buildLayers(labPos$side, vpH, facetKeys = NULL)
+  layers <- buildLayers(side0, vpH, facetKeys = NULL)
   for (g in layers) {
     if (!is.null(g)) p <- p + g
   }
@@ -1342,23 +1662,24 @@ addOutcomeRateStripBarsLayer <- function(
 #' @return A ggplot object representing the comparison
 #' @export
 plotComparison <- function(
-    allResults,
-    outcomes = NULL,
-    modelOriginsToCompare,
-    featureSetsToCompare,
-    devPeriodsToCompare = NULL,
-    facetBy = NULL,
-    metric = "AUROC",
-    legendCorner = "auto",
-    showMilestones = TRUE,
-    vaccineLineColor = "#EF4444FF",
-    variantLineColor = "#9CA3AFFF",
-    title = NULL,
-    showOutcomeRatePanel = FALSE,
-    outcomeRatePanelStyle = c("area", "bars"),
-    outcomeRatePanelFill = "#6B7280FF",
-    outcomeRatePanelAlpha = 0.6,
-    outcomeRatePanelHeights = c(0.78, 0.22)  
+  allResults,
+  outcomes = NULL,
+  modelOriginsToCompare,
+  featureSetsToCompare,
+  devPeriodsToCompare = NULL,
+  facetBy = NULL,
+  facetCols = 1,
+  metric = "AUROC",
+  legendCorner = "auto",
+  showMilestones = TRUE,
+  vaccineLineColor = "#EF4444FF",
+  variantLineColor = "#9CA3AFFF",
+  title = NULL,
+  showOutcomeRatePanel = FALSE,
+  outcomeRatePanelStyle = c("area", "bars"),
+  outcomeRatePanelFill = "#6B7280FF",
+  outcomeRatePanelAlpha = 0.6,
+  outcomeRatePanelHeights = c(0.78, 0.22)
 ) {
   outcomeRatePanelStyle <- match.arg(outcomeRatePanelStyle)
 
@@ -1388,7 +1709,9 @@ plotComparison <- function(
   yLower <- yLim$yLower
   yUpper <- yLim$yUpper
   milestones <- .defaultUsMilestones()
-  if (is.null(title)) title <- "Model Performance Over Time"
+  if (is.null(title)) {
+    title <- "Model Performance Over Time"
+  }
 
   pal <- buildFeatureSetPalette(resultsToPlot, devPerformance)
   allLevels <- pal$allLevels
@@ -1396,33 +1719,42 @@ plotComparison <- function(
 
   resultsToPlot$fullName <- factor(resultsToPlot$fullName, levels = allLevels)
   devPerformance$fullName <- factor(devPerformance$fullName, levels = allLevels)
-  devPlotPerformance$fullName <- factor(devPlotPerformance$fullName, levels = allLevels)
+  devPlotPerformance$fullName <- factor(
+    devPlotPerformance$fullName,
+    levels = allLevels
+  )
 
   legendGrobs <- buildFacetLegendGrobs(
     resultsToPlot = resultsToPlot,
-    facetBy       = facetBy,
-    colorPalette  = colorPalette,
-    metric        = metric,
-    yLower        = yLower,
-    yUpper        = yUpper,
-    legendCorner  = legendCorner
+    facetBy = facetBy,
+    colorPalette = colorPalette,
+    metric = metric,
+    yLower = yLower,
+    yUpper = yUpper,
+    legendCorner = legendCorner
   )
 
   xLim <- computeGlobalXLimits(resultsToPlot, devPerformance)
   globalXmin <- xLim$globalXmin
   globalXMax <- xLim$globalXMax
+  # Panel limits including scale expansion to align NPC text with data vlines
+  xSpanDays <- as.numeric(globalXMax - globalXmin)
+  padFrac <- 0.01
+  panelXmin <- globalXmin - padFrac * xSpanDays
+  panelXmax <- globalXMax + padFrac * xSpanDays
 
   vplot <- buildBasePlot(
-    resultsToPlot      = resultsToPlot,
+    resultsToPlot = resultsToPlot,
     devPlotPerformance = devPlotPerformance,
-    yVar               = yVar,
-    globalXmin         = globalXmin,
-    globalXMax         = globalXMax,
-    yLower             = yLower,
-    yUpper             = yUpper,
-    metric             = metric,
-    hasDevSegments     = hasDevSegments,
-    title              = title
+    yVar = yVar,
+    globalXmin = globalXmin,
+    globalXMax = globalXMax,
+    yLower = yLower,
+    yUpper = yUpper,
+    metric = metric,
+    hasDevSegments = hasDevSegments,
+    title = title,
+    connectDevToVal = TRUE
   )
   bottomLegend <- legendGrobs[legendGrobs$side == "bottom", , drop = FALSE]
   topLegend <- legendGrobs[legendGrobs$side == "top", , drop = FALSE]
@@ -1431,58 +1763,72 @@ plotComparison <- function(
     ggpp::geom_grob_npc(
       data = bottomLegend,
       mapping = ggplot2::aes(
-        label       = .data$grob,
-        `vp.width`  = .data$vpWidth,
+        label = .data$grob,
+        `vp.width` = .data$vpWidth,
         `vp.height` = .data$vpHeight,
-        npcx        = .data$npcx,
-        npcy        = .data$npcyAdj
+        npcx = .data$npcx,
+        npcy = .data$npcyAdj
       ),
       inherit.aes = FALSE,
-      hjust = 1, vjust = 0
+      hjust = 1,
+      vjust = 0
     ) +
     ggpp::geom_grob_npc(
       data = topLegend,
       mapping = ggplot2::aes(
-        label       = .data$grob,
-        `vp.width`  = .data$vpWidth,
+        label = .data$grob,
+        `vp.width` = .data$vpWidth,
         `vp.height` = .data$vpHeight,
-        npcx        = .data$npcx,
-        npcy        = .data$npcyAdj
+        npcx = .data$npcx,
+        npcy = .data$npcyAdj
       ),
       inherit.aes = FALSE,
-      hjust = 1, vjust = 1
+      hjust = 1,
+      vjust = 1
     ) +
-    ggplot2::scale_color_manual(values = colorPalette, limits = allLevels, guide = "none")
+    ggplot2::scale_color_manual(
+      values = colorPalette,
+      limits = allLevels,
+      guide = "none"
+    )
 
   if (!is.null(facetBy)) {
     if (!all(facetBy %in% names(resultsToPlot))) {
-      stop("One or more column names provided to 'facetBy' do not exist in the data.")
+      stop(
+        "One or more column names provided to 'facetBy' do not exist in the data."
+      )
     }
-    vplot <- vplot + ggplot2::facet_wrap(
-      facets = ggplot2::vars(!!!rlang::syms(facetBy)),
-      ncol = 1,
-      strip.position = "top"
-    )
+    vplot <- vplot +
+      ggplot2::facet_wrap(
+        facets = ggplot2::vars(!!!rlang::syms(facetBy)),
+        ncol = facetCols,
+        strip.position = "top"
+      )
   }
 
-  if (!hasDevSegments) vplot <- vplot + ggplot2::theme(legend.position = "none")
+  if (!hasDevSegments) {
+    vplot <- vplot + ggplot2::theme(legend.position = "none")
+  }
 
   xDateCol <- "periodMidpoint" # or "endDate"
   xRange <- range(resultsToPlot[[xDateCol]], na.rm = TRUE)
 
   if (showMilestones) {
+    # Provide per-facet legend placement to anchor milestone labels correctly.
     vplot <- .addMilestoneLayers(
       p = vplot,
       milestones = milestones,
       yLower = yLower,
       yUpper = yUpper,
-      xRange = xRange,
+      xRange = c(panelXmin, panelXmax),
       vaccineLineColor = vaccineLineColor,
       variantLineColor = variantLineColor,
       showLabels = TRUE,
       legendCorner = legendCorner,
       resultsData = resultsToPlot,
-      metric = metric
+      metric = metric,
+      facetBy = facetBy,
+      legendPlacement = legendGrobs
     )
   }
 
@@ -1495,27 +1841,46 @@ plotComparison <- function(
   # NEW: Option C - add a compact, aligned outcome-rate panel below the main plot
   if (identical(tolower(metric), "eavg") && isTRUE(showOutcomeRatePanel)) {
     if (!requireNamespace("patchwork", quietly = TRUE)) {
-      warning("showOutcomeRatePanel = TRUE requires the 'patchwork' package. Returning single-panel plot.")
+      warning(
+        "showOutcomeRatePanel = TRUE requires the 'patchwork' package. Returning single-panel plot."
+      )
       return(vplot)
     }
 
     rateDf <- computeOutcomeRateSummary(resultsToPlot, facetBy = facetBy)
     if (nrow(rateDf) == 0) {
-      warning("Outcome-rate panel requested but no 'observedRisk' data available. Returning single-panel plot.")
+      warning(
+        "Outcome-rate panel requested but no 'observedRisk' data available. Returning single-panel plot."
+      )
       return(vplot)
     }
 
     # Build rate panel (area or bars), aligned x-limits
-    p_rate <- ggplot2::ggplot(rateDf, ggplot2::aes(x = .data$periodMidpoint, y = .data$risk)) +
+    p_rate <- ggplot2::ggplot(
+      rateDf,
+      ggplot2::aes(x = .data$periodMidpoint, y = .data$risk)
+    ) +
       {
         if (identical(outcomeRatePanelStyle, "area")) {
-          ggplot2::geom_area(fill = outcomeRatePanelFill, alpha = outcomeRatePanelAlpha, linewidth = 0)
+          ggplot2::geom_area(
+            fill = outcomeRatePanelFill,
+            alpha = outcomeRatePanelAlpha,
+            linewidth = 0
+          )
         } else {
           # pick a reasonable default bar width in days
           ux <- sort(unique(rateDf$periodMidpoint))
-          d  <- diff(ux)
-          wDays <- if (length(d)) max(7, round(as.numeric(stats::median(d, na.rm = TRUE)))) else 28
-          ggplot2::geom_col(fill = outcomeRatePanelFill, alpha = outcomeRatePanelAlpha, width = wDays)
+          d <- diff(ux)
+          wDays <- if (length(d)) {
+            max(7, round(as.numeric(stats::median(d, na.rm = TRUE))))
+          } else {
+            28
+          }
+          ggplot2::geom_col(
+            fill = outcomeRatePanelFill,
+            alpha = outcomeRatePanelAlpha,
+            width = wDays
+          )
         }
       } +
       ggplot2::scale_x_date(
@@ -1524,18 +1889,34 @@ plotComparison <- function(
         date_labels = "%b %Y",
         expand = ggplot2::expansion(mult = c(0.01, 0.01))
       ) +
-      ggplot2::scale_y_continuous(labels = scales::label_percent(accuracy = 1)) +
+      ggplot2::scale_y_continuous(
+        labels = scales::label_percent(accuracy = 1)
+      ) +
       ggplot2::labs(x = "Time", y = "Outcome rate") +
       ggplot2::theme_bw(base_size = 16) +
       ggplot2::theme(
         panel.grid.major.x = ggplot2::element_blank(),
         panel.grid.minor.x = ggplot2::element_blank(),
-        panel.grid.major.y = ggplot2::element_line(linewidth = 0.25, colour = "grey85"),
+        panel.grid.major.y = ggplot2::element_line(
+          linewidth = 0.25,
+          colour = "grey85"
+        ),
         panel.grid.minor.y = ggplot2::element_blank(),
-        axis.text.x = ggplot2::element_text(size = 14, angle = 45, hjust = 1, vjust = 1),
+        axis.text.x = ggplot2::element_text(
+          size = 14,
+          angle = 45,
+          hjust = 1,
+          vjust = 1
+        ),
         axis.text.y = ggplot2::element_text(size = 12),
-        axis.title.y = ggplot2::element_text(size = 14, margin = ggplot2::margin(r = 4)),
-        axis.title.x = ggplot2::element_text(size = 16, margin = ggplot2::margin(t = 6)),
+        axis.title.y = ggplot2::element_text(
+          size = 14,
+          margin = ggplot2::margin(r = 4)
+        ),
+        axis.title.x = ggplot2::element_text(
+          size = 16,
+          margin = ggplot2::margin(t = 6)
+        ),
         plot.margin = grid::unit(c(2, 6, 6, 6), "pt"),
         strip.background = ggplot2::element_blank(),
         strip.text = ggplot2::element_text(size = 14, face = "bold")
@@ -1545,23 +1926,29 @@ plotComparison <- function(
       if (!all(facetBy %in% names(rateDf))) {
         stop("One or more 'facetBy' columns are missing in outcome-rate data.")
       }
-      p_rate <- p_rate + ggplot2::facet_wrap(
-        facets = ggplot2::vars(!!!rlang::syms(facetBy)),
-        ncol = 1,
-        strip.position = "top"
-      )
+      p_rate <- p_rate +
+        ggplot2::facet_wrap(
+          facets = ggplot2::vars(!!!rlang::syms(facetBy)),
+          ncol = 1,
+          strip.position = "top"
+        )
     }
 
     # Remove x labels from the main plot; keep them on the rate panel
     p_main <- vplot +
       ggplot2::theme(
-        axis.text.x  = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_blank(),
         axis.title.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank(),
-        plot.margin  = grid::unit(c(6, 6, 2, 6), "pt")
+        plot.margin = grid::unit(c(6, 6, 2, 6), "pt")
       )
 
-    return(patchwork::wrap_plots(p_main, p_rate, ncol = 1, heights = outcomeRatePanelHeights))
+    return(patchwork::wrap_plots(
+      p_main,
+      p_rate,
+      ncol = 1,
+      heights = outcomeRatePanelHeights
+    ))
   }
 
   vplot
