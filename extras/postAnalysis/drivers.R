@@ -165,7 +165,55 @@ buildComparisonsFromAllResults <- function(
     )
     k <- k + 1L
   }
-  do.call(rbind, res)
+  out <- do.call(rbind, res)
+
+  # Add "frozen-only" comparisons for quarters where a frozen proxy model exists
+  # but a rolling recalibrated proxy model does not (for the same outcome + feature set).
+  #
+  # We use a self-comparison (frozen vs frozen) so that bootstrapping yields absolute
+  # metric values for the frozen model in those quarters.
+  buildFrozenOnlyComparisons <- function(allResults) {
+    needed <- c("outcomeName", "featureSet", "startDate", "endDate", "modelOrigin")
+    if (length(setdiff(needed, names(allResults)))) {
+      return(data.frame())
+    }
+    tmp <- allResults
+    tmp$startDate <- as.Date(tmp$startDate)
+    tmp$endDate <- as.Date(tmp$endDate)
+    tmp$quarterId <- computeQuarterId(tmp$startDate, tmp$endDate, tmp$outcomeName)
+
+    origin <- tolower(trimws(as.character(tmp$modelOrigin)))
+    frozenMask <- origin == "original influenza"
+    rollingMask <- grepl("rolling recalibrated", origin, fixed = TRUE)
+
+    frozen <- unique(tmp[frozenMask, c("outcomeName", "featureSet", "quarterId")])
+    if (!nrow(frozen)) return(data.frame())
+
+    rolling <- unique(tmp[rollingMask, c("outcomeName", "featureSet", "quarterId")])
+    frozenKey <- paste(frozen$outcomeName, frozen$featureSet, frozen$quarterId, sep = "||")
+    rollingKey <- if (nrow(rolling)) paste(rolling$outcomeName, rolling$featureSet, rolling$quarterId, sep = "||") else character(0)
+
+    only <- frozen[!(frozenKey %in% rollingKey), , drop = FALSE]
+    if (!nrow(only)) return(data.frame())
+
+    only$W <- "na"
+    only$comparator <- "proxy_frozen_only"
+    only$modelAKey <- vapply(
+      seq_len(nrow(only)),
+      function(i) makeModelKey("Original Influenza", only$featureSet[i], NA),
+      character(1)
+    )
+    only$modelBKey <- only$modelAKey
+    only <- only[, c("outcomeName", "featureSet", "W", "comparator", "modelAKey", "modelBKey", "quarterId")]
+    rownames(only) <- NULL
+    only
+  }
+
+  frozenOnly <- buildFrozenOnlyComparisons(ar)
+  if (nrow(frozenOnly)) {
+    out <- rbind(out, frozenOnly)
+  }
+  out
 }
 
 loadQuarterPredictions <- function(
