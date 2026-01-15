@@ -238,6 +238,53 @@ loadQuarterPredictions <- function(
   )
 }
 
+getPairedPredictions <- function(
+  row,
+  runsRoot = "results/runs",
+  allResultsPath = "results/allResults.csv",
+  locateQuarterRunFn = locateQuarterRun,
+  loadRunPredictionsFn = loadRunPredictions,
+  loadQuarterPairFromRunsFn = loadQuarterPairFromRuns
+) {
+  sameModel <- identical(as.character(row$modelAKey), as.character(row$modelBKey))
+  if (isTRUE(sameModel)) {
+    tmpRow <- data.frame(
+      outcomeName = row$outcomeName,
+      quarterId = row$quarterId,
+      modelAKey = row$modelAKey,
+      modelBKey = row$modelBKey,
+      stringsAsFactors = FALSE
+    )
+    run <- locateQuarterRunFn(
+      modelKey = row$modelAKey,
+      row = tmpRow,
+      runsRoot = runsRoot,
+      allResultsPath = allResultsPath
+    )
+    preds <- loadRunPredictionsFn(run$runPlpPath, evalType = "Validation")
+    list(
+      y = preds$y,
+      pA = preds$p,
+      pB = preds$p
+    )
+  } else {
+    modelKeys <- c(row$modelAKey, row$modelBKey)
+    df <- loadQuarterPairFromRunsFn(
+      row,
+      runsRoot = runsRoot,
+      allResultsPath = allResultsPath
+    )
+    cols <- c("patient_id", "y", paste0("p_", modelKeys))
+    df <- df[, cols]
+    df <- df[stats::complete.cases(df), ]
+    list(
+      y = df$y,
+      pA = df[[paste0("p_", row$modelAKey)]],
+      pB = df[[paste0("p_", row$modelBKey)]]
+    )
+  }
+}
+
 runSingleComparison <- function(
   row,
   inbThresholds,
@@ -248,22 +295,14 @@ runSingleComparison <- function(
   allResultsPath = "results/allResults.csv",
   threads = 1L
 ) {
-  modelKeys <- c(row$modelAKey, row$modelBKey)
-  df <- loadQuarterPredictions(
-    quarterId = row$quarterId,
-    outcomeName = row$outcomeName,
-    modelKeys = modelKeys,
+  pr <- getPairedPredictions(
+    row = row,
     runsRoot = runsRoot,
     allResultsPath = allResultsPath
   )
-
-  cols <- c("patient_id", "y", paste0("p_", modelKeys))
-  df <- df[, cols]
-  df <- df[stats::complete.cases(df), ]
-
-  y <- df$y
-  pA <- df[[paste0("p_", row$modelAKey)]]
-  pB <- df[[paste0("p_", row$modelBKey)]]
+  y <- pr$y
+  pA <- pr$pA
+  pB <- pr$pB
 
   metricFns <- list(
     AUROC = auroc,
@@ -350,27 +389,18 @@ runQuarterwise <- function(
 
   taskFun <- function(i, prog = NULL) {
     row <- comparisons[i, ]
-    modelKeys <- c(row$modelAKey, row$modelBKey)
-    df <- loadQuarterPredictions(
-      quarterId = row$quarterId,
-      outcomeName = row$outcomeName,
-      modelKeys = modelKeys,
+    pr <- getPairedPredictions(
+      row = row,
       runsRoot = runsRoot,
       allResultsPath = allResultsPath
     )
+    y <- pr$y
+    pA <- pr$pA
+    pB <- pr$pB
 
-    # Ensure identical cohort across models (intersection)
-    cols <- c("patient_id", "y", paste0("p_", modelKeys))
-    df <- df[, cols]
-    df <- df[stats::complete.cases(df), ]
-
-    y <- df$y
-    pA <- df[[paste0("p_", row$modelAKey)]]
-    pB <- df[[paste0("p_", row$modelBKey)]]
-
-  metricFns <- list(
-    AUROC = auroc,
-    AUPRC = auprc,
+	  metricFns <- list(
+	    AUROC = auroc,
+	    AUPRC = auprc,
     Brier = brier,
     ICI = function(y, p) eavgGAM(y, p, nthreads = threads),
     INB = function(y, p) integratedNetBenefit(y, p, thresholds = inbThresholds[[row$outcomeName]])

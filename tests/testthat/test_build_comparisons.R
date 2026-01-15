@@ -34,3 +34,34 @@ test_that("buildComparisonsFromAllResults adds proxy_frozen_only for frozen-only
   expect_true(all(frozenOnly$modelAKey == frozenOnly$modelBKey))
 })
 
+test_that("getPairedPredictions supports self-comparisons (modelAKey == modelBKey)", {
+  driverPath <- testthat::test_path("..", "..", "extras", "postAnalysis", "drivers.R")
+  source(driverPath, local = TRUE)
+
+  row <- data.frame(
+    outcomeName = "Hospitalization",
+    featureSet = "Full",
+    W = "na",
+    comparator = "proxy_frozen_only",
+    modelAKey = "proxy_frozen_full",
+    modelBKey = "proxy_frozen_full",
+    quarterId = "20200101_20200331_Hospitalization",
+    stringsAsFactors = FALSE
+  )
+
+  fakeLocate <- function(modelKey, row, runsRoot, allResultsPath) {
+    list(runPlpPath = "fake.rds")
+  }
+  fakeLoad <- function(runPlpPath, evalType = "Validation") {
+    data.frame(patientId = 1:4, y = c(0, 1, 0, 1), p = c(0.1, 0.9, 0.2, 0.8))
+  }
+
+  pr <- getPairedPredictions(
+    row = row,
+    locateQuarterRunFn = fakeLocate,
+    loadRunPredictionsFn = fakeLoad,
+    loadQuarterPairFromRunsFn = function(...) stop("should not be called")
+  )
+  expect_equal(pr$pA, pr$pB)
+  expect_equal(length(pr$y), 4)
+})
