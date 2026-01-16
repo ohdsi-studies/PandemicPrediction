@@ -5,15 +5,22 @@ source("extras/postAnalysis/drivers.R")
 comps <- buildComparisonsFromAllResults("results/allResults.csv")
 proxy_comps <- subset(
   comps,
-  comparator %in% c("proxy_frozen_vs_proxy_rolling_recal", "proxy_recal_vs_proxy_rolling_recal")
+  comparator %in% c(
+    "proxy_frozen_only",
+    "proxy_frozen_vs_proxy_rolling_recal", 
+    "proxy_recal_vs_proxy_rolling_recal",
+    "covid_vs_proxy_frozen",
+    "covid_vs_proxy_recal"
+    )
 )
 df <- runQuarterwise(
   comparisons = proxy_comps,
-  outDir = "results/rolling_test2",
-  B = 50,
+  outDir = "results/rolling_200",
+  B = 200,
   seedBase = 42,
   parallel = "mirai",
   threads = 1,
   workers = 20,
-  showProgress = TRUE
+  showProgress = TRUE,
+  resume = TRUE
 )

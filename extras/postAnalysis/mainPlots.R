@@ -12,7 +12,7 @@ dfAll <- collectQuarterwiseBootstrap(
 
 modelDf <- comparisonToModelRows(
   dfAll,
-  metric = "INB",
+  metric = "ICI",
   labelMap = c(
       proxy_frozen_full = "Frozen Full",
       proxy_roll_full   = "Rolling Full",
