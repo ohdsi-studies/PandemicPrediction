@@ -65,3 +65,24 @@ test_that("getPairedPredictions supports self-comparisons (modelAKey == modelBKe
   expect_equal(pr$pA, pr$pB)
   expect_equal(length(pr$y), 4)
 })
+
+test_that("readExistingBootstrapIfCompatible returns cached results only when B matches", {
+  driverPath <- testthat::test_path("..", "..", "extras", "postAnalysis", "drivers.R")
+  source(driverPath, local = TRUE)
+
+  tmp <- tempfile(fileext = ".csv")
+  df <- data.frame(
+    metric = c("AUROC", "AUPRC", "Brier", "ICI", "INB"),
+    B = rep(25, 5),
+    delta = rep(0, 5),
+    stringsAsFactors = FALSE
+  )
+  utils::write.csv(df, tmp, row.names = FALSE)
+
+  ok <- readExistingBootstrapIfCompatible(tmp, B = 25)
+  expect_true(!is.null(ok))
+  expect_equal(nrow(ok), 5)
+
+  bad <- readExistingBootstrapIfCompatible(tmp, B = 200)
+  expect_true(is.null(bad))
+})

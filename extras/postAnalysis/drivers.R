@@ -18,6 +18,50 @@ ensureDir <- function(path) {
   }
 }
 
+buildBootstrapOutFile <- function(outDir, row) {
+  file.path(
+    outDir,
+    paste0(
+      row$outcomeName,
+      "_",
+      row$featureSet,
+      "_",
+      row$W,
+      "_",
+      row$comparator,
+      "_",
+      row$quarterId,
+      ".csv"
+    )
+  )
+}
+
+readExistingBootstrapIfCompatible <- function(path, B) {
+  if (is.null(path) || !nzchar(path) || !file.exists(path)) {
+    return(NULL)
+  }
+  df <- tryCatch(
+    utils::read.csv(path, stringsAsFactors = FALSE),
+    error = function(e) NULL
+  )
+  if (is.null(df) || !nrow(df)) {
+    return(NULL)
+  }
+  if (!"B" %in% names(df)) {
+    return(NULL)
+  }
+  existingB <- unique(as.integer(df$B))
+  if (length(existingB) != 1L || is.na(existingB) || existingB != as.integer(B)) {
+    return(NULL)
+  }
+  # Expect 5 metrics per file from our writers:
+  # AUROC, AUPRC, Brier, ICI, INB
+  if (!"metric" %in% names(df) || length(unique(as.character(df$metric))) != 5L) {
+    return(NULL)
+  }
+  df
+}
+
 featureShort <- function(featureSet) {
   ifelse(tolower(featureSet) == "parsimonious", "pars", "full")
 }
@@ -293,8 +337,20 @@ runSingleComparison <- function(
   outDir = NULL,
   runsRoot = "results/runs",
   allResultsPath = "results/allResults.csv",
-  threads = 1L
+  threads = 1L,
+  resume = FALSE
 ) {
+  if (!is.null(outDir)) {
+    ensureDir(outDir)
+    outFile <- buildBootstrapOutFile(outDir, row)
+    if (isTRUE(resume)) {
+      cached <- readExistingBootstrapIfCompatible(outFile, B = B)
+      if (!is.null(cached)) {
+        return(cached)
+      }
+    }
+  }
+
   pr <- getPairedPredictions(
     row = row,
     runsRoot = runsRoot,
@@ -334,22 +390,7 @@ runSingleComparison <- function(
   bootRes$nEvents <- sum(y == 1L)
 
   if (!is.null(outDir)) {
-    ensureDir(outDir)
-    outFile <- file.path(
-      outDir,
-      paste0(
-        row$outcomeName,
-        "_",
-        row$featureSet,
-        "_",
-        row$W,
-        "_",
-        row$comparator,
-        "_",
-        row$quarterId,
-        ".csv"
-      )
-    )
+    outFile <- buildBootstrapOutFile(outDir, row)
     utils::write.csv(bootRes, outFile, row.names = FALSE)
   }
   bootRes
@@ -367,6 +408,7 @@ runQuarterwise <- function(
   runsRoot = "results/runs",
   allResultsPath = "results/allResults.csv",
   threads = 1L,
+  resume = FALSE,
   bootParallel = c("none", "mirai"),
   bootWorkers = NULL,
   bootChunkSize = 100L
@@ -515,7 +557,8 @@ runQuarterwise <- function(
               outDir = outDir,
               runsRoot = runsRoot,
               allResultsPath = allResultsPath,
-              threads = threads_i
+              threads = threads_i,
+              resume = resume_i
             )
           },
           .args = list(
@@ -526,7 +569,8 @@ runQuarterwise <- function(
             outDir = outDir,
             runsRoot = runsRoot,
             allResultsPath = allResultsPath,
-            threads_i = threads
+            threads_i = threads,
+            resume_i = resume
           )
         )
       }
