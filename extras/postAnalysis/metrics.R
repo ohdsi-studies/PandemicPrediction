@@ -183,3 +183,22 @@ integratedNetBenefit <- function(y, p, thresholds) {
   nb <- vapply(th, function(t) netBenefit(y, p, t), numeric(1))
   mean(nb, na.rm = TRUE)
 }
+
+# Area under net benefit curve (A-NBC) using trapezoidal numerical integration.
+# Returns raw area (not normalized by threshold range).
+areaNetBenefitCurve <- function(y, p, thresholds) {
+  th <- as.numeric(thresholds)
+  th <- th[is.finite(th) & th > 0 & th < 1]
+  th <- sort(unique(th))
+  if (length(th) < 2) {
+    return(NA_real_)
+  }
+  nb <- vapply(th, function(t) netBenefit(y, p, t), numeric(1))
+  ok <- is.finite(th) & is.finite(nb)
+  th <- th[ok]
+  nb <- nb[ok]
+  if (length(th) < 2) {
+    return(NA_real_)
+  }
+  sum(diff(th) * (head(nb, -1) + tail(nb, -1)) / 2)
+}

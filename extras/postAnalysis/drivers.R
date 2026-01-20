@@ -365,7 +365,8 @@ runSingleComparison <- function(
     AUPRC = auprc,
     Brier = brier,
     ICI = function(y, p) eavgGAM(y, p, nthreads = threads),
-    INB = function(y, p) integratedNetBenefit(y, p, thresholds = inbThresholds[[row$outcomeName]])
+    INB = function(y, p) integratedNetBenefit(y, p, thresholds = inbThresholds[[row$outcomeName]]),
+    ANBC = function(y, p) areaNetBenefitCurve(y, p, thresholds = inbThresholds[[row$outcomeName]])
   )
 
   bootRes <- bootPairedDeltas(
@@ -445,7 +446,8 @@ runQuarterwise <- function(
 	    AUPRC = auprc,
     Brier = brier,
     ICI = function(y, p) eavgGAM(y, p, nthreads = threads),
-    INB = function(y, p) integratedNetBenefit(y, p, thresholds = inbThresholds[[row$outcomeName]])
+    INB = function(y, p) integratedNetBenefit(y, p, thresholds = inbThresholds[[row$outcomeName]]),
+    ANBC = function(y, p) areaNetBenefitCurve(y, p, thresholds = inbThresholds[[row$outcomeName]])
   )
 
     # Unique seed per task; if bootParallel=='mirai' and not already using mirai across comparisons,

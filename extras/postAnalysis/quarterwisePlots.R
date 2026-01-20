@@ -115,7 +115,7 @@ collectQuarterwiseBootstrap <- function(
     }
   }
 
-  metricLevels <- c("AUROC", "AUPRC", "Brier", "ICI", "INB")
+  metricLevels <- c("AUROC", "AUPRC", "Brier", "ICI", "INB", "ANBC")
   out$metric <- factor(
     out$metric,
     levels = c(metricLevels, setdiff(unique(out$metric), metricLevels))
