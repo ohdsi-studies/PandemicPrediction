@@ -9,7 +9,7 @@ safeReadJson <- function(path) {
 }
 
 parseModelKey <- function(modelKey) {
-  # Returns list(family, featureSet, W) where family in {covid, proxy_frozen, proxy_recal}
+  # Returns list(family, featureSet, W) where family in {covid, proxy_frozen, proxy_recal, proxy_roll}
   x <- tolower(modelKey)
   parts <- strsplit(x, "_")[[1]]
   if (length(parts) < 2) {
@@ -24,7 +24,7 @@ parseModelKey <- function(modelKey) {
     return(list(
       family = "covid",
       featureSet = if (parts[2] == "pars") "Parsimonious" else "Full",
-      W = parts[3]
+      W = if (length(parts) >= 3) paste(parts[3:length(parts)], collapse = "_") else NA_character_
     ))
   }
   if (family == "proxy_frozen") {
@@ -38,14 +38,14 @@ parseModelKey <- function(modelKey) {
     return(list(
       family = "proxy_recal",
       featureSet = if (parts[3] == "pars") "Parsimonious" else "Full",
-      W = parts[4]
+      W = if (length(parts) >= 4) paste(parts[4:length(parts)], collapse = "_") else NA_character_
     ))
   }
   if (family == "proxy_roll") {
     return(list(
       family = "proxy_roll",
       featureSet = if (parts[3] == "pars") "Parsimonious" else "Full",
-      W = parts[4]
+      W = if (length(parts) >= 4) paste(parts[4:length(parts)], collapse = "_") else NA_character_
     ))
   }
   list(family = NA_character_, featureSet = NA_character_, W = NA_character_)
@@ -285,7 +285,8 @@ locateQuarterRun <- function(
     info$family,
     covid = "New Covid",
     proxy_frozen = "Original Influenza",
-    proxy_recal = "Original Influenza (Recalibrated)"
+    proxy_recal = "Recalibrated Influenza",
+    proxy_roll = "Rolling Recalibrated Influenza"
   )
   ar2 <- subset(ar2, modelOrigin == familyName)
   if (nrow(ar2)) {
