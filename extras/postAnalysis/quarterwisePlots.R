@@ -731,7 +731,8 @@ comparisonToModelRows <- function(
       "metric", "metricValue", "metricLo", "metricHi",
       "modelKey", "modelRole", "modelAKey", "modelBKey",
       "featureSet", "outcomeName", "quarterId",
-      "quarterStart", "quarterEnd", "quarterMid", "comparator"
+      "quarterStart", "quarterEnd", "quarterMid", "comparator",
+      "outcomeRate"
     ),
     names(res)
   )
@@ -761,7 +762,10 @@ plotQuarterwiseModelMetric <- function(
   dateLabels = "%Y-%m",
   title = NULL,
   yLabel = NULL,
-  showIntervals = TRUE
+  showIntervals = TRUE,
+  showOutcomeRate = FALSE,
+  outcomeRateColor = "#333333",
+  outcomeRateLinetype = "dotdash"
 ) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package 'ggplot2' is required for plotting.")
@@ -790,7 +794,48 @@ plotQuarterwiseModelMetric <- function(
   p <- p +
     ggplot2::geom_line(linewidth = 0.7) +
     ggplot2::geom_point(size = 1.8) +
-    ggplot2::scale_x_date(date_breaks = dateBreaks, date_labels = dateLabels) +
+    ggplot2::scale_x_date(date_breaks = dateBreaks, date_labels = dateLabels)
+
+  # Optional outcome rate overlay on a secondary axis (per quarter)
+  if (isTRUE(showOutcomeRate) && "outcomeRate" %in% names(df)) {
+    rateDf <- df[, c("quarterMid", "outcomeRate")]
+    rateDf <- rateDf[stats::complete.cases(rateDf$outcomeRate), , drop = FALSE]
+    if (nrow(rateDf)) {
+      rateDf <- stats::aggregate(
+        outcomeRate ~ quarterMid,
+        data = rateDf,
+        FUN = function(x) stats::median(x, na.rm = TRUE)
+      )
+    }
+    if (nrow(rateDf)) {
+      yRange <- range(df$metricValue, na.rm = TRUE)
+      rateRange <- range(rateDf$outcomeRate, na.rm = TRUE)
+      if (diff(rateRange) == 0) rateRange[2] <- rateRange[2] + 1e-6
+      if (diff(yRange) == 0) yRange[2] <- yRange[2] + 1e-6
+      scaleToMetric <- function(r) {
+        (r - rateRange[1]) / diff(rateRange) * diff(yRange) + yRange[1]
+      }
+      rateDf$rateScaled <- scaleToMetric(rateDf$outcomeRate)
+      p <- p +
+        ggplot2::geom_line(
+          data = rateDf,
+          ggplot2::aes(x = quarterMid, y = rateScaled),
+          inherit.aes = FALSE,
+          color = outcomeRateColor,
+          linetype = outcomeRateLinetype,
+          linewidth = 0.6
+        ) +
+        ggplot2::scale_y_continuous(
+          name = yLabel,
+          sec.axis = ggplot2::sec_axis(
+            transform = ~ (.- yRange[1]) / diff(yRange) * diff(rateRange) + rateRange[1],
+            name = "Outcome rate"
+          )
+        )
+    }
+  }
+
+  p <- p +
     ggplot2::labs(
       title = title %||% "Quarter-wise model metric",
       x = "Quarter (midpoint)",

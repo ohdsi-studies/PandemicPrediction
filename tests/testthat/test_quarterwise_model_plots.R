@@ -61,10 +61,11 @@ test_that("plotQuarterwiseModelMetric returns a ggplot and only uses provided ro
     quarterMid = as.Date("2020-05-16"),
     comparator = "proxy_frozen_vs_proxy_rolling_recal",
     seriesLabel = c("Frozen Full", "Rolling Full"),
+    outcomeRate = 0.10,
     stringsAsFactors = FALSE
   )
 
-  p <- plotQuarterwiseModelMetric(df, title = "t", yLabel = "y")
+  p <- plotQuarterwiseModelMetric(df, title = "t", yLabel = "y", showOutcomeRate = TRUE)
   expect_s3_class(p, "ggplot")
   expect_equal(sort(unique(p$data$modelKey)), sort(unique(df$modelKey)))
   expect_equal(sort(unique(p$data$seriesLabel)), sort(unique(df$seriesLabel)))
