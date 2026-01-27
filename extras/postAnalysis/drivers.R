@@ -36,7 +36,7 @@ buildBootstrapOutFile <- function(outDir, row) {
   )
 }
 
-readExistingBootstrapIfCompatible <- function(path, B) {
+readExistingBootstrapIfCompatible <- function(path, B, expectedMetrics = NULL) {
   if (is.null(path) || !nzchar(path) || !file.exists(path)) {
     return(NULL)
   }
@@ -54,10 +54,21 @@ readExistingBootstrapIfCompatible <- function(path, B) {
   if (length(existingB) != 1L || is.na(existingB) || existingB != as.integer(B)) {
     return(NULL)
   }
-  # Expect 5 metrics per file from our writers:
-  # AUROC, AUPRC, Brier, ICI, INB
-  if (!"metric" %in% names(df) || length(unique(as.character(df$metric))) != 5L) {
+  if (!"metric" %in% names(df)) {
     return(NULL)
+  }
+  have <- unique(as.character(df$metric))
+  if (!is.null(expectedMetrics)) {
+    if (!all(expectedMetrics %in% have)) {
+      return(NULL)
+    }
+  } else {
+    # Backwards-compatible fallback: expect at least the original metric set
+    # (AUROC, AUPRC, Brier, ICI, INB). Newer runs may add ANBC.
+    needed <- c("AUROC", "AUPRC", "Brier", "ICI", "INB")
+    if (!all(needed %in% have)) {
+      return(NULL)
+    }
   }
   df
 }
@@ -340,11 +351,12 @@ runSingleComparison <- function(
   threads = 1L,
   resume = FALSE
 ) {
+  expectedMetrics <- c("AUROC", "AUPRC", "Brier", "ICI", "INB", "ANBC")
   if (!is.null(outDir)) {
     ensureDir(outDir)
     outFile <- buildBootstrapOutFile(outDir, row)
     if (isTRUE(resume)) {
-      cached <- readExistingBootstrapIfCompatible(outFile, B = B)
+      cached <- readExistingBootstrapIfCompatible(outFile, B = B, expectedMetrics = expectedMetrics)
       if (!is.null(cached)) {
         return(cached)
       }
@@ -432,6 +444,7 @@ runQuarterwise <- function(
 
   taskFun <- function(i, prog = NULL) {
     row <- comparisons[i, ]
+    expectedMetrics <- c("AUROC", "AUPRC", "Brier", "ICI", "INB", "ANBC")
     pr <- getPairedPredictions(
       row = row,
       runsRoot = runsRoot,
@@ -449,6 +462,15 @@ runQuarterwise <- function(
     INB = function(y, p) integratedNetBenefit(y, p, thresholds = inbThresholds[[row$outcomeName]]),
     ANBC = function(y, p) areaNetBenefitCurve(y, p, thresholds = inbThresholds[[row$outcomeName]])
   )
+
+    if (!is.null(outDir) && isTRUE(resume)) {
+      outFile <- buildBootstrapOutFile(outDir, row)
+      cached <- readExistingBootstrapIfCompatible(outFile, B = B, expectedMetrics = expectedMetrics)
+      if (!is.null(cached)) {
+        if (!is.null(prog)) prog()
+        return(cached)
+      }
+    }
 
     # Unique seed per task; if bootParallel=='mirai' and not already using mirai across comparisons,
     # use mirai chunking for B within this single comparison.

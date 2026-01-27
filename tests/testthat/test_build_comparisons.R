@@ -72,16 +72,16 @@ test_that("readExistingBootstrapIfCompatible returns cached results only when B 
 
   tmp <- tempfile(fileext = ".csv")
   df <- data.frame(
-    metric = c("AUROC", "AUPRC", "Brier", "ICI", "INB"),
-    B = rep(25, 5),
-    delta = rep(0, 5),
+    metric = c("AUROC", "AUPRC", "Brier", "ICI", "INB", "ANBC"),
+    B = rep(25, 6),
+    delta = rep(0, 6),
     stringsAsFactors = FALSE
   )
   utils::write.csv(df, tmp, row.names = FALSE)
 
   ok <- readExistingBootstrapIfCompatible(tmp, B = 25)
   expect_true(!is.null(ok))
-  expect_equal(nrow(ok), 5)
+  expect_equal(nrow(ok), 6)
 
   bad <- readExistingBootstrapIfCompatible(tmp, B = 200)
   expect_true(is.null(bad))
