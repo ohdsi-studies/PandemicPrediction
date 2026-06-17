@@ -13,3 +13,4 @@ atlas_id,cohort_id,cohort_name,logic_description,generate_stats
 23,23,Hepatic Failure,NA,TRUE
 24,24,Resp failure,NA,TRUE
 31,31,[T] Pandemic Prediction new target,NA,TRUE
+27,27,[O] Pandemic Prediction intensive services or death,NA,TRUE

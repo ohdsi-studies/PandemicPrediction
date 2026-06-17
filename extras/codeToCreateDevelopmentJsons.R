@@ -1,6 +1,7 @@
 library(PatientLevelPrediction)
 library(Strategus)
 library(lubridate)
+source(file.path("R", "outcomeIds.R"))
 
 # COHORT GENERATOR MODULE ------------------------------------------------------
 cohortDefinitions <- CohortGenerator::getCohortDefinitionSet(
@@ -171,7 +172,7 @@ for (i in seq_along(restrictList)) {
 
   covidI <- PatientLevelPrediction::createModelDesign(
     targetId = 31,
-    outcomeId = 13,
+    outcomeId = getPandemicOutcomeId("Critical"),
     restrictPlpDataSettings = restrictList[[i]],
 
     populationSettings = populationSettings,
@@ -208,7 +209,7 @@ for (i in seq_along(restrictList)) {
 
   dataDrivenCovidI <- PatientLevelPrediction::createModelDesign(
     targetId = 31,
-    outcomeId = 13,
+    outcomeId = getPandemicOutcomeId("Critical"),
     restrictPlpDataSettings = restrictList[[i]],
     populationSettings = populationSettings,
     covariateSettings = dataDrivenCovariateSettings,

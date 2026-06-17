@@ -4,6 +4,7 @@ library(lubridate)
 library(purrr)
 library(PatientLevelPrediction)
 library(Strategus)
+source(file.path("R", "outcomeIds.R"))
 
 # ============================================================================
 # CONFIGURATION
@@ -23,9 +24,9 @@ createPackageModel <- function(modelFolder, package) {
 
 getOutcomeName <- function(outcomeId) {
   dplyr::case_when(
-    as.character(outcomeId) == "11" ~ "Death",
-    as.character(outcomeId) == "13" ~ "Critical",
-    as.character(outcomeId) == "14" ~ "Hospital"
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Fatality")) ~ "Death",
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Critical")) ~ "Critical",
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Hospitalization")) ~ "Hospital"
   )
 }
 

@@ -605,7 +605,8 @@ collectQuarterwiseValidationStats <- function(
   outcomeNames = c(
     `11` = "Fatality",
     `14` = "Hospitalization",
-    `13` = "RespiratoryFailure"
+    `27` = "RespiratoryFailure",
+    `13` = "RespiratoryFailureLegacy"
   )
 ) {
   files <- list.files(runsRoot, pattern = "runPlp\\.rds$", recursive = TRUE, full.names = TRUE)

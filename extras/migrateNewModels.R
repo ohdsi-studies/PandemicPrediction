@@ -1,16 +1,18 @@
 library(jsonlite)
 library(PatientLevelPrediction)
+library(dplyr)
+source(file.path("R", "outcomeIds.R"))
 
 sourceModelsDir <- "./results/development/strategusOutput/PatientLevelPredictionModule/models"
 destinationDir <- "./inst/newModels/"
 
 # Map original outcome IDs to descriptive names
 getOutcomeName <- function(outcomeId) {
-  switch(as.character(outcomeId),
-    "11" = "Death",
-    "13" = "Critical",
-    "14" = "Hospital",
-    "UnknownOutcome"
+  dplyr::case_when(
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Fatality")) ~ "Death",
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Critical")) ~ "Critical",
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Hospitalization")) ~ "Hospital",
+    TRUE ~ "UnknownOutcome"
   )
 }
 

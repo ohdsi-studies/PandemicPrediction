@@ -1,12 +1,13 @@
 recalibrationJsonPath <- "./inst/study_execution_jsons/recalibration.json"
 recalibrationResultsDir <- "./results/recalibration/strategusWork/PatientLevelPredictionValidationModule/OPTUM Extended DOD/"
 recalibratedModelsDir <- "./inst/recalibratedModels/"
+source(file.path("R", "outcomeIds.R"))
 
 getOutcomeName <- function(outcomeId) {
   dplyr::case_when(
-    as.character(outcomeId) == "11" ~ "Death",
-    as.character(outcomeId) == "13" ~ "Critical",
-    as.character(outcomeId) == "14" ~ "Hospital"
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Fatality")) ~ "Death",
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Critical")) ~ "Critical",
+    as.character(outcomeId) == as.character(getPandemicOutcomeId("Hospitalization")) ~ "Hospital"
   )
 }
 

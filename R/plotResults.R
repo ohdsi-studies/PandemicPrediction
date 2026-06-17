@@ -2,8 +2,9 @@ getOutcome <- function(outcomeId) {
   outcome <- switch(
     as.character(outcomeId),
     "11" = "Fatality",
-    "13" = "RespiratoryFailure",
+    "13" = "RespiratoryFailureLegacy",
     "14" = "Hospitalization",
+    "27" = "RespiratoryFailure",
     "UnknownOutcome"
   )
   return(outcome)
@@ -32,7 +33,7 @@ getModelName <- function(name, targetId, outcomeId) {
     if (targetId == 12 || targetId == 31) {
       if (outcomeId == 11) {
         name <- "dataDrivenF"
-      } else if (outcomeId == 13) {
+      } else if (outcomeId %in% c(13, 27)) {
         name <- "dataDrivenI"
       } else if (outcomeId == 14) {
         name <- "dataDrivenH"
@@ -112,7 +113,7 @@ appendOutcomeSuffix <- function(modelKey, outcomeId, append = FALSE) {
   }
   oc <- dplyr::case_when(
     outcomeId == 11 ~ "F",
-    outcomeId == 13 ~ "I",
+    outcomeId %in% c(13, 27) ~ "I",
     outcomeId == 14 ~ "H",
     TRUE ~ "X"
   )
@@ -425,7 +426,7 @@ getAnalysisResults <- function(databasePath, evaluationType, analysisId) {
         stringr::str_replace_all(" \\| NA", ""),
       outcomeCode = dplyr::case_when(
         .data$outcomeId == 11 ~ "F",
-        .data$outcomeId == 13 ~ "I",
+        .data$outcomeId == 13 | .data$outcomeId == 27 ~ "I",
         .data$outcomeId == 14 ~ "H",
         TRUE ~ ""
       ),

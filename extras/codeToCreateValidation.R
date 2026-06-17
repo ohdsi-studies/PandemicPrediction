@@ -1,5 +1,6 @@
 library(PatientLevelPrediction)
 library(Strategus)
+source(file.path("R", "outcomeIds.R"))
 
 
 cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
@@ -67,7 +68,7 @@ validationList <- list()
 
 validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
   targetId = 31, # covid
-  outcomeId = 11, # death. - 14 severe, 13 critial
+  outcomeId = getPandemicOutcomeId("Fatality"),
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
@@ -84,7 +85,7 @@ validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
 )
 validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
   targetId = 31, # covid
-  outcomeId = 14, # 11 death. - 14 severe, 13 critial
+  outcomeId = getPandemicOutcomeId("Hospitalization"),
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
@@ -101,7 +102,7 @@ validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
 )
 validationList[[3]] <- PatientLevelPrediction::createValidationDesign(
   targetId = 31, # covid
-  outcomeId = 13, # 11 death. - 14 severe, 13 critial
+  outcomeId = getPandemicOutcomeId("Critical"),
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(

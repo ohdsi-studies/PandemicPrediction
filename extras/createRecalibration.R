@@ -2,6 +2,7 @@ library(PatientLevelPrediction)
 library(Strategus)
 library(dplyr)
 library(purrr)
+source(file.path("R", "outcomeIds.R"))
 
 cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
   settingsFileName = "inst/Cohorts.csv",
@@ -24,12 +25,12 @@ createPackageModel <- function(modelFolder, package) {
 }
 
 originalInfluenzaModels <- list(
-  list(outcomeId = 11, model = createPackageModel("models/dato", "PandemicPrediction")),
-  list(outcomeId = 11, model = createPackageModel("models/dataDrivenF", "PandemicPrediction")),
-  list(outcomeId = 14, model = createPackageModel("models/sato", "PandemicPrediction")),
-  list(outcomeId = 14, model = createPackageModel("models/dataDrivenH", "PandemicPrediction")),
-  list(outcomeId = 13, model = createPackageModel("models/cato", "PandemicPrediction")),
-  list(outcomeId = 13, model = createPackageModel("models/dataDrivenI", "PandemicPrediction"))
+  list(outcomeId = getPandemicOutcomeId("Fatality"), model = createPackageModel("models/dato", "PandemicPrediction")),
+  list(outcomeId = getPandemicOutcomeId("Fatality"), model = createPackageModel("models/dataDrivenF", "PandemicPrediction")),
+  list(outcomeId = getPandemicOutcomeId("Hospitalization"), model = createPackageModel("models/sato", "PandemicPrediction")),
+  list(outcomeId = getPandemicOutcomeId("Hospitalization"), model = createPackageModel("models/dataDrivenH", "PandemicPrediction")),
+  list(outcomeId = getPandemicOutcomeId("Critical"), model = createPackageModel("models/cato", "PandemicPrediction")),
+  list(outcomeId = getPandemicOutcomeId("Critical"), model = createPackageModel("models/dataDrivenI", "PandemicPrediction"))
 )
 
 recalibrationPeriods <- list(

@@ -1,5 +1,6 @@
 library(PatientLevelPrediction)
 library(Strategus)
+source(file.path("R", "outcomeIds.R"))
 
 # should be influenza only in 2019, this should get me as similar results for 
 # internal validation as the original paper
@@ -42,7 +43,7 @@ restrictPlpDataSettings <- PatientLevelPrediction::createRestrictPlpDataSettings
 )
 validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
   targetId = 30, # influenza
-  outcomeId = 11, # death. - 14 severe, 13 critial
+  outcomeId = getPandemicOutcomeId("Fatality"),
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
@@ -59,7 +60,7 @@ validationList[[1]] <- PatientLevelPrediction::createValidationDesign(
 )
 validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
   targetId = 30, # influenza
-  outcomeId = 14, # 11 death. - 14 severe, 13 critial
+  outcomeId = getPandemicOutcomeId("Hospitalization"),
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(
@@ -76,7 +77,7 @@ validationList[[2]] <- PatientLevelPrediction::createValidationDesign(
 )
 validationList[[3]] <- PatientLevelPrediction::createValidationDesign(
   targetId = 30, # influenza
-  outcomeId = 13, # 11 death. - 14 severe, 13 critial
+  outcomeId = getPandemicOutcomeId("Critical"),
   populationSettings = NULL, # use models
   restrictPlpDataSettings = restrictPlpDataSettings,
   plpModelList = list(

@@ -4,6 +4,7 @@ library(lubridate)
 library(purrr)
 library(PatientLevelPrediction)
 library(Strategus)
+source(file.path("R", "outcomeIds.R"))
 
 recalibratedModelsDir <- "./inst/recalibratedModels/"
 
@@ -17,9 +18,9 @@ createPackageModel <- function(modelFolder, package) {
 }
 getOutcomeId <- function(outcomeName) {
   switch(outcomeName,
-    "Death" = 11,
-    "Critical" = 13,
-    "Hospital" = 14
+    "Death" = getPandemicOutcomeId("Fatality"),
+    "Critical" = getPandemicOutcomeId("Critical"),
+    "Hospital" = getPandemicOutcomeId("Hospitalization")
   )
 }
 
